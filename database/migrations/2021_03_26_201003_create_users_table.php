@@ -17,13 +17,14 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('nickname')->unique();
-            $table->string('url_img')->nullable();
+            $table->unsignedBigInteger('photo')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('about')->nullable();
-            $table->string('password');
+            $table->string('hash');
             $table->rememberToken();
             $table->timestamps();
+            $table->foreign('photo')->references('id')->on('medias');
 
         });
     }
