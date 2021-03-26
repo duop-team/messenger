@@ -18,6 +18,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Login"
 });
@@ -79,11 +107,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/getUrl.js */ "./node_modules/css-loader/dist/runtime/getUrl.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _img_login_bg_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../img/login_bg.svg */ "./resources/img/login_bg.svg");
 // Imports
 
+
+
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Sarabun&family=Roboto+Condensed&display=swap);"]);
+var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_img_login_bg_svg__WEBPACK_IMPORTED_MODULE_2__.default);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ndiv[data-v-6bdc8b8e] {\n    height: 100vh;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    text-align: center;\n}\n*[data-v-6bdc8b8e] {\n    font-size: 50px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.bg[data-v-6bdc8b8e] {\n    height: 100vh;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + "), linear-gradient(67.6deg, #32C585 17.95%, #546286 97.28%);\n    background-size: cover;\n    position: relative;\n}\n.card[data-v-6bdc8b8e] {\n    width: 480px;\n    padding: 45px;\n    background: #65B59E;\n    mix-blend-mode: normal;\n    border: 3px solid #FFC3C3;\n    box-sizing: border-box;\n    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);\n    border-radius: 5px;\n    color: #fff;\n}\n.card__title[data-v-6bdc8b8e] {\n    font-family: Sarabun, sans-serif;\n    font-size: 30px;\n    text-align: center;\n    color: #FFFFFF;\n}\n.card__description[data-v-6bdc8b8e] {\n    margin-top: 15px;\n    font-family: Sarabun, sans-serif;\n    font-size: 18px;\n}\n.card__form input[data-v-6bdc8b8e] {\n    padding: 3px 0;\n    font-family: Noto Sans KR, sans-serif;\n    font-style: normal;\n    font-weight: normal;\n    font-size: 18px;\n    width: 100%;\n    background-color: transparent;\n    border: 0;\n    border-bottom: 1px solid #FFFFFF;;\n    outline: 0;\n    color: #fff;\n    margin-top: 10px;\n}\n.card__form label[data-v-6bdc8b8e] {\n    font-family: Sarabun, sans-serif;\n    font-size: 18px;\n}\n.form__item[data-v-6bdc8b8e] {\n    margin-top: 25px;\n}\n.form__footer[data-v-6bdc8b8e] {\n    display: flex;\n    flex-flow: row nowrap;\n    margin-top: 45px;\n}\n.form__error[data-v-6bdc8b8e] {\n    display: flex;\n    flex-flow: row nowrap;\n    color: #FF0B0B;\n}\n.error__img[data-v-6bdc8b8e] {\n    height: 18px;\n    margin-right: 10px;\n}\n.error__text[data-v-6bdc8b8e] {\n    font-family: Roboto Condensed, sans-serif;\n    font-size: 18px;\n}\n.form__submit button[data-v-6bdc8b8e] {\n    background: linear-gradient(180deg, #E26363 0%, #DE796B 100%);\n    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);\n    border-radius: 32px;\n    font-family: Sarabun, sans-serif;\n    font-size: 16px;\n    color: #fff;\n    border: 0;\n    outline: 0;\n    padding: 13px 45px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -162,6 +197,63 @@ module.exports = function (cssWithMappingToString) {
 
   return list;
 };
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/getUrl.js":
+/*!********************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/getUrl.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+
+
+module.exports = function (url, options) {
+  if (!options) {
+    // eslint-disable-next-line no-param-reassign
+    options = {};
+  } // eslint-disable-next-line no-underscore-dangle, no-param-reassign
+
+
+  url = url && url.__esModule ? url.default : url;
+
+  if (typeof url !== "string") {
+    return url;
+  } // If url is already wrapped in quotes, remove them
+
+
+  if (/^['"].*['"]$/.test(url)) {
+    // eslint-disable-next-line no-param-reassign
+    url = url.slice(1, -1);
+  }
+
+  if (options.hash) {
+    // eslint-disable-next-line no-param-reassign
+    url += options.hash;
+  } // Should url be wrapped?
+  // See https://drafts.csswg.org/css-values-3/#urls
+
+
+  if (/["'() \t\n]/.test(url) || options.needQuotes) {
+    return "\"".concat(url.replace(/"/g, '\\"').replace(/\n/g, "\\n"), "\"");
+  }
+
+  return url;
+};
+
+/***/ }),
+
+/***/ "./resources/img/login_bg.svg":
+/*!************************************!*\
+  !*** ./resources/img/login_bg.svg ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/login_bg.svg?321c7248d817eb9d89697ebbb148b499");
 
 /***/ }),
 
@@ -582,9 +674,71 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    It works!!!\n")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "bg" }, [
+      _c("div", { staticClass: "content" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card__title" }, [_vm._v("Sign in")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card__description" }, [
+            _c("p", [
+              _vm._v(
+                "Please, enter your country, phone number or whatever they want from you"
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card__form" }, [
+            _c("form", { attrs: { action: "/login", method: "post" } }, [
+              _c("div", { staticClass: "form__item" }, [
+                _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "email", name: "email", id: "email" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form__item" }, [
+                _c("label", { attrs: { for: "password" } }, [
+                  _vm._v("Password")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "password", name: "password", id: "password" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form__footer" }, [
+                _c("div", { staticClass: "form__error" }, [
+                  _c("img", {
+                    staticClass: "error__img",
+                    attrs: { src: "/images/error_icon.svg" }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "error__text" }, [
+                    _vm._v("Warning! You did something wrong.")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form__submit" }, [
+                  _c("button", { attrs: { type: "submit" } }, [
+                    _vm._v("Submit")
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
