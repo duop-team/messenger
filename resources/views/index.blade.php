@@ -9,6 +9,7 @@
             padding: 0;
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <title>Messenger</title>
 </head>
 <body>
