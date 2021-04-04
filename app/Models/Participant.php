@@ -9,6 +9,10 @@ class Participant extends Model
 {
     use HasFactory;
 
+    protected $table = 'participants';
+
+    public $timestamps = false;
+
     public function accessRules()
     {
         return $this->belongsTo(AccessRule::class);

@@ -9,6 +9,8 @@ class Message extends Model
 {
     use HasFactory;
 
+    protected $table = 'messages';
+
     public function attachments()
     {
         return $this->belongsTo(Attachment::class);
