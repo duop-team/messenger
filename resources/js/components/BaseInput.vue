@@ -3,7 +3,7 @@
         <label :for="name">
             <slot></slot>
         </label>
-        <input :type="type" :id="name" :name="name" :value="value" :required="required" @input="updateValue">
+        <input :type="type" :id="name" :name="name" :value="value" :required="required.valueOf()" @input="updateValue">
     </div>
 </template>
 
@@ -20,7 +20,6 @@ export default {
             required: true
         },
         'required': {
-            type: Boolean,
             default: false
         },
         'value': {
