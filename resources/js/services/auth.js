@@ -15,4 +15,10 @@ export default {
         await authClient.get("/sanctum/csrf-cookie");
         await authClient.post("/register", payload);
     },
+    async logout() {
+        await authClient.post('/logout');
+    },
+    async getAuthUser() {
+        return await authClient.get('/api/user');
+    }
 }
