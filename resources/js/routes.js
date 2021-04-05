@@ -1,13 +1,15 @@
+import VueRouter from 'vue-router'
+import store from './store';
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Home from "./views/Home";
 
-export default {
+const router = new VueRouter({
     mode: 'history',
     routes: [
         {
             path: '/',
-            component: Home
+            redirect: '/chats'
         },
         {
             path: '/login',
@@ -16,6 +18,30 @@ export default {
         {
             path: '/register',
             component: Register
+        },
+        {
+            path: '/chats',
+            meta: {
+                requiresAuth: true
+            },
+            component: Home
         }
     ]
-}
+});
+
+router.beforeEach((to, from, next) => {
+    const authUser = store.getters["currentUser"];
+    const reqAuth = to.matched.some((record) => record.meta.requiresAuth);
+    const loginQuery = { path: "/login" };
+
+    if (reqAuth && !authUser) {
+        store.dispatch("getAuthUser").then(() => {
+            if (!store.getters["currentUser"]) next(loginQuery);
+            else next();
+        });
+    } else {
+        next();
+    }
+});
+
+export default router;

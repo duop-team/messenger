@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import routes from './routes';
+import router from './routes';
 import vuex from 'vuex';
+import store from './store'
 
 Vue.use(vuex);
 Vue.use(VueRouter);
-
 
 /* Registering custom components */
 Vue.component('RoundedButton', require('./components/RoundedButton').default);
@@ -15,5 +15,6 @@ Vue.component('ServiceLayout', require('./components/ServiceLayout').default);
 
 const app = new Vue({
     el: '#app',
-    router: new VueRouter(routes)
+    router,
+    store
 });
