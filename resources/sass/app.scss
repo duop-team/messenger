@@ -1,6 +1,10 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Sarabun&display=swap');
 
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
 #app {
     background-color: #F8E5E5;
 }
