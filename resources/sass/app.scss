@@ -1,8 +1,61 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Sarabun&display=swap');
 
-// Variables
-@import 'variables';
+*, *:before, *:after {
+    box-sizing: border-box;
+}
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+#app {
+    background-color: #F8E5E5;
+}
+
+.card {
+    max-width: 480px;
+}
+
+.form {
+    &__footer {
+        display: flex;
+        flex-flow: row nowrap;
+        margin-top: 45px;
+    }
+
+    &__error {
+        display: flex;
+        flex-flow: row nowrap;
+        color: #FF0B0B;
+    }
+
+    &__submit {
+        margin-left: auto;
+    }
+}
+
+.links {
+    margin-top: 11px;
+    font-family: Sarabun, sans-serif;
+    font-weight: 400;
+    text-align: center;
+
+    &__text {
+        font-size: 18px;
+        color: #867676;
+    }
+
+    &__link {
+        font-size: 24px;
+        color: #E32A26;
+    }
+}
+
+/* TODO: Move it to another Vue component */
+.error__img {
+    height: 18px;
+    margin-right: 8px;
+    margin-top: 3px;
+}
+
+.error__text {
+    font-family: Sarabun, sans-serif;
+    font-size: 16px;
+}
