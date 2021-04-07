@@ -24,7 +24,7 @@ class MediaFactory extends Factory
         return [
             'title' => $this->faker->title,
             'content' => $this->faker->imageUrl(),
-            'type' => array_rand(["JPEG", "PNG"]),
+            'type' => $this->faker->mimeType,
             'created_at' => $this->faker->date(),
             'updated_at' => $this->faker->date()
         ];
