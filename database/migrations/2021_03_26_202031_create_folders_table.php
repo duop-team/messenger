@@ -15,11 +15,11 @@ class CreateFoldersTable extends Migration
     {
         Schema::create('folders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('chat');
+            $table->unsignedBigInteger('chat_id');
             $table->string('folder');
-            $table->unsignedBigInteger('owner')->nullable();
-            $table->foreign('chat')->references('id')->on('chats');
-            $table->foreign('owner')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('chat_id')->references('id')->on('chats');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

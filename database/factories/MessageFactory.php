@@ -26,9 +26,9 @@ class MessageFactory extends Factory
     {
         return [
             'text' => $this->faker->text,
-            'attachment' => Attachment::factory(),
-            'sender' => User::factory(),
-            'chat' => Chat::factory(),
+            'attachment_id' => Attachment::factory(),
+            'user_id' => User::factory(),
+            'chat_id' => Chat::factory(),
             'status' => $this->faker->numberBetween($min = 0, $max = 1),
             'created_at' => $this->faker->date(),
             'updated_at' => $this->faker->date()

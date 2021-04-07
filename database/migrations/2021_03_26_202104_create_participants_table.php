@@ -15,12 +15,12 @@ class CreateParticipantsTable extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user');
-            $table->unsignedBigInteger('chat');
-            $table->unsignedBigInteger('rights')->nullable();
-            $table->foreign('user')->references('id')->on('users');
-            $table->foreign('chat')->references('id')->on('chats');
-            $table->foreign('rights')->references('id')->on('access_rules');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('chat_id');
+            $table->unsignedBigInteger('access_rule_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('chat_id')->references('id')->on('chats');
+            $table->foreign('access_rule_id')->references('id')->on('access_rules');
         });
     }
 

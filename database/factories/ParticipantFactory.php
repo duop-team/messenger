@@ -25,9 +25,9 @@ class ParticipantFactory extends Factory
     public function definition()
     {
         return [
-            'user' => User::factory(),
-            'chat' => Chat::factory(),
-            'rights' => AccessRule::factory()
+            'user_id' => User::factory(),
+            'chat_id' => Chat::factory(),
+            'access_rule_id' => AccessRule::factory()
         ];
     }
 }

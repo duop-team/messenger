@@ -16,10 +16,11 @@ class CreateChatsTable extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
             $table->string('about')->nullable();
-            $table->unsignedBigInteger('owner');
-            $table->unsignedBigInteger('photo')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('media_id')->nullable();
             $table->timestamps();
-            $table->foreign('owner')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('media_id')->references('id')->on('medias');
         });
     }
 

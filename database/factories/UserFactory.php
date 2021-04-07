@@ -26,7 +26,7 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name,
             'nickname' => $this->faker->unique()->userName,
-            'photo' => Media::factory(),
+            'media_id' => Media::factory(),
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
             'about' => $this->faker->text,

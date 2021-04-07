@@ -24,9 +24,9 @@ class FolderFactory extends Factory
     public function definition()
     {
         return [
-            'chat' => Chat::factory(),
+            'chat_id' => Chat::factory(),
             'folder' => $this->faker->name,
-            'owner' => User::factory()
+            'user_id' => User::factory()
         ];
     }
 }
