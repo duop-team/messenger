@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\AccessRule;
+use App\Models\Folder;
+use App\Models\Media;
+use App\Models\Participant;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +17,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            MediaSeeder::class,
+            UsersSeeder::class,
+            AttachmentsSeeder::class,
+            ChatsSeeder::class,
+            FoldersSeeder::class,
+            MessagesSeeder::class,
+            AccessRulesSeeder::class,
+            ParticipantsSeeder::class
+        ]);
     }
 }

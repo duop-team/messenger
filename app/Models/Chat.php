@@ -9,6 +9,8 @@ class Chat extends Model
 {
     use HasFactory;
 
+    protected $table = 'chats';
+
     public function media()
     {
         return $this->belongsTo(Media::class);

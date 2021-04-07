@@ -9,6 +9,10 @@ class AccessRule extends Model
 {
     use HasFactory;
 
+    protected $table = 'access_rules';
+
+    public $timestamps = false;
+
     public function participants()
     {
         return $this->hasMany(Participant::class);

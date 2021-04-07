@@ -9,6 +9,10 @@ class Folder extends Model
 {
     use HasFactory;
 
+    protected $table = 'folders';
+
+    public $timestamps = false;
+
     public function chats()
     {
         return $this->belongsTo(Chat::class);
