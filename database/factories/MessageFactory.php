@@ -29,7 +29,7 @@ class MessageFactory extends Factory
             'attachment' => Attachment::factory(),
             'sender' => User::factory(),
             'chat' => Chat::factory(),
-            'status' => $this->faker->numberBetween($min = 1, $max = 2),
+            'status' => $this->faker->numberBetween($min = 0, $max = 1),
             'created_at' => $this->faker->date(),
             'updated_at' => $this->faker->date()
         ];

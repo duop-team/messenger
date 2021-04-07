@@ -22,7 +22,7 @@ class AttachmentFactory extends Factory
     public function definition()
     {
         return [
-            'type' => $this->faker->word,
+            'type' => array_rand(["jpeg", "png", "gif", "txt"]),
             'content' => $this->faker->imageUrl()
         ];
     }

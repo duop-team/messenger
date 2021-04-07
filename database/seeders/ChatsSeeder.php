@@ -14,6 +14,6 @@ class ChatsSeeder extends Seeder
      */
     public function run()
     {
-        Chat::factory()->times(10)->create();
+        Chat::factory()->times(100)->create();
     }
 }

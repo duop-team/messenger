@@ -14,6 +14,6 @@ class ParticipantsSeeder extends Seeder
      */
     public function run()
     {
-        Participant::factory()->times(10)->create();
+        Participant::factory()->times(50)->create();
     }
 }

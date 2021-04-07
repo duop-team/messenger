@@ -14,6 +14,6 @@ class AccessRulesSeeder extends Seeder
      */
     public function run()
     {
-        AccessRule::factory()->times(10)->create();
+        AccessRule::factory()->times(20)->create();
     }
 }

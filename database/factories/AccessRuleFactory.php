@@ -22,7 +22,7 @@ class AccessRuleFactory extends Factory
     public function definition()
     {
         return [
-            'rule' => $this->faker->numberBetween($min=0, $max=200),
+            'rule' => array_rand([0, 1, 2, 4, 8]),
             'time' => $this->faker->dateTime()
         ];
     }
