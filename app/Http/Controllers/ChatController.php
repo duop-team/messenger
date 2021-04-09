@@ -19,6 +19,7 @@ class ChatController extends Controller
     public function store(Request $request)
     {
         return Chat::create([
+            "name" => $request->name,
             "about" => $request->about,
             "user_id" => Auth::id(),
         ]);
