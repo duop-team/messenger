@@ -19,7 +19,7 @@ class CreateMessagesTable extends Migration
             $table->unsignedBigInteger('attachment_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('chat_id');
-            $table->unsignedBigInteger('status');
+            $table->unsignedSmallInteger('status');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('chat_id')->references('id')->on('chats');
