@@ -26,8 +26,8 @@ class ChatController extends Controller
     }
 
 
-    public function delete()
+    public function show(Request $request)
     {
-        //
+        return Chat::find($request->id);
     }
 }

@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user/chats', [ChatController::class, 'index']);
 
@@ -29,6 +30,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return User::findOrFail($id);
     });
 
+    Route::get('/chats/{id}',[ChatController::class, 'show']);
+
     Route::post('/chats/create', [ChatController::class, 'store']);
 
 });
+
