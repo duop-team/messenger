@@ -2,9 +2,9 @@ import  {authClient} from './auth'
 
 export default {
     async sendMessage(chat, payload) {
-        await authClient.post(`/chats/${chat}/send`, payload);
+        return await authClient.post(`/api/chats/${chat}/send`, payload);
     },
     async listMessages(chat) {
-        await authClient.get(`/chats/${chat}`);
+        return await authClient.get(`/api/chats/${chat}`);
     }
 }

@@ -29,10 +29,10 @@ export default {
         },
         // this shit just for testing
         sendMessage() {
-            chatService.sendMessage(1, {text: this.message}).then(r => console.log(r.data));
+            chatService.sendMessage(1, {text: this.message}).then(r => console.log(r));
         },
         listMessages() {
-            chatService.listMessages(1).then(r => console.log(r.data));
+            chatService.listMessages(1).then(r => console.log(r));
         }
     }
 }
@@ -44,7 +44,7 @@ div {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 span {
