@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
+use App\Models\Message;
 use App\Models\Participant;
 use App\Models\User;
 use Illuminate\Http\Request;
