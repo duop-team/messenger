@@ -30,9 +30,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return User::findOrFail($id);
     });
 
-    Route::get('/chats/{id}',[ChatController::class, 'show']);
+    Route::get('/chats/{id}', [ChatController::class, 'show']);
 
     Route::post('/chats/create', [ChatController::class, 'store']);
 
+    Route::delete('/chats/{id}/delete', [ChatController::class, 'destroy']);
 });
-

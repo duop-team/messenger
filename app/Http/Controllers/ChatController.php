@@ -25,9 +25,14 @@ class ChatController extends Controller
         ]);
     }
 
-
     public function show(Request $request)
     {
         return Chat::find($request->id);
+    }
+
+    public function destroy(Request $request)
+    {
+        $chat = Chat::find($request->id);
+        return $chat->delete();
     }
 }
