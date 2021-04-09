@@ -2002,6 +2002,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _services_chat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/chat */ "./resources/js/services/chat.js");
 //
 //
 //
@@ -2009,11 +2010,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Home",
+  data: function data() {
+    return {
+      message: ''
+    };
+  },
   methods: {
     logout: function logout() {
       this.$store.dispatch('logout');
+    },
+    // this shit just for testing
+    sendMessage: function sendMessage() {
+      _services_chat__WEBPACK_IMPORTED_MODULE_0__.default.sendMessage(1, {
+        text: this.message
+      }).then(function (r) {
+        return console.log(r.data);
+      });
+    },
+    listMessages: function listMessages() {
+      _services_chat__WEBPACK_IMPORTED_MODULE_0__.default.listMessages(1).then(function (r) {
+        return console.log(r.data);
+      });
     }
   }
 });
@@ -2032,6 +2060,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/auth */ "./resources/js/services/auth.js");
+/* harmony import */ var vue_router_src_util_errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router/src/util/errors */ "./node_modules/vue-router/src/util/errors.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 //
 //
 //
@@ -2218,37 +2248,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
-/* harmony import */ var _views_Login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/Login */ "./resources/js/views/Login.vue");
-/* harmony import */ var _views_Register__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/Register */ "./resources/js/views/Register.vue");
-/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
+/* harmony import */ var _views_Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/Login */ "./resources/js/views/Login.vue");
+/* harmony import */ var _views_Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/Register */ "./resources/js/views/Register.vue");
+/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
 
 
 
 
 
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__.default({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__.default({
   mode: 'history',
   routes: [{
     path: '/',
     redirect: '/chats'
   }, {
     path: '/login',
-    component: _views_Login__WEBPACK_IMPORTED_MODULE_2__.default
+    component: _views_Login__WEBPACK_IMPORTED_MODULE_1__.default
   }, {
     path: '/register',
-    component: _views_Register__WEBPACK_IMPORTED_MODULE_3__.default
+    component: _views_Register__WEBPACK_IMPORTED_MODULE_2__.default
   }, {
     path: '/chats',
     meta: {
       requiresAuth: true
     },
-    component: _views_Home__WEBPACK_IMPORTED_MODULE_4__.default
+    component: _views_Home__WEBPACK_IMPORTED_MODULE_3__.default
   }]
 });
 router.beforeEach(function (to, from, next) {
-  var authUser = _store__WEBPACK_IMPORTED_MODULE_1__.default.getters.currentUser;
+  var authUser = _store__WEBPACK_IMPORTED_MODULE_0__.default.getters.currentUser;
   var reqAuth = to.matched.some(function (record) {
     return record.meta.requiresAuth;
   });
@@ -2257,8 +2287,8 @@ router.beforeEach(function (to, from, next) {
   };
 
   if (reqAuth && !authUser) {
-    _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch("getAuthUser").then(function () {
-      if (!_store__WEBPACK_IMPORTED_MODULE_1__.default.getters.currentUser) next(loginQuery);else next();
+    _store__WEBPACK_IMPORTED_MODULE_0__.default.dispatch("getAuthUser").then(function () {
+      if (!_store__WEBPACK_IMPORTED_MODULE_0__.default.getters.currentUser) next(loginQuery);else next();
     });
   } else {
     next();
@@ -2381,6 +2411,66 @@ var authClient = axios__WEBPACK_IMPORTED_MODULE_1___default().create({
 
 /***/ }),
 
+/***/ "./resources/js/services/chat.js":
+/*!***************************************!*\
+  !*** ./resources/js/services/chat.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth */ "./resources/js/services/auth.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  sendMessage: function sendMessage(chat, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _auth__WEBPACK_IMPORTED_MODULE_1__.authClient.post("/chats/".concat(chat, "/send"), payload);
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  listMessages: function listMessages(chat) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return _auth__WEBPACK_IMPORTED_MODULE_1__.authClient.get("/chats/".concat(chat));
+
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/store.js":
 /*!*******************************!*\
   !*** ./resources/js/store.js ***!
@@ -2392,16 +2482,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/auth */ "./resources/js/services/auth.js");
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services/auth */ "./resources/js/services/auth.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
 
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.default);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_1__.default.Store({
+vue__WEBPACK_IMPORTED_MODULE_2__.default.use(vuex__WEBPACK_IMPORTED_MODULE_3__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_3__.default.Store({
   state: {
     user: null
   },
@@ -2420,9 +2510,9 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
   },
   actions: {
     logout: function logout(context) {
-      return _services_auth__WEBPACK_IMPORTED_MODULE_2__.default.logout().then(function () {
+      return _services_auth__WEBPACK_IMPORTED_MODULE_0__.default.logout().then(function () {
         context.commit('setUser', null);
-        _routes__WEBPACK_IMPORTED_MODULE_3__.default.push({
+        _routes__WEBPACK_IMPORTED_MODULE_1__.default.push({
           path: '/login'
         });
       })["catch"](function (e) {
@@ -2430,7 +2520,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.d
       });
     },
     getAuthUser: function getAuthUser(context) {
-      return _services_auth__WEBPACK_IMPORTED_MODULE_2__.default.getAuthUser().then(function (response) {
+      return _services_auth__WEBPACK_IMPORTED_MODULE_0__.default.getAuthUser().then(function (response) {
         console.log(response);
         context.commit("setUser", response.data);
       })["catch"](function (error) {
@@ -2489,7 +2579,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ndiv[data-v-f1cd7dc4] {\n    margin-top: 20px;\n}\ninput[data-v-f1cd7dc4] {\n    padding: 5px 0;\n    font-family: Sarabun, sans-serif;\n    font-style: normal;\n    font-weight: normal;\n    font-size: 16px;\n    width: 100%;\n    background-color: transparent;\n    border: 0;\n    border-bottom: 1px solid #FFFFFF;;\n    outline: 0;\n    color: #fff;\n}\ninput[type=password][data-v-f1cd7dc4] {\n    letter-spacing: 0.1em;\n}\nlabel[data-v-f1cd7dc4] {\n    font-family: Sarabun, sans-serif;\n    font-size: 16px;\n    margin-bottom: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\ndiv[data-v-f1cd7dc4] {\r\n    margin-top: 20px;\n}\ninput[data-v-f1cd7dc4] {\r\n    padding: 5px 0;\r\n    font-family: Sarabun, sans-serif;\r\n    font-style: normal;\r\n    font-weight: normal;\r\n    font-size: 16px;\r\n    width: 100%;\r\n    background-color: transparent;\r\n    border: 0;\r\n    border-bottom: 1px solid #FFFFFF;;\r\n    outline: 0;\r\n    color: #fff;\n}\ninput[type=password][data-v-f1cd7dc4] {\r\n    letter-spacing: 0.1em;\n}\nlabel[data-v-f1cd7dc4] {\r\n    font-family: Sarabun, sans-serif;\r\n    font-size: 16px;\r\n    margin-bottom: 0;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2513,7 +2603,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.card[data-v-b9bc2c0a] {\n    margin: -80px auto 0;\n    /*width: 480px;*/\n    padding: 25px 45px 32px;\n    background: #65B59E;\n    mix-blend-mode: normal;\n    border: 3px solid #FFC3C3;\n    box-sizing: border-box;\n    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);\n    border-radius: 5px;\n    color: #fff;\n    font-family: Sarabun, sans-serif;\n}\n.card__title[data-v-b9bc2c0a] {\n    font-size: 30px;\n    text-align: center;\n}\n.card__content[data-v-b9bc2c0a] {\n    margin-top: 15px;\n    font-size: 16px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.card[data-v-b9bc2c0a] {\r\n    margin: -80px auto 0;\r\n    /*width: 480px;*/\r\n    padding: 25px 45px 32px;\r\n    background: #65B59E;\r\n    mix-blend-mode: normal;\r\n    border: 3px solid #FFC3C3;\r\n    box-sizing: border-box;\r\n    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);\r\n    border-radius: 5px;\r\n    color: #fff;\r\n    font-family: Sarabun, sans-serif;\n}\n.card__title[data-v-b9bc2c0a] {\r\n    font-size: 30px;\r\n    text-align: center;\n}\n.card__content[data-v-b9bc2c0a] {\r\n    margin-top: 15px;\r\n    font-size: 16px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2699,7 +2789,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/figures.svg?47611b534e476309b95b9cf6fb3cc3ec");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/figures.svg?506b18b38e5af003cd5159d98428230a");
 
 /***/ }),
 
@@ -4856,7 +4946,50 @@ var render = function() {
     _vm._v(" "),
     _c("span", { staticClass: "links__link", on: { click: _vm.logout } }, [
       _vm._v("Logout")
-    ])
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.sendMessage($event)
+            }
+          }
+        },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.message,
+                expression: "message"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.message },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.message = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("button", { attrs: { type: "submit" } }, [_vm._v("Send")])
+        ]
+      ),
+      _vm._v(" "),
+      _c("br"),
+      _c("br")
+    ]),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.listMessages } }, [_vm._v("List messages")])
   ])
 }
 var staticRenderFns = []
@@ -8446,6 +8579,113 @@ if (inBrowser && window.Vue) {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VueRouter);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-router/src/util/errors.js":
+/*!****************************************************!*\
+  !*** ./node_modules/vue-router/src/util/errors.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "NavigationFailureType": () => (/* binding */ NavigationFailureType),
+/* harmony export */   "createNavigationRedirectedError": () => (/* binding */ createNavigationRedirectedError),
+/* harmony export */   "createNavigationDuplicatedError": () => (/* binding */ createNavigationDuplicatedError),
+/* harmony export */   "createNavigationCancelledError": () => (/* binding */ createNavigationCancelledError),
+/* harmony export */   "createNavigationAbortedError": () => (/* binding */ createNavigationAbortedError),
+/* harmony export */   "isError": () => (/* binding */ isError),
+/* harmony export */   "isNavigationFailure": () => (/* binding */ isNavigationFailure)
+/* harmony export */ });
+// When changing thing, also edit router.d.ts
+const NavigationFailureType = {
+  redirected: 2,
+  aborted: 4,
+  cancelled: 8,
+  duplicated: 16
+}
+
+function createNavigationRedirectedError (from, to) {
+  return createRouterError(
+    from,
+    to,
+    NavigationFailureType.redirected,
+    `Redirected when going from "${from.fullPath}" to "${stringifyRoute(
+      to
+    )}" via a navigation guard.`
+  )
+}
+
+function createNavigationDuplicatedError (from, to) {
+  const error = createRouterError(
+    from,
+    to,
+    NavigationFailureType.duplicated,
+    `Avoided redundant navigation to current location: "${from.fullPath}".`
+  )
+  // backwards compatible with the first introduction of Errors
+  error.name = 'NavigationDuplicated'
+  return error
+}
+
+function createNavigationCancelledError (from, to) {
+  return createRouterError(
+    from,
+    to,
+    NavigationFailureType.cancelled,
+    `Navigation cancelled from "${from.fullPath}" to "${
+      to.fullPath
+    }" with a new navigation.`
+  )
+}
+
+function createNavigationAbortedError (from, to) {
+  return createRouterError(
+    from,
+    to,
+    NavigationFailureType.aborted,
+    `Navigation aborted from "${from.fullPath}" to "${
+      to.fullPath
+    }" via a navigation guard.`
+  )
+}
+
+function createRouterError (from, to, type, message) {
+  const error = new Error(message)
+  error._isRouter = true
+  error.from = from
+  error.to = to
+  error.type = type
+
+  return error
+}
+
+const propertiesToLog = ['params', 'query', 'hash']
+
+function stringifyRoute (to) {
+  if (typeof to === 'string') return to
+  if ('path' in to) return to.path
+  const location = {}
+  propertiesToLog.forEach(key => {
+    if (key in to) location[key] = to[key]
+  })
+  return JSON.stringify(location, null, 2)
+}
+
+function isError (err) {
+  return Object.prototype.toString.call(err).indexOf('Error') > -1
+}
+
+function isNavigationFailure (err, errorType) {
+  return (
+    isError(err) &&
+    err._isRouter &&
+    (errorType == null || err.type === errorType)
+  )
+}
 
 
 /***/ }),
