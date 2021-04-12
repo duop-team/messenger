@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +32,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return User::findOrFail($id);
     });
 
-    Route::get('/chats/{id}', [ChatController::class, 'show']);
+    Route::get('/chats/{id}/participants', [ParticipantController::class, 'index']);
+
+    Route::post('/chats/{id}/participants/create', [ParticipantController::class, 'store']);
 
     Route::delete('/chats/{id}/messages/delete', [MessageController::class, 'destroy']);
 
@@ -41,9 +44,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::delete('/chats/{id}/delete', [ChatController::class, 'destroy']);
 
+    Route::get('/chats/{id}', [ChatController::class, 'show']);
+
     Route::post('/chats/create', [ChatController::class, 'store']);
 });
-
-
-
-
