@@ -7,11 +7,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        user: null
+        user: null,
+        loading: false
     },
     mutations: {
-        setUser(state, user) {
+        SET_USER(state, user) {
             state.user = user;
+        },
+        SET_LOADING(state, loading) {
+            state.loading = loading;
         }
     },
     getters: {
@@ -20,24 +24,36 @@ export default new Vuex.Store({
         },
         currentUser(state) {
             return state.user;
+        },
+        loading(state) {
+            return state.loading;
         }
     },
     actions: {
         logout(context) {
+            context.commit('SET_LOADING', true);
             return authService.logout()
                 .then(() => {
-                    context.commit('setUser', null);
+                    context.commit('SET_LOADING', false);
+                    context.commit('SET_USER', null);
                     router.push({path: '/login'});
                 })
-                .catch(e => console.log(e));
+                .catch(e => {
+                    context.commit('SET_LOADING', false);
+                    console.log(e)
+                });
         },
         getAuthUser(context) {
+            context.commit('SET_LOADING', true);
             return authService.getAuthUser()
                 .then(response => {
-                    console.log(response);
-                    context.commit("setUser", response.data);
+                    context.commit("SET_USER", response.data);
+                    context.commit('SET_LOADING', false);
                 })
-                .catch(error => console.log(error));
+                .catch(error => {
+                    context.commit('SET_LOADING', false);
+                    console.log(error)
+                });
 
         }
     }
