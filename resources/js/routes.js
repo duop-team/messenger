@@ -25,6 +25,10 @@ const router = new VueRouter({
                 requiresAuth: true
             },
             component: Home
+        },
+        {
+            path: '*',
+            redirect: '/'
         }
     ]
 });
