@@ -36,7 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/chats/{id}/participants/create', [ParticipantController::class, 'store']);
 
-    Route::delete('/chats/{id}/messages/delete', [MessageController::class, 'destroy']);
+    Route::post('/chats/{id}/messages/delete', [MessageController::class, 'destroy']);
 
     Route::post('/chats/{id}/messages/send', [MessageController::class, 'store']);
 

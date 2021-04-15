@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
+//        TODO: check if sender is participant
         return Auth::user()->messages()->create([
             'text' => $request->text,
-            'user_id' => Auth::id(),
-            'chat_id' => $request->id,
+            'chat_id' => $id
         ]);
     }
 
@@ -25,6 +25,6 @@ class MessageController extends Controller
 
     public function destroy(Request $request)
     {
-        return Message::find($request->id)->delete();
+        return Message::findOrFail($request->message_id)->delete();
     }
 }
