@@ -13,27 +13,25 @@ class ChatController extends Controller
 {
     public function index()
     {
-        $user = User::find(Auth::id());
-        return $user->chats;
+        return Auth::user()->chats;
     }
 
     public function store(Request $request)
     {
-        return Chat::create([
+//        TODO: add creator of chat to participants
+        return Auth::user()->chats()->create([
             "title" => $request->title,
-            "about" => $request->about,
-            "user_id" => Auth::id(),
+            "about" => $request->about
         ]);
     }
 
-    public function show(Request $request)
+    public function show($id)
     {
-        return Chat::find($request->id);
+        return Chat::findOrFail($id);
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $chat = Chat::find($request->id);
-        return $chat->delete();
+        return Chat::findOrFail($id)->delete();
     }
 }

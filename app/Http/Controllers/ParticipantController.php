@@ -11,7 +11,7 @@ class ParticipantController extends Controller
 {
     public function index($id)
     {
-        return Chat::find($id)->participants;
+        return Chat::findOrFail($id)->participants;
     }
 
     public function store(Request $request, $id)
@@ -25,5 +25,11 @@ class ParticipantController extends Controller
             ]);
         }
         abort(400);
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        return Participant::where('user_id', '=', $request->user_id)->where('chat_id', $id)->firstOrFail()->delete();
+
     }
 }
