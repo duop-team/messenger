@@ -1,10 +1,8 @@
-import  {authClient} from './auth'
-
 export default {
     async sendMessage(chat, payload) {
-        return await authClient.post(`/api/chats/${chat}/send`, payload);
+        return await axios.post(`/api/chats/${chat}/messages/send`, payload);
     },
     async listMessages(chat) {
-        return await authClient.get(`/api/chats/${chat}`);
+        return await axios.get(`/api/chats/${chat}/messages`);
     }
 }
