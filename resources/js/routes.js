@@ -1,5 +1,5 @@
 import VueRouter from 'vue-router'
-import store from './store';
+import store from './store/index';
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Home from "./views/Home";
@@ -34,13 +34,13 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const authUser = store.getters["currentUser"];
+    const authUser = store.getters["auth/currentUser"];
     const reqAuth = to.matched.some((record) => record.meta.requiresAuth);
     const loginQuery = { path: "/login" };
 
     if (reqAuth && !authUser) {
-        store.dispatch("getAuthUser").then(() => {
-            if (!store.getters["currentUser"]) next(loginQuery);
+        store.dispatch("auth/getAuthUser").then(() => {
+            if (!store.getters["auth/currentUser"]) next(loginQuery);
             else next();
         });
     } else {
