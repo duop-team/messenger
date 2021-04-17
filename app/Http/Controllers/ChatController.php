@@ -18,11 +18,17 @@ class ChatController extends Controller
 
     public function store(Request $request)
     {
-//        TODO: add creator of chat to participants
-        return Auth::user()->chats()->create([
+        $chat = Auth::user()->chats()->create([
             "title" => $request->title,
             "about" => $request->about
         ]);
+
+        $chat->participants()->create([
+            'user_id' => Auth::id(),
+            'access_rule_id' => null
+        ]);
+
+        return $chat;
     }
 
     public function show($id)
