@@ -16,4 +16,8 @@ class UserController extends Controller
             return null;
         }
     }
+
+    public function search(Request $request) {
+        return User::where('nickname', $request->nickname)->firstOrFail();
+    }
 }

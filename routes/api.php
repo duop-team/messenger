@@ -36,6 +36,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return User::findOrFail($id);
     });
 
+    Route::post('/users/search', [UserController::class, 'search']);
+
     Route::get('/chats/{id}/participants', [ParticipantController::class, 'index']);
 
     Route::post('/chats/{id}/participants/create', [ParticipantController::class, 'store']);
