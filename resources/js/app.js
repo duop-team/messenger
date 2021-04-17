@@ -14,6 +14,10 @@ Vue.component('RoundedButton', require('./components/RoundedButton').default);
 Vue.component('BaseInput', require('./components/BaseInput').default);
 Vue.component('Card', require('./components/Card').default);
 Vue.component('ServiceLayout', require('./components/ServiceLayout').default);
+Vue.component('MessageForm', require('./components/MessageForm').default);
+Vue.component('ChatHeader', require('./components/ChatHeader').default);
+Vue.component('ChatItem', require('./components/ChatItem').default);
+Vue.component('Message', require('./components/Message').default);
 
 const app = new Vue({
     el: '#app',
