@@ -9,6 +9,8 @@ class Chat extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'about', 'user_id', 'media_id'];
+
     protected $table = 'chats';
 
     public function media()

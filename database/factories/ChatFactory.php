@@ -24,9 +24,10 @@ class ChatFactory extends Factory
     public function definition()
     {
         return [
+            'title' => $this->faker->name(),
             'about' => $this->faker->text(30),
-            'owner' => User::factory(),
-            'photo' => Media::factory(),
+            'user_id' => User::factory(),
+            'media_id' => Media::factory(),
             'created_at' => $this->faker->time(),
             'updated_at' => $this->faker->time()
         ];

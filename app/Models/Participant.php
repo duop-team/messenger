@@ -11,6 +11,8 @@ class Participant extends Model
 
     protected $table = 'participants';
 
+    protected $fillable = ['user_id', 'chat_id', 'access_rule_id'];
+
     public $timestamps = false;
 
     public function accessRules()

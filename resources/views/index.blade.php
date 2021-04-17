@@ -9,13 +9,15 @@
             padding: 0;
         }
     </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <title>Messenger</title>
 </head>
 <body>
-    <div id="app">
-        <router-view></router-view>
-    </div>
-    <script src="{{asset("js/app.js")}}"></script>
+<div id="app">
+    <router-view></router-view>
+</div>
+<script src="{{asset("js/app.js")}}"></script>
 </body>
 </html>

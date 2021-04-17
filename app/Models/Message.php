@@ -11,6 +11,8 @@ class Message extends Model
 
     protected $table = 'messages';
 
+    protected $fillable = ['text', 'user_id', 'chat_id'];
+
     public function attachments()
     {
         return $this->belongsTo(Attachment::class);

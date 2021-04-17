@@ -10,6 +10,9 @@
                     </BaseInput>
                     <BaseInput type="password" name="password_confirmation" v-model="form.password_confirmation" required="true">Confirm password</BaseInput>
                     <div class="form__footer">
+                        <div v-if="$store.getters['auth/loading']">
+                            <img src="/images/loader.svg" alt="Loading..." height="40">
+                        </div>
                         <div class="form__error" v-show="hasErrors">
                             <img src="/images/error_icon.svg" class="error__img">
                             <div class="error__text">Warning! You did something wrong.</div>
@@ -51,7 +54,7 @@ export default {
                 .then(() => this.$router.replace('/chats'))
                 .catch(e => {
                     this.errors = e.response.data.errors
-                })
+                });
         }
     },
     computed: {
