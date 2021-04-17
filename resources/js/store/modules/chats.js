@@ -5,7 +5,8 @@ export const state = {
     chat: null,
     chatInfo: false,
     messageList: [],
-    chatList: []
+    chatList: [],
+    createChat: false
 }
 
 export const mutations = {
@@ -17,6 +18,10 @@ export const mutations = {
     },
     SET_CHAT_INFO(state, chatInfo) {
         state.chatInfo = chatInfo;
+
+        if (state.createChat && state.chatInfo) {
+            state.createChat = false;
+        }
     },
     SET_MESSAGE_LIST(state, list) {
         state.messageList = list;
@@ -29,12 +34,18 @@ export const mutations = {
     },
     PUSH_CHAT_LIST(state, value) {
         state.chatList.push(value);
+    },
+    SET_CREATE_CHAT(state, value) {
+        state.createChat = value;
+        if (state.chatInfo && state.createChat) {
+            state.chatInfo = false;
+        }
     }
 }
 
 export const getters = {
     currentChat(state) {
-        return state.chat;
+        return state.chat || {};
     },
     loading(state) {
         return state.loading;
@@ -47,12 +58,18 @@ export const getters = {
     },
     chatList(state) {
         return state.chatList;
+    },
+    isCreatingChat(state) {
+        return state.createChat;
     }
 }
 
 export const actions = {
     toggleInfo({commit}) {
         commit('SET_CHAT_INFO', !this.getters["chats/infoActive"]);
+    },
+    toggleCreateChat({commit}) {
+        commit('SET_CREATE_CHAT', !this.getters["chats/isCreatingChat"]);
     },
     clearMessageList({commit}) {
         commit('SET_MESSAGE_LIST', []);
