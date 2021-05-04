@@ -89,7 +89,16 @@ export default {
             }).catch(e => alert('This user doesn\'t exists'))
         },
         selectChat(chat) {
+            Echo.leave(`chat.${this.$store.getters['chats/currentChat'].id}`);
+
             this.$store.commit('chats/SET_CHAT', chat);
+
+            Echo.private(`chat.${chat.id}`)
+                .listen('MessageSent', e => {
+                    console.log(e);
+                    this.$store.commit('chats/PUSH_MESSAGE_LIST', e.message);
+                });
+
             this.listMessages();
         },
         showCreateChat() {
@@ -116,17 +125,20 @@ export default {
             if (obj) {
                 obj.scrollTop = obj.scrollHeight;
             }
+        },
+        listenChat(id) {
+            Echo.private(`chat.${id}`)
+                .listen('MessageSent', e => {
+                    console.log(e);
+                    this.$store.commit('chats/PUSH_MESSAGE_LIST', e.message);
+                });
         }
     },
     created() {
         this.listChats();
-        this.listMessages();
+        // this.listMessages();
 
-        Echo.private(`messages`)
-            .listen('MessageSent', e => {
-                console.log(e);
-                this.$store.commit('chats/PUSH_MESSAGE_LIST', e.message);
-            });
+
     },
     updated() {
         this.scrollBottom();

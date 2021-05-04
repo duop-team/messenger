@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Chat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -14,6 +15,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('messages', function ($user) {
-    return Auth::check();
+Broadcast::channel('chat.{chat}', function ($user, Chat $chat) {
+    return $chat->hasParticipant($user);
 });
