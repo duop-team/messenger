@@ -93,11 +93,7 @@ export default {
 
             this.$store.commit('chats/SET_CHAT', chat);
 
-            Echo.private(`chat.${chat.id}`)
-                .listen('MessageSent', e => {
-                    console.log(e);
-                    this.$store.commit('chats/PUSH_MESSAGE_LIST', e.message);
-                });
+            this.listenChat(chat.id);
 
             this.listMessages();
         },

@@ -2256,7 +2256,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     selectChat: function selectChat(chat) {
+      Echo.leave("chat.".concat(this.$store.getters['chats/currentChat'].id));
       this.$store.commit('chats/SET_CHAT', chat);
+      this.listenChat(chat.id);
       this.listMessages();
     },
     showCreateChat: function showCreateChat() {
@@ -2290,18 +2292,19 @@ __webpack_require__.r(__webpack_exports__);
       if (obj) {
         obj.scrollTop = obj.scrollHeight;
       }
+    },
+    listenChat: function listenChat(id) {
+      var _this5 = this;
+
+      Echo["private"]("chat.".concat(id)).listen('MessageSent', function (e) {
+        console.log(e);
+
+        _this5.$store.commit('chats/PUSH_MESSAGE_LIST', e.message);
+      });
     }
   },
   created: function created() {
-    var _this5 = this;
-
-    this.listChats();
-    this.listMessages();
-    Echo["private"]("messages").listen('MessageSent', function (e) {
-      console.log(e);
-
-      _this5.$store.commit('chats/PUSH_MESSAGE_LIST', e.message);
-    });
+    this.listChats(); // this.listMessages();
   },
   updated: function updated() {
     this.scrollBottom();
@@ -2322,6 +2325,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/auth */ "./resources/js/services/auth.js");
+/* harmony import */ var vue_router_src_util_errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router/src/util/errors */ "./node_modules/vue-router/src/util/errors.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 //
 //
 //
@@ -33375,6 +33380,113 @@ if (inBrowser && window.Vue) {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VueRouter);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-router/src/util/errors.js":
+/*!****************************************************!*\
+  !*** ./node_modules/vue-router/src/util/errors.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "NavigationFailureType": () => (/* binding */ NavigationFailureType),
+/* harmony export */   "createNavigationRedirectedError": () => (/* binding */ createNavigationRedirectedError),
+/* harmony export */   "createNavigationDuplicatedError": () => (/* binding */ createNavigationDuplicatedError),
+/* harmony export */   "createNavigationCancelledError": () => (/* binding */ createNavigationCancelledError),
+/* harmony export */   "createNavigationAbortedError": () => (/* binding */ createNavigationAbortedError),
+/* harmony export */   "isError": () => (/* binding */ isError),
+/* harmony export */   "isNavigationFailure": () => (/* binding */ isNavigationFailure)
+/* harmony export */ });
+// When changing thing, also edit router.d.ts
+const NavigationFailureType = {
+  redirected: 2,
+  aborted: 4,
+  cancelled: 8,
+  duplicated: 16
+}
+
+function createNavigationRedirectedError (from, to) {
+  return createRouterError(
+    from,
+    to,
+    NavigationFailureType.redirected,
+    `Redirected when going from "${from.fullPath}" to "${stringifyRoute(
+      to
+    )}" via a navigation guard.`
+  )
+}
+
+function createNavigationDuplicatedError (from, to) {
+  const error = createRouterError(
+    from,
+    to,
+    NavigationFailureType.duplicated,
+    `Avoided redundant navigation to current location: "${from.fullPath}".`
+  )
+  // backwards compatible with the first introduction of Errors
+  error.name = 'NavigationDuplicated'
+  return error
+}
+
+function createNavigationCancelledError (from, to) {
+  return createRouterError(
+    from,
+    to,
+    NavigationFailureType.cancelled,
+    `Navigation cancelled from "${from.fullPath}" to "${
+      to.fullPath
+    }" with a new navigation.`
+  )
+}
+
+function createNavigationAbortedError (from, to) {
+  return createRouterError(
+    from,
+    to,
+    NavigationFailureType.aborted,
+    `Navigation aborted from "${from.fullPath}" to "${
+      to.fullPath
+    }" via a navigation guard.`
+  )
+}
+
+function createRouterError (from, to, type, message) {
+  const error = new Error(message)
+  error._isRouter = true
+  error.from = from
+  error.to = to
+  error.type = type
+
+  return error
+}
+
+const propertiesToLog = ['params', 'query', 'hash']
+
+function stringifyRoute (to) {
+  if (typeof to === 'string') return to
+  if ('path' in to) return to.path
+  const location = {}
+  propertiesToLog.forEach(key => {
+    if (key in to) location[key] = to[key]
+  })
+  return JSON.stringify(location, null, 2)
+}
+
+function isError (err) {
+  return Object.prototype.toString.call(err).indexOf('Error') > -1
+}
+
+function isNavigationFailure (err, errorType) {
+  return (
+    isError(err) &&
+    err._isRouter &&
+    (errorType == null || err.type === errorType)
+  )
+}
 
 
 /***/ }),
