@@ -22,15 +22,13 @@
             </div>
         </div>
         <div slot="content" class="links">
-            <div class="links__text">Already have the account?</div>
+            <div class="links__text">Already have account?</div>
             <router-link to="/login" class="links__link" replace>Sign in</router-link>
         </div>
     </service-layout>
 </template>
 
 <script>
-import authService from "../services/auth";
-
 export default {
     name: "Register",
     data() {
@@ -47,11 +45,8 @@ export default {
     },
     methods: {
         register() {
-            authService.registerUser(this.form)
-                .then(() => this.$router.replace('/chats'))
-                .catch(e => {
-                    this.errors = e.response.data.errors
-                });
+            this.$store.dispatch('auth/setForm', this.form);
+            this.$store.dispatch('auth/register');
         }
     },
     computed: {
