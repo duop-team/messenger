@@ -12,10 +12,7 @@
                         <div v-if="$store.getters['auth/loading']">
                             <img src="/images/loader.svg" alt="Loading..." height="40">
                         </div>
-                        <div class="form__error" v-show="hasErrors">
-                            <img src="/images/error_icon.svg" class="error__img">
-                            <div class="error__text">Warning! You did something wrong.</div>
-                        </div>
+                        <!--TODO: show error and remove it on typing-->
                         <div class="form__submit">
                             <RoundedButton type="submit">Submit</RoundedButton>
                         </div>
@@ -42,18 +39,13 @@ export default {
             form: {
                 email: '',
                 password: ''
-            },
-            errors: {
             }
         }
     },
     methods: {
         login() {
-            authService.login(this.form)
-                .then(() => this.$router.replace('/chats'))
-                .catch(e => {
-                    this.errors = e.response.data.errors;
-                });
+            this.$store.dispatch('auth/setForm', this.form);
+            this.$store.dispatch('auth/login');
         }
     },
     computed: {

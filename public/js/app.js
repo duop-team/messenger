@@ -2357,9 +2357,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -2370,19 +2367,13 @@ __webpack_require__.r(__webpack_exports__);
       form: {
         email: '',
         password: ''
-      },
-      errors: {}
+      }
     };
   },
   methods: {
     login: function login() {
-      var _this = this;
-
-      _services_auth__WEBPACK_IMPORTED_MODULE_0__.default.login(this.form).then(function () {
-        return _this.$router.replace('/chats');
-      })["catch"](function (e) {
-        _this.errors = e.response.data.errors;
-      });
+      this.$store.dispatch('auth/setForm', this.form);
+      this.$store.dispatch('auth/login');
     }
   },
   computed: {
@@ -2406,9 +2397,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/auth */ "./resources/js/services/auth.js");
-//
-//
-//
 //
 //
 //
@@ -2925,6 +2913,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var namespaced = true;
 var state = {
+  form: {},
   user: null,
   loading: false
 };
@@ -2934,6 +2923,9 @@ var mutations = {
   },
   SET_LOADING: function SET_LOADING(state, loading) {
     state.loading = loading;
+  },
+  SET_FORM: function SET_FORM(state, data) {
+    state.form = data;
   }
 };
 var getters = {
@@ -2945,25 +2937,42 @@ var getters = {
   },
   loading: function loading(state) {
     return state.loading;
+  },
+  formData: function formData(state) {
+    return state.form;
   }
 };
 var actions = {
-  logout: function logout(_ref) {
+  setForm: function setForm(_ref, payload) {
     var commit = _ref.commit;
+    commit('SET_FORM', payload);
+  },
+  login: function login(_ref2) {
+    var commit = _ref2.commit,
+        getters = _ref2.getters;
+    commit('SET_LOADING', true);
+    _services_auth__WEBPACK_IMPORTED_MODULE_0__.default.login(getters['formData']).then(function () {
+      commit('SET_LOADING', false);
+      commit('SET_FORM', {});
+      _routes__WEBPACK_IMPORTED_MODULE_1__.default.replace('/chats');
+    })["catch"](function (e) {
+      commit('SET_LOADING', false); // this.errors = e.response.data.errors;
+    });
+  },
+  logout: function logout(_ref3) {
+    var commit = _ref3.commit;
     commit('SET_LOADING', true);
     return _services_auth__WEBPACK_IMPORTED_MODULE_0__.default.logout().then(function () {
       commit('SET_LOADING', false);
       commit('SET_USER', null);
-      _routes__WEBPACK_IMPORTED_MODULE_1__.default.push({
-        path: '/login'
-      });
+      _routes__WEBPACK_IMPORTED_MODULE_1__.default.replace('/login');
     })["catch"](function (e) {
       commit('SET_LOADING', false);
       console.log(e);
     });
   },
-  getAuthUser: function getAuthUser(_ref2) {
-    var commit = _ref2.commit;
+  getAuthUser: function getAuthUser(_ref4) {
+    var commit = _ref4.commit;
     commit('SET_LOADING', true);
     return _services_auth__WEBPACK_IMPORTED_MODULE_0__.default.getAuthUser().then(function (response) {
       commit("SET_USER", response.data);
@@ -29675,7 +29684,7 @@ var render = function() {
               },
               [
                 _c(
-                  "base-input",
+                  "input-field",
                   {
                     attrs: { type: "text", name: "search" },
                     model: {
@@ -29727,7 +29736,7 @@ var render = function() {
               },
               [
                 _c(
-                  "base-input",
+                  "input-field",
                   {
                     attrs: { type: "text", name: "chat_name" },
                     model: {
@@ -29866,31 +29875,6 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.hasErrors,
-                      expression: "hasErrors"
-                    }
-                  ],
-                  staticClass: "form__error"
-                },
-                [
-                  _c("img", {
-                    staticClass: "error__img",
-                    attrs: { src: "/images/error_icon.svg" }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "error__text" }, [
-                    _vm._v("Warning! You did something wrong.")
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
                 { staticClass: "form__submit" },
                 [
                   _c("RoundedButton", { attrs: { type: "submit" } }, [
@@ -29966,7 +29950,7 @@ var render = function() {
           },
           [
             _c(
-              "BaseInput",
+              "input-field",
               {
                 attrs: { type: "text", name: "name", required: "true" },
                 model: {
@@ -29981,7 +29965,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c(
-              "BaseInput",
+              "input-field",
               {
                 attrs: { type: "text", name: "nickname", required: "true" },
                 model: {
@@ -29996,7 +29980,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c(
-              "BaseInput",
+              "input-field",
               {
                 attrs: { type: "email", name: "email", required: "true" },
                 model: {
@@ -30011,7 +29995,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c(
-              "BaseInput",
+              "input-field",
               {
                 attrs: { type: "password", name: "password", required: "true" },
                 model: {
@@ -30026,7 +30010,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c(
-              "BaseInput",
+              "input-field",
               {
                 attrs: {
                   type: "password",
@@ -30056,31 +30040,6 @@ var render = function() {
                     })
                   ])
                 : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.hasErrors,
-                      expression: "hasErrors"
-                    }
-                  ],
-                  staticClass: "form__error"
-                },
-                [
-                  _c("img", {
-                    staticClass: "error__img",
-                    attrs: { src: "/images/error_icon.svg" }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "error__text" }, [
-                    _vm._v("Warning! You did something wrong.")
-                  ])
-                ]
-              ),
               _vm._v(" "),
               _c(
                 "div",
