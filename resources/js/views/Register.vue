@@ -3,20 +3,17 @@
         <div slot="card">
             <div class="card__form">
                 <form action="#" method="post" @submit.prevent="register">
-                    <BaseInput type="text" name="name" v-model="form.name" required="true">Name</BaseInput>
-                    <BaseInput type="text" name="nickname" v-model="form.nickname" required="true">Nickname</BaseInput>
-                    <BaseInput type="email" name="email" v-model="form.email" required="true">Email</BaseInput>
-                    <BaseInput type="password" name="password" v-model="form.password" required="true">Password
-                    </BaseInput>
-                    <BaseInput type="password" name="password_confirmation" v-model="form.password_confirmation" required="true">Confirm password</BaseInput>
+                    <input-field type="text" name="name" v-model="form.name" required="true">Name</input-field>
+                    <input-field type="text" name="nickname" v-model="form.nickname" required="true">Nickname</input-field>
+                    <input-field type="email" name="email" v-model="form.email" required="true">Email</input-field>
+                    <input-field type="password" name="password" v-model="form.password" required="true">Password
+                    </input-field>
+                    <input-field type="password" name="password_confirmation" v-model="form.password_confirmation" required="true">Confirm password</input-field>
                     <div class="form__footer">
                         <div v-if="$store.getters['auth/loading']">
                             <img src="/images/loader.svg" alt="Loading..." height="40">
                         </div>
-                        <div class="form__error" v-show="hasErrors">
-                            <img src="/images/error_icon.svg" class="error__img">
-                            <div class="error__text">Warning! You did something wrong.</div>
-                        </div>
+                        <!--TODO: show error and remove it on typing-->
                         <div class="form__submit">
                             <RoundedButton type="submit">Submit</RoundedButton>
                         </div>

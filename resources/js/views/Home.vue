@@ -40,9 +40,9 @@
             <div class="info__inner">
                 <div class="chat__participants">
                     <form @submit.prevent="addParticipant">
-                        <base-input type="text" v-model="search" name="search">Add participant to current chat by
+                        <input-field type="text" v-model="search" name="search">Add participant to current chat by
                             nickname
-                        </base-input>
+                        </input-field>
                         <rounded-button type="submit">Add</rounded-button>
                     </form>
                 </div>
@@ -52,8 +52,8 @@
             <div class="info__inner">
                 <div class="chat__create">
                     <form @submit.prevent="createChat">
-                        <base-input type="text" v-model="chatName" name="chat_name">Enter title of a new chat:
-                        </base-input>
+                        <input-field type="text" v-model="chatName" name="chat_name">Enter title of a new chat:
+                        </input-field>
                         <rounded-button type="submit">Create chat</rounded-button>
                     </form>
                 </div>
