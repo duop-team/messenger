@@ -1961,6 +1961,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "BaseInput",
   props: {
@@ -1977,10 +1978,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     'value': {
       type: [String, Number]
-    },
-    'placeholder': {
-      type: [String, Number],
-      "default": ''
     },
     'autofocus': {
       type: Boolean
@@ -2396,7 +2393,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _services_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/auth */ "./resources/js/services/auth.js");
 //
 //
 //
@@ -2427,7 +2423,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Register",
   data: function data() {
@@ -2444,13 +2441,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     register: function register() {
-      var _this = this;
-
-      _services_auth__WEBPACK_IMPORTED_MODULE_0__.default.registerUser(this.form).then(function () {
-        return _this.$router.replace('/chats');
-      })["catch"](function (e) {
-        _this.errors = e.response.data.errors;
-      });
+      this.$store.dispatch('auth/setForm', this.form);
+      this.$store.dispatch('auth/register');
     }
   },
   computed: {
@@ -3276,7 +3268,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ndiv[data-v-eb71a80a] {\n    margin-top: 20px;\n}\ninput[data-v-eb71a80a] {\n    padding: 5px 0;\n    font-family: Sarabun, sans-serif;\n    font-style: normal;\n    font-weight: normal;\n    font-size: 16px;\n    width: 100%;\n    background-color: transparent;\n    border: 0;\n    border-bottom: 1px solid #FFFFFF;;\n    outline: 0;\n    color: #fff;\n}\ninput[type=password][data-v-eb71a80a] {\n    letter-spacing: 0.1em;\n}\nlabel[data-v-eb71a80a] {\n    font-family: Sarabun, sans-serif;\n    font-size: 16px;\n    margin-bottom: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.input[data-v-eb71a80a] {\n    position: relative;\n    margin-top: 28px;\n}\ninput[data-v-eb71a80a] {\n    padding: 5px 0;\n    font-family: Sarabun, sans-serif;\n    font-style: normal;\n    font-weight: normal;\n    font-size: 16px;\n    width: 100%;\n    background-color: transparent;\n    border: 0;\n    border-bottom: 1px solid #FFFFFF;\n    border-radius: 0;\n    outline: 0;\n    color: #fff;\n}\ninput[type=password][data-v-eb71a80a] {\n    letter-spacing: 0.1em;\n}\ninput[data-v-eb71a80a]::-moz-placeholder {\n    color: transparent;\n}\ninput[data-v-eb71a80a]:-ms-input-placeholder {\n    color: transparent;\n}\ninput[data-v-eb71a80a]::placeholder {\n    color: transparent;\n}\nspan[data-v-eb71a80a] {\n    /*content: '';*/\n    background-color: #66C8FF;\n    display: block;\n    width: 0;\n    height: 3px;\n    transition: .4s;\n    position: absolute;\n    bottom: 0;\n}\nlabel[data-v-eb71a80a] {\n    font-family: Sarabun, sans-serif;\n    font-size: 16px;\n    margin-bottom: 0;\n    position: absolute;\n    top: 15%;\n    left: 5px;\n    transition: .4s;\n}\ninput:not(:-moz-placeholder-shown) ~ label[data-v-eb71a80a] {\n    top: -18px;\n    left: 0;\n}\ninput:not(:-ms-input-placeholder) ~ label[data-v-eb71a80a] {\n    top: -18px;\n    left: 0;\n}\ninput:focus ~ label[data-v-eb71a80a],\ninput:not(:placeholder-shown) ~ label[data-v-eb71a80a] {\n    top: -18px;\n    left: 0;\n}\ninput:not(:-moz-placeholder-shown) ~ span[data-v-eb71a80a] {\n    width: 100%;\n}\ninput:not(:-ms-input-placeholder) ~ span[data-v-eb71a80a] {\n    width: 100%;\n}\ninput:focus ~ span[data-v-eb71a80a],\ninput:not(:placeholder-shown) ~ span[data-v-eb71a80a] {\n    width: 100%;\n}\ninput[data-v-eb71a80a]:-webkit-autofill,\ninput[data-v-eb71a80a]:-webkit-autofill:hover,\ninput[data-v-eb71a80a]:-webkit-autofill:focus,\ntextarea[data-v-eb71a80a]:-webkit-autofill,\ntextarea[data-v-eb71a80a]:-webkit-autofill:hover,\ntextarea[data-v-eb71a80a]:-webkit-autofill:focus,\nselect[data-v-eb71a80a]:-webkit-autofill,\nselect[data-v-eb71a80a]:-webkit-autofill:hover,\nselect[data-v-eb71a80a]:-webkit-autofill:focus {\n    background-color: #65B59E !important;\n    -webkit-box-shadow: 0 0 0 1000px #65B59E inset !important;\n    -webkit-text-fill-color: white !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29341,20 +29333,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("label", { attrs: { for: _vm.name } }, [_vm._t("default")], 2),
-    _vm._v(" "),
+  return _c("div", { staticClass: "input" }, [
     _c("input", {
       attrs: {
+        placeholder: "workaround",
         type: _vm.type,
         id: _vm.name,
         name: _vm.name,
         required: _vm.required.valueOf(),
-        autofocus: "autofocus"
+        autofocus: _vm.autofocus
       },
       domProps: { value: _vm.value },
       on: { input: _vm.updateValue }
-    })
+    }),
+    _vm._v(" "),
+    _c("label", { attrs: { for: _vm.name } }, [_vm._t("default")], 2),
+    _vm._v(" "),
+    _c("span")
   ])
 }
 var staticRenderFns = []
@@ -29950,82 +29945,93 @@ var render = function() {
           },
           [
             _c(
-              "input-field",
-              {
-                attrs: { type: "text", name: "name", required: "true" },
-                model: {
-                  value: _vm.form.name,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "name", $$v)
+              "div",
+              { staticClass: "input__fields" },
+              [
+                _c(
+                  "input-field",
+                  {
+                    attrs: { type: "text", name: "name", required: "true" },
+                    model: {
+                      value: _vm.form.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "name", $$v)
+                      },
+                      expression: "form.name"
+                    }
                   },
-                  expression: "form.name"
-                }
-              },
-              [_vm._v("Name")]
-            ),
-            _vm._v(" "),
-            _c(
-              "input-field",
-              {
-                attrs: { type: "text", name: "nickname", required: "true" },
-                model: {
-                  value: _vm.form.nickname,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "nickname", $$v)
+                  [_vm._v("Name")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "input-field",
+                  {
+                    attrs: { type: "text", name: "nickname", required: "true" },
+                    model: {
+                      value: _vm.form.nickname,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "nickname", $$v)
+                      },
+                      expression: "form.nickname"
+                    }
                   },
-                  expression: "form.nickname"
-                }
-              },
-              [_vm._v("Nickname")]
-            ),
-            _vm._v(" "),
-            _c(
-              "input-field",
-              {
-                attrs: { type: "email", name: "email", required: "true" },
-                model: {
-                  value: _vm.form.email,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "email", $$v)
+                  [_vm._v("Nickname")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "input-field",
+                  {
+                    attrs: { type: "email", name: "email", required: "true" },
+                    model: {
+                      value: _vm.form.email,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "email", $$v)
+                      },
+                      expression: "form.email"
+                    }
                   },
-                  expression: "form.email"
-                }
-              },
-              [_vm._v("Email")]
-            ),
-            _vm._v(" "),
-            _c(
-              "input-field",
-              {
-                attrs: { type: "password", name: "password", required: "true" },
-                model: {
-                  value: _vm.form.password,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "password", $$v)
+                  [_vm._v("Email")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "input-field",
+                  {
+                    attrs: {
+                      type: "password",
+                      name: "password",
+                      required: "true"
+                    },
+                    model: {
+                      value: _vm.form.password,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "password", $$v)
+                      },
+                      expression: "form.password"
+                    }
                   },
-                  expression: "form.password"
-                }
-              },
-              [_vm._v("Password\n                ")]
-            ),
-            _vm._v(" "),
-            _c(
-              "input-field",
-              {
-                attrs: {
-                  type: "password",
-                  name: "password_confirmation",
-                  required: "true"
-                },
-                model: {
-                  value: _vm.form.password_confirmation,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "password_confirmation", $$v)
+                  [_vm._v("Password\n                    ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "input-field",
+                  {
+                    attrs: {
+                      type: "password",
+                      name: "password_confirmation",
+                      required: "true"
+                    },
+                    model: {
+                      value: _vm.form.password_confirmation,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "password_confirmation", $$v)
+                      },
+                      expression: "form.password_confirmation"
+                    }
                   },
-                  expression: "form.password_confirmation"
-                }
-              },
-              [_vm._v("Confirm password")]
+                  [_vm._v("Confirm password")]
+                )
+              ],
+              1
             ),
             _vm._v(" "),
             _c("div", { staticClass: "form__footer" }, [
@@ -30052,8 +30058,7 @@ var render = function() {
                 1
               )
             ])
-          ],
-          1
+          ]
         )
       ])
     ]),
@@ -30063,7 +30068,7 @@ var render = function() {
       { staticClass: "links", attrs: { slot: "content" }, slot: "content" },
       [
         _c("div", { staticClass: "links__text" }, [
-          _vm._v("Already have the account?")
+          _vm._v("Already have account?")
         ]),
         _vm._v(" "),
         _c(
