@@ -3,7 +3,7 @@
         <label :for="name">
             <slot></slot>
         </label>
-        <input :type="type" :id="name" :name="name" :value="value" :required="required.valueOf()" @input="updateValue">
+        <input :type="type" :id="name" :name="name" :value="value" :required="required.valueOf()" autofocus="autofocus" @input="updateValue">
     </div>
 </template>
 
@@ -28,6 +28,9 @@ export default {
         'placeholder': {
             type: [String, Number],
             default: ''
+        },
+        'autofocus': {
+            type: Boolean
         }
     },
     methods: {

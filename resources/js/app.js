@@ -11,7 +11,7 @@ Vue.use(VueRouter);
 
 /* Registering custom components */
 Vue.component('RoundedButton', require('./components/RoundedButton').default);
-Vue.component('BaseInput', require('./components/BaseInput').default);
+Vue.component('InputField', require('./components/InputField').default);
 Vue.component('Card', require('./components/Card').default);
 Vue.component('ServiceLayout', require('./components/ServiceLayout').default);
 Vue.component('MessageForm', require('./components/MessageForm').default);

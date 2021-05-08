@@ -5,10 +5,9 @@
                 <p>Please, enter your country, phone number or whatever they want from you</p>
             </div>
             <div class="card__form">
-                <form action="#" method="post" @submit.prevent="login">
-                    <BaseInput type="email" name="email" v-model="form.email" required="true">Email</BaseInput>
-                    <BaseInput type="password" name="password" v-model="form.password" required="true">Password
-                    </BaseInput>
+                <form method="post" @submit.prevent="login" autocomplete="off" autofocus>
+                    <input-field type="email" name="email" v-model="form.email" required="true" autofocus>Email</input-field>
+                    <input-field type="password" name="password" v-model="form.password" required="true">Password</input-field>
                     <div class="form__footer">
                         <div v-if="$store.getters['auth/loading']">
                             <img src="/images/loader.svg" alt="Loading..." height="40">
