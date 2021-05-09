@@ -10,9 +10,7 @@
                     </input-field>
                     <input-field type="password" name="password_confirmation" v-model="form.password_confirmation" required="true">Confirm password</input-field>
                     <div class="form__footer">
-                        <div v-if="$store.getters['auth/loading']">
-                            <img src="/images/loader.svg" alt="Loading..." height="40">
-                        </div>
+                        <loader v-if="$store.getters['auth/loading']"></loader>
                         <!--TODO: show error and remove it on typing-->
                         <div class="form__submit">
                             <RoundedButton type="submit">Submit</RoundedButton>
@@ -21,9 +19,9 @@
                 </form>
             </div>
         </div>
-        <div slot="content" class="links">
-            <div class="links__text">Already have account?</div>
-            <router-link to="/login" class="links__link" replace>Sign in</router-link>
+        <div slot="content" class="content">
+            <div class="content__text">Already have account?</div>
+            <router-link to="/login" class="content__link" replace>Sign in</router-link>
         </div>
     </service-layout>
 </template>
@@ -58,5 +56,7 @@ export default {
 </script>
 
 <style scoped>
-
+.content {
+    margin-top: 11px;
+}
 </style>

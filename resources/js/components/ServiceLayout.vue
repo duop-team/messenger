@@ -4,7 +4,7 @@
             <h1 class="header__title">Messenger</h1>
         </section>
         <section class="content">
-            <card :title="cardTitle">
+            <card class="card" :title="cardTitle">
                 <slot name="card"></slot>
             </card>
             <div class="content__additional">
@@ -46,7 +46,11 @@ export default {
 }
 
 .content {
-    padding-bottom: 5px;
+    padding-bottom: 15px;
+
+    .card {
+        margin: -80px auto 0;
+    }
 }
 
 </style>
