@@ -26,7 +26,6 @@ use Illuminate\Support\Facades\Route;
 
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
-
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user/chats', [ChatController::class, 'index']);
 
@@ -47,6 +46,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/chats/{id}/messages/send', [MessageController::class, 'store']);
 
     Route::get('/chats/{id}/messages', [MessageController::class, 'index']);
+
+    Route::patch('/chats/{id}/messages/{mid}/edit', [MessageController::class, 'update']);
 
     Route::delete('/chats/{id}/delete', [ChatController::class, 'destroy']);
 
