@@ -1,8 +1,8 @@
 <template>
     <ul>
         <li>
-            <chat-item v-for="chat in source" :key="chat.id"
-                       :class="['chat__item', ($store.getters['chats/currentChat'].id === chat.id) ? 'is-active' : '']"
+            <chat-item v-for="chat in $store.getters['chats/chatList']" :key="chat.id"
+                       :class="[($store.getters['chats/currentChat'].id === chat.id) ? 'is-active' : '']"
                        :title="chat.title"
                        @click=""></chat-item>
         </li>
@@ -12,11 +12,8 @@
 <script>
 export default {
     name: "ChatList",
-    props: {
-        'source': {
-            type: Array,
-            required: true
-        }
+    mounted() {
+        this.$store.dispatch('chats/getChatList');
     }
 }
 </script>
@@ -26,5 +23,7 @@ ul {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 </style>
