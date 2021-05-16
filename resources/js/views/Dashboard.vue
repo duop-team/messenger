@@ -8,14 +8,20 @@
             </div>
         </aside>
         <main class="dashboard__content">
-            <chat-content></chat-content>
+            <loader size="100" v-if="$store.getters['chats/loading']"></loader>
+            <chat-content v-else-if="isSelectedChat"></chat-content>
         </main>
     </div>
 </template>
 
 <script>
 export default {
-    name: "Dashboard"
+    name: "Dashboard",
+    computed: {
+        isSelectedChat() {
+            return Object.entries(this.$store.getters['chats/currentChat']).length > 0;
+        }
+    }
 }
 </script>
 
