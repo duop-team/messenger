@@ -9,7 +9,21 @@
 
 <script>
 export default {
-    name: "Messages"
+    name: "Messages",
+    updated() {
+        this.scrollBottom();
+    },
+    mounted() {
+        this.scrollBottom();
+    },
+    methods: {
+        scrollBottom() {
+            let obj = document.querySelector('.chat__messages');
+            if (obj) {
+                obj.scrollTop = obj.scrollHeight;
+            }
+        }
+    }
 }
 </script>
 
