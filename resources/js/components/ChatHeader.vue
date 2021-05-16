@@ -1,7 +1,9 @@
 <template>
-    <div class="header__inner">
-        <div class="header__title" @click="showInfo">{{$store.getters["chats/currentChat"].title}}</div>
-        <div class="header__subtitle">There are many members</div>
+    <div class="chat__header">
+        <div class="header__inner">
+            <div class="header__title" @click="showInfo">{{ $store.getters["chats/currentChat"].title }}</div>
+            <div class="header__subtitle">There are many members</div>
+        </div>
     </div>
 </template>
 
@@ -10,19 +12,25 @@ export default {
     name: "ChatHeader",
     methods: {
         showInfo() {
-            this.$store.dispatch('chats/toggleInfo');
-        },
+            this.$store.dispatch('chats/toggleInfoBar');
+        }
     }
 }
 </script>
 
 <style scoped lang="scss">
-.header {
+.chat__header {
+    margin-left: -15px;
     background: #559E89;
     border: 1px solid #5B8377;
     box-sizing: border-box;
     border-radius: 0px 0px 15px 15px;
+    min-height: 80px;
+    color: #fff;
+    font-family: Lexend Deca;
+}
 
+.header {
     &__inner {
         display: flex;
         flex-direction: column;
