@@ -1,3 +1,5 @@
+import chatService from "../../services/chat";
+
 export const namespaced = true;
 
 export const state = {
@@ -6,7 +8,11 @@ export const state = {
     chatInfo: false,
     messageList: [],
     chatList: [],
-    createChat: false
+    createChat: false,
+    createChatForm: {
+        title: '',
+        /* TODO: another fields such as participants, description, etc */
+    }
 }
 
 export const mutations = {
@@ -40,6 +46,9 @@ export const mutations = {
         if (state.chatInfo && state.createChat) {
             state.chatInfo = false;
         }
+    },
+    SET_NEW_CHAT(state, data) {
+        state.createChatForm = data;
     }
 }
 
@@ -61,11 +70,14 @@ export const getters = {
     },
     isCreatingChat(state) {
         return state.createChat;
+    },
+    newChatForm(state) {
+        return state.createChatForm;
     }
 }
 
 export const actions = {
-    toggleInfo({commit}) {
+    toggleInfoBar({commit}) {
         commit('SET_CHAT_INFO', !this.getters["chats/infoActive"]);
     },
     toggleCreateChat({commit}) {
@@ -76,5 +88,63 @@ export const actions = {
     },
     clearChatList({commit}) {
         commit('SET_CHAT_LIST', []);
-    }
+    },
+    getChatList({commit, dispatch}) {
+        commit('SET_LOADING', true);
+        dispatch('clearChatList');
+
+        chatService.listChats().then(r => {
+            commit('SET_LOADING', false);
+            commit('SET_CHAT_LIST', r.data);
+        }).catch(() => {
+            commit('SET_LOADING', false);
+            /* TODO: There must be error handler */
+        });
+    },
+    selectChat({commit, getters, dispatch}, chat) {
+        Echo.leave(`chat.${getters['currentChat'].id}`);
+
+        commit('SET_CHAT', chat);
+
+        dispatch('listenChatMessages', chat.id);
+        dispatch('listMessages');
+    },
+    listenChatMessages({commit}, id) {
+        Echo.private(`chat.${id}`)
+            .listen('MessageSent', e => {
+                commit('chats/PUSH_MESSAGE_LIST', e.message);
+            });
+    },
+    listMessages({getters, commit, dispatch}) {
+        commit('SET_LOADING', true);
+        chatService.listMessages(getters['currentChat'].id).then(r => {
+            commit('SET_LOADING', false);
+            dispatch('clearMessageList');
+            commit('SET_MESSAGE_LIST', r.data.data); /* FIXME: fix typo on backend */
+        }).catch(() => {
+            commit('SET_LOADING', false);
+            /* TODO: there must be error handler */
+        });
+    },
+    createChat({getters, commit, dispatch}) {
+        commit('SET_LOADING', true);
+        chatService.createChat(getters['newChatForm']).then(r => {
+            commit('SET_LOADING', false);
+            alert(`Chat ${r.data.title} is created`);
+            dispatch('getChatList');
+            /* TODO: prevent reloading of full list */
+            dispatch('toggleCreateChat');
+        }).catch(() => {
+            commit('SET_LOADING', false);
+            /* TODO: there must be error handler */
+        });
+    },
+    addParticipant({getters}, nickname) {
+        chatService.findUser({nickname: nickname}).then(r => {
+            chatService.addParticipant(getters['currentChat'].id, {user_id: r.data.id})
+                .then(res => alert('Participant added'))
+                .catch(() => alert('That user already a participant'))
+        }).catch(() => alert('This user doesn\'t exists'))
+        /* TODO: Error handlers!!! */
+    },
 }

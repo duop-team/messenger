@@ -74,61 +74,12 @@ export default {
         }
     },
     methods: {
-        createChat() {
-            chatService.createChat({title: this.chatName}).then(r => {
-                alert(`Chat ${r.data.title} is created`);
-                this.chatName = '';
-                this.listChats();
-                this.showCreateChat();
-            }).catch(error => console.log(error));
-        },
-        addParticipant() {
-            chatService.findUser({nickname: this.search}).then(r => {
-                chatService.addParticipant(this.$store.getters['chats/currentChat'].id, {user_id: r.data.id})
-                    .then(res => alert('Participant added')).catch(() => alert('That user already a participant'))
-            }).catch(e => alert('This user doesn\'t exists'))
-        },
-        selectChat(chat) {
-            Echo.leave(`chat.${this.$store.getters['chats/currentChat'].id}`);
-
-            this.$store.commit('chats/SET_CHAT', chat);
-
-            this.listenChat(chat.id);
-
-            this.listMessages();
-        },
-        showCreateChat() {
-            this.$store.dispatch('chats/toggleCreateChat');
-        },
-        logout() {
-            this.$store.dispatch('auth/logout');
-        },
-        // this shit just for testing
-        listMessages() {
-            chatService.listMessages(this.$store.getters['chats/currentChat'].id).then(r => {
-                this.$store.dispatch('chats/clearMessageList');
-                this.$store.commit('chats/SET_MESSAGE_LIST', r.data.data);
-            });
-        },
-        listChats() {
-            chatService.listChats().then(r => {
-                this.$store.dispatch('chats/clearChatList');
-                this.$store.commit('chats/SET_CHAT_LIST', r.data);
-            });
-        },
         scrollBottom() {
             let obj = document.querySelector('.chat');
             if (obj) {
                 obj.scrollTop = obj.scrollHeight;
             }
         },
-        listenChat(id) {
-            Echo.private(`chat.${id}`)
-                .listen('MessageSent', e => {
-                    console.log(e);
-                    this.$store.commit('chats/PUSH_MESSAGE_LIST', e.message);
-                });
-        }
     },
     created() {
         this.listChats();
