@@ -11,7 +11,7 @@ class Media extends Model
 
     protected $table = 'medias';
 
-    protected $fillable = ['image'];
+    protected $fillable = ['content'];
 
     public function users()
     {
