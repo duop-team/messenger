@@ -14,7 +14,7 @@ class MediaController extends Controller
     public function uploadImage(Request $request)
     {
         $currentMedia = Media::create([
-            'content' => asset(Storage::putFile('/public/media', $request->image)),
+            'content' => Storage::putFile('/public/media', $request->image),
         ]);
         return $currentMedia->id;
     }
@@ -31,11 +31,13 @@ class MediaController extends Controller
 
     public function userUnloadImage($user_id)
     {
-        return User::findOrFail($user_id)->media;
+        $userImage =  User::findOrFail($user_id)->media;
+        return url(Storage::url($userImage->content));
     }
 
     public function chatUnloadImage($user_id)
     {
-        return Chat::findOrFail($user_id->media);
+        $chatImage = Chat::findOrFail($user_id)->media;
+        return url(Storage::url($chatImage->content));
     }
 }
