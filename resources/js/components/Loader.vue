@@ -1,18 +1,24 @@
 <template>
-    <div>
+    <div :style="{width: size + 'px', height: size + 'px'}">
     </div>
 </template>
 
 <script>
 export default {
-name: "Loader"
+    name: "Loader",
+    props: {
+        'size': {
+            type: Number,
+            default: 40
+        }
+    }
 }
 </script>
 
 <style scoped>
 div {
     content: url(../../img/loader.svg);
-    height: 40px;
-    width: 40px;
+    /*height: 40px;*/
+    /*width: 40px;*/
 }
 </style>
