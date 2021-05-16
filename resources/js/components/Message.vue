@@ -1,7 +1,8 @@
 <template>
-    <div class="message__root">
+    <div class="chat__message">
         <div class="sender__photo">
-            <img src="http://placehold.jp/35x35.png" alt="Awesome avatar">
+            <!--TODO: replace placeholder with a real photo-->
+            <img src="https://via.placeholder.com/35" alt="Awesome avatar">
         </div>
         <div class="message__content">
             <div class="message__sender">@{{sender}}</div>
@@ -20,7 +21,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.message__root {
+.chat__message {
     display: flex;
     flex-flow: row nowrap;
     font-family: Sarabun, sans-serif;
@@ -36,6 +37,7 @@ export default {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-end;
+    max-width: 35px;
 
     img {
         margin-top: auto;
