@@ -3,8 +3,8 @@
         <li>
             <chat-item v-for="chat in $store.getters['chats/chatList']" :key="chat.id"
                        :class="[($store.getters['chats/currentChat'].id === chat.id) ? 'is-active' : '']"
-                       :title="chat.title"
-                       @click=""></chat-item>
+                       :title="chat.title" photo_url="https://via.placeholder.com/60"
+                       @click="$store.dispatch('chats/selectChat', chat)"></chat-item>
         </li>
     </ul>
 </template>
