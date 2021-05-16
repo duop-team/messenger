@@ -78,10 +78,10 @@ export const getters = {
 
 export const actions = {
     toggleInfoBar({commit}) {
-        commit('SET_CHAT_INFO', !this.getters["chats/infoActive"]);
+        commit('SET_CHAT_INFO', !this.getters["infoActive"]);
     },
     toggleCreateChat({commit}) {
-        commit('SET_CREATE_CHAT', !this.getters["chats/isCreatingChat"]);
+        commit('SET_CREATE_CHAT', !this.getters["isCreatingChat"]);
     },
     clearMessageList({commit}) {
         commit('SET_MESSAGE_LIST', []);
@@ -112,7 +112,7 @@ export const actions = {
     listenChatMessages({commit}, id) {
         Echo.private(`chat.${id}`)
             .listen('MessageSent', e => {
-                commit('chats/PUSH_MESSAGE_LIST', e.message);
+                commit('PUSH_MESSAGE_LIST', e.message);
             });
     },
     listMessages({getters, commit, dispatch}) {
