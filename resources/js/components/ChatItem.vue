@@ -31,10 +31,20 @@ export default {
     user-select: none;
     cursor: pointer;
     font-family: Sarabun, sans-serif;
+    background-color: #D4D4D4;
+
+    &:nth-child(2n) {
+        background-color: #e2e2e2;
+    }
+
+    &.is-active {
+        background-color: #AAC1DF;
+    }
 }
 
 .chat__photo {
     margin-right: 10px;
+    max-width: 60px;
 
     img {
         border-radius: 50%;
