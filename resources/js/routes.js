@@ -3,6 +3,8 @@ import store from './store/index';
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Home from "./views/Home";
+import Dashboard from "./views/Dashboard";
+
 
 const router = new VueRouter({
     mode: 'history',
@@ -24,7 +26,7 @@ const router = new VueRouter({
             meta: {
                 requiresAuth: true
             },
-            component: Home
+            component: Dashboard
         },
         {
             path: '*',
