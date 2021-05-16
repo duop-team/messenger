@@ -21,6 +21,7 @@ Vue.component('Message', require('./components/Message').default);
 Vue.component('Loader', require('./components/Loader').default);
 Vue.component('ChatList', require('./components/ChatList').default);
 Vue.component('ChatContent', require('./components/ChatContent').default);
+Vue.component('Messages', require('./components/Messages').default);
 
 const app = new Vue({
     el: '#app',
