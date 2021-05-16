@@ -8,7 +8,6 @@ export default {
     name: "Loader",
     props: {
         'size': {
-            type: Number,
             default: 40
         }
     }
