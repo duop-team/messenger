@@ -1,13 +1,17 @@
 <template>
     <div class="chat__message">
-        <div class="sender__photo">
-            <!--TODO: replace placeholder with a real photo-->
-            <img src="https://via.placeholder.com/35" alt="Awesome avatar">
-        </div>
-        <div class="message__content">
-            <div class="message__sender">@{{sender}}</div>
-            <div class="message__text">
-                <slot></slot>
+        <div class="message__inner">
+            <div class="sender__photo">
+                <!--TODO: replace placeholder with a real photo-->
+                <img src="https://via.placeholder.com/37" alt="Awesome avatar">
+            </div>
+            <div class="message__content">
+                <div class="message__sender">@{{sender}}</div>
+                <div class="message__text">
+                    <p>
+                        <slot></slot>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -22,12 +26,15 @@ export default {
 
 <style scoped lang="scss">
 .chat__message {
+    width: 100%;
+}
+.message__inner {
     display: flex;
-    flex-flow: row nowrap;
     font-family: Sarabun, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
+    max-width: 65%;
 }
 
 .sender__photo {
@@ -37,7 +44,7 @@ export default {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-end;
-    max-width: 35px;
+    max-width: 37px;
 
     img {
         margin-top: auto;
@@ -50,14 +57,24 @@ export default {
     background-color: #C8D1E3;
     border-radius: 0px 3px 3px 0px;
     padding: 10px;
+    overflow-wrap: break-word;
+    max-width: calc(100% - 50px);
+    word-break: break-all;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
     .message__sender {
         color: #D78E53;
     }
 
     .message__text {
-        margin-top: 10px;
         color: #000;
+    }
+
+    p {
+        margin: 0;
     }
 }
 </style>

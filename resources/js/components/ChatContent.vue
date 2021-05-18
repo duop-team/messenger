@@ -14,10 +14,9 @@ export default {
 
 <style scoped lang="scss">
 .chat__content {
-    width: 100%;
     height: 100%;
+    flex: 1;
     display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
+    flex-direction: column;
 }
 </style>

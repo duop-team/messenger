@@ -29,6 +29,7 @@ export default {
 .dashboard {
     display: flex;
     flex-flow: row nowrap;
+    align-items: stretch;
 
     max-width: 100vw;
     max-height: 100vh;
@@ -43,8 +44,9 @@ export default {
 .dashboard__sidebar {
     display: flex;
     flex-flow: row nowrap;
-    width: 100%;
-    max-width: 480px;
+    align-items: stretch;
+    max-width: 31%;
+    flex: 1 0 auto;
     background-color: #64A793;
 
     & > * {
@@ -66,6 +68,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    flex: 1 1 auto;
+    max-width: 100%;
 }
 </style>

@@ -1,9 +1,12 @@
 <template>
     <div class="chat__messages">
-        <message v-for="m in $store.getters['chats/messageList']"
-                 :key="m.id" :sender="m.sender.nickname">
-            {{ m.text }}
-        </message>
+        <ul>
+            <li v-for="m in $store.getters['chats/messageList']">
+                <message :key="m.id" :sender="m.sender.nickname">{{ m.text }}
+                </message>
+            </li>
+        </ul>
+
     </div>
 </template>
 
@@ -29,9 +32,14 @@ export default {
 
 <style scoped lang="scss">
 .chat__messages {
-    height: 100%;
     overflow-y: scroll;
     padding: 10px;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
