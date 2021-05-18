@@ -34,6 +34,7 @@ export default {
 .chat__messages {
     overflow-y: scroll;
     padding: 10px;
+    flex: 1 1 auto;
 }
 
 ul {
