@@ -8,6 +8,7 @@ use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class MessageController extends Controller
 {
@@ -32,5 +33,20 @@ class MessageController extends Controller
     public function destroy(Request $request)
     {
         return Message::findOrFail($request->message_id)->delete();
+    }
+
+    public function update(Request $request, $id, $mid)
+    {
+        $validator = Validator::make($request->all(), [
+            'text' => ['required', 'string', 'min:1']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(["message" => $validator->errors()->all()], 422);
+        }
+
+        return Message::findOrFail($mid)->update([
+            'text' => $request->text
+        ]);
     }
 }

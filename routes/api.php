@@ -26,7 +26,6 @@ use Illuminate\Support\Facades\Route;
 
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
-
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user/chats', [ChatController::class, 'index']);
 
@@ -51,6 +50,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/chats/{chat_id}/media/create', [MediaController::class, 'chatUploadImage']);
 
     Route::get('/chats/{chats_id}/media', [MediaController::class, 'chatUnloadImage']);
+
+    Route::patch('/chats/{id}/messages/{mid}/edit', [MessageController::class, 'update']);
 
     Route::delete('/chats/{id}/delete', [ChatController::class, 'destroy']);
 
