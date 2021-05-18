@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +47,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/chats/{id}/messages', [MessageController::class, 'index']);
 
+    Route::post('/chats/{chat_id}/media/create', [MediaController::class, 'chatUploadImage']);
+
+    Route::get('/chats/{chats_id}/media', [MediaController::class, 'chatUnloadImage']);
+
     Route::patch('/chats/{id}/messages/{mid}/edit', [MessageController::class, 'update']);
 
     Route::delete('/chats/{id}/delete', [ChatController::class, 'destroy']);
@@ -54,4 +58,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/chats/{id}', [ChatController::class, 'show']);
 
     Route::post('/chats/create', [ChatController::class, 'store']);
+
+    Route::post('/users/{user_id}/media/create', [MediaController::class, 'userUploadImage']);
+
+    Route::get('/users/{user_id}/media', [MediaController::class, 'userUnloadImage']);
 });
