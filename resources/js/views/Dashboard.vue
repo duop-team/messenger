@@ -2,6 +2,9 @@
     <div class="dashboard">
         <aside class="dashboard__sidebar">
             <div class="sidebar__menu">
+                <sidebar-button icon="profile">My profile</sidebar-button>
+                <sidebar-button icon="settings">Settings</sidebar-button>
+                <sidebar-button icon="create_chat">Create chat</sidebar-button>
             </div>
             <div class="sidebar__list">
                 <chat-list></chat-list>
@@ -20,6 +23,11 @@ export default {
     computed: {
         isSelectedChat() {
             return Object.entries(this.$store.getters['chats/currentChat']).length > 0;
+        }
+    },
+    methods: {
+        hello() {
+            alert("Hello world")
         }
     }
 }
@@ -54,8 +62,10 @@ export default {
     }
 
     .sidebar__menu {
-        width: 80px;
+        width: 100%;
+        max-width: 80px;
         background-color: #63B69D;
+        padding-top: 7px;
     }
 
     .sidebar__list {

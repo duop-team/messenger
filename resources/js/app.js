@@ -24,6 +24,7 @@ Vue.component('Loader', require('./components/Loader').default);
 Vue.component('ChatList', require('./components/ChatList').default);
 Vue.component('ChatContent', require('./components/ChatContent').default);
 Vue.component('Messages', require('./components/Messages').default);
+Vue.component('SidebarButton', require('./components/SidebarButton').default);
 
 const app = new Vue({
     el: '#app',
