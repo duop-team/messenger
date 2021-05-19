@@ -3,7 +3,7 @@
         <div class="message__inner">
             <div class="sender__photo">
                 <!--TODO: replace placeholder with a real photo-->
-                <img src="https://via.placeholder.com/37" alt="Awesome avatar">
+                <img src="https://via.placeholder.com/60" alt="Awesome avatar">
             </div>
             <div class="message__content">
                 <div class="message__sender">@{{sender}}</div>
@@ -44,12 +44,12 @@ export default {
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-end;
-    max-width: 37px;
 
     img {
         margin-top: auto;
         margin-bottom: 0;
         border-radius: 50%;
+        width: 60px;
     }
 }
 
