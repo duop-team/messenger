@@ -5,9 +5,11 @@ import VueRouter from 'vue-router';
 import router from './routes';
 import vuex from 'vuex';
 import store from './store'
+import SvgVue from 'svg-vue';
 
 Vue.use(vuex);
 Vue.use(VueRouter);
+Vue.use(SvgVue);
 
 /* Registering custom components */
 Vue.component('RoundedButton', require('./components/RoundedButton').default);
