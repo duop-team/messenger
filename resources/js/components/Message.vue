@@ -49,7 +49,7 @@ export default {
         margin-top: auto;
         margin-bottom: 0;
         border-radius: 50%;
-        width: 60px;
+        width: 45px;
     }
 }
 

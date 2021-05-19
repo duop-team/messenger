@@ -7,6 +7,9 @@
                 <sidebar-button icon="create_chat">Create chat</sidebar-button>
             </div>
             <div class="sidebar__list">
+                <div class="sidebar__search">
+                    <search-field v-model="query" :icon-enabled="true"></search-field>
+                </div>
                 <chat-list></chat-list>
             </div>
         </aside>
@@ -25,9 +28,9 @@ export default {
             return Object.entries(this.$store.getters['chats/currentChat']).length > 0;
         }
     },
-    methods: {
-        hello() {
-            alert("Hello world")
+    data() {
+        return {
+            query: '',
         }
     }
 }
@@ -53,7 +56,7 @@ export default {
     display: flex;
     flex-flow: row nowrap;
     align-items: stretch;
-    max-width: 31%;
+    max-width: 480px;
     flex: 1 0 auto;
     background-color: #64A793;
 
@@ -68,8 +71,16 @@ export default {
         padding-top: 7px;
     }
 
+    .sidebar__search {
+        padding: 22px 40px 22px 25px;
+
+        & > * {
+            height: 36px;
+        }
+    }
+
     .sidebar__list {
-        width: 100%;
+        width: 480px;
     }
 }
 
