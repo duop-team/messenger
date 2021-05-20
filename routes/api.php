@@ -27,39 +27,39 @@ use Illuminate\Support\Facades\Route;
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/users', [UserController::class, 'index']);
+//    Route::get('/users', [UserController::class, 'index']);
 
-    Route::get('/users/{user_id}', [UserController::class, 'show']);
+    Route::post('/user/search', [UserController::class, 'search']);
 
-    Route::post('/users/search', [UserController::class, 'search']);  // ????
+    Route::get('/user/chats', [ChatController::class, 'index']);
 
-    Route::get('/users/chats', [ChatController::class, 'index']);
+    Route::get('/user/{user_id}', [UserController::class, 'show']);
 
-    Route::get('/chats/{chat_id}', [ChatController::class, 'show']);
+    Route::post('/user/{user_id}/media', [MediaController::class, 'userUploadImage']);
+
+    Route::get('/user/{user_id}/media', [MediaController::class, 'userUnloadImage']);
 
     Route::post('/chats', [ChatController::class, 'store']);
 
-    Route::delete('/chats/{chat_id}', [ChatController::class, 'destroy']);
+    Route::get('/chat/{chat_id}', [ChatController::class, 'show']);
 
-    Route::get('/chats/{chat_id}/participants', [ParticipantController::class, 'index']);
+    Route::delete('/chat/{chat_id}', [ChatController::class, 'destroy']);
 
-    Route::post('/chats/{chat_id}/participants', [ParticipantController::class, 'store']); // ????
+    Route::get('/chat/{chat_id}/participants', [ParticipantController::class, 'index']);
 
-    Route::post('/chats/{chat_id}/participants/{user_id}', [ParticipantController::class, 'destroy']);
+    Route::post('/chat/{chat_id}/participants', [ParticipantController::class, 'store']);
 
-    Route::delete('/chats/messages/{messages_id}', [MessageController::class, 'destroy']); // ????
+    Route::post('/chat/{chat_id}/messages', [MessageController::class, 'store']);
 
-    Route::post('/chats/{chat_id}/messages', [MessageController::class, 'store']);
+    Route::get('/chat/{chat_id}/messages', [MessageController::class, 'index']);
 
-    Route::get('/chats/{chat_id}/messages', [MessageController::class, 'index']);
+    Route::get('/chat/{chats_id}/media', [MediaController::class, 'chatUnloadImage']);
 
-    Route::patch('/chats/messages/{message_id}', [MessageController::class, 'update']);
+    Route::post('/chat/{chat_id}/media', [MediaController::class, 'chatUploadImage']);
 
-    Route::post('/chats/{chat_id}/media', [MediaController::class, 'chatUploadImage']);
+    Route::delete('/chat/{chat_id}/participant/{user_id}', [ParticipantController::class, 'destroy']);
 
-    Route::get('/chats/{chats_id}/media', [MediaController::class, 'chatUnloadImage']);
+    Route::patch('/message/{message_id}', [MessageController::class, 'update']);
 
-    Route::post('/users/{user_id}/media', [MediaController::class, 'userUploadImage']);
-
-    Route::get('/users/{user_id}/media', [MediaController::class, 'userUnloadImage']);
+    Route::delete('/message/{messages_id}', [MessageController::class, 'destroy']);
 });

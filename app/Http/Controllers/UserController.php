@@ -8,15 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        if (Auth::check()) {
-            $id = Auth::id();
-            return User::findOrFail($id);
-        } else {
-            return null;
-        }
-    }
+//    public function index()
+//    {
+//        if (Auth::check()) {
+//            $id = Auth::id();
+//            return User::findOrFail($id);
+//        } else {
+//            return null;
+//        }
+//    }
 
     public function show($user_id)
     {
