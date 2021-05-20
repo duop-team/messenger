@@ -69,4 +69,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class);
     }
+
+    public function sms_codes()
+    {
+        return $this->hasOne(SmsCode::class);
+    }
 }
