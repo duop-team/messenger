@@ -28,6 +28,14 @@ class ChatController extends Controller
             'user_id' => Auth::id(),
             'access_rule_id' => null
         ]);
+        if ($request->has('participants')) {
+           foreach ($request->participants as $participant) {
+               $chat->participants()->create([
+                   'user_id' => User::where('nickname', $participant)->firstOrFail()->id,
+                   'access_rule_id' => null
+               ]);
+           }
+        }
 
         return $chat;
     }
