@@ -56,6 +56,19 @@ export const actions = {
                 // this.errors = e.response.data.errors;
             });
     },
+    register({commit, getters}) {
+        commit('SET_LOADING', true);
+        authService.registerUser(getters['formData'])
+            .then(() => {
+                commit('SET_LOADING', false);
+                commit('SET_FORM', {});
+                router.replace('/chats')
+            })
+            .catch(e => {
+                commit('SET_LOADING', false);
+                // this.errors = e.response.data.errors
+            })
+    },
     logout({commit}) {
         commit('SET_LOADING', true);
         return authService.logout()
@@ -66,7 +79,7 @@ export const actions = {
             })
             .catch(e => {
                 commit('SET_LOADING', false);
-                console.log(e)
+                // console.log(e)
             });
     }
     ,
@@ -79,7 +92,7 @@ export const actions = {
             })
             .catch(error => {
                 commit('SET_LOADING', false);
-                console.log(error)
+                // console.log(error)
             });
 
     }
