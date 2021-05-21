@@ -18,6 +18,7 @@ class CreateSmsCodesTable extends Migration
             $table->unsignedTinyInteger('code');
             $table->timestamp('created_at');
             $table->timestamp('valid_time');
+            $table->timestamp('timeout');
             $table->foreign('id')->references('id')->on('users');
         });
     }
