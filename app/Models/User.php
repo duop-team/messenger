@@ -73,6 +73,6 @@ class User extends Authenticatable
 
     public function sms_codes()
     {
-        return $this->hasOne(SmsCode::class);
+        return $this->hasOne(SmsCode::class, 'id');
     }
 }
