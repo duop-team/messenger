@@ -11,6 +11,8 @@ class Media extends Model
 
     protected $table = 'medias';
 
+    protected $fillable = ['content'];
+
     public function users()
     {
         return $this->hasMany(User::class);

@@ -13,7 +13,6 @@ class ChatController extends Controller
 {
     public function index()
     {
-//        return Auth::user()->chats;
         $participant = Participant::select('chat_id')->where('user_id', Auth::id());
         return Chat::whereIn('id', $participant)->get();
     }
@@ -29,17 +28,25 @@ class ChatController extends Controller
             'user_id' => Auth::id(),
             'access_rule_id' => null
         ]);
+        if ($request->has('participants')) {
+           foreach ($request->participants as $participant) {
+               $chat->participants()->create([
+                   'user_id' => User::where('nickname', $participant)->firstOrFail()->id,
+                   'access_rule_id' => null
+               ]);
+           }
+        }
 
         return $chat;
     }
 
-    public function show($id)
+    public function show($chat_id)
     {
-        return Chat::findOrFail($id);
+        return Chat::findOrFail($chat_id);
     }
 
-    public function destroy($id)
+    public function destroy($chat_id)
     {
-        return Chat::findOrFail($id)->delete();
+        return Chat::findOrFail($chat_id)->delete();
     }
 }
