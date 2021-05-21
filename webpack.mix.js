@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+require('laravel-mix-svg-vue');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,6 +12,16 @@ const mix = require('laravel-mix');
  |
  */
 
+
 mix.js('resources/js/app.js', 'public/js')
     .vue()
+    .svgVue({
+        svgPath: 'resources/img/icons',
+        extract: false,
+        svgoSettings: [
+            {removeTitle: true},
+            {removeViewBox: false},
+            {removeDimensions: true}
+        ]
+    })
     .sass('resources/sass/app.scss', 'public/css');

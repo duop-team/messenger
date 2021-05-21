@@ -4,6 +4,7 @@ import router from "../../routes";
 export const namespaced = true;
 
 export const state = {
+    form: {},
     user: null,
     loading: false
 }
@@ -14,6 +15,9 @@ export const mutations = {
     },
     SET_LOADING(state, loading) {
         state.loading = loading;
+    },
+    SET_FORM(state, data) {
+        state.form = data;
     }
 }
 
@@ -29,17 +33,36 @@ export const getters = {
     ,
     loading(state) {
         return state.loading;
+    },
+    formData(state) {
+        return state.form;
     }
 }
 
 export const actions = {
+    setForm({commit}, payload) {
+        commit('SET_FORM', payload);
+    },
+    login({commit, getters}) {
+        commit('SET_LOADING', true);
+        authService.login(getters['formData'])
+            .then(() => {
+                commit('SET_LOADING', false);
+                commit('SET_FORM', {});
+                router.replace('/chats');
+            })
+            .catch(e => {
+                commit('SET_LOADING', false);
+                // this.errors = e.response.data.errors;
+            });
+    },
     logout({commit}) {
         commit('SET_LOADING', true);
         return authService.logout()
             .then(() => {
                 commit('SET_LOADING', false);
                 commit('SET_USER', null);
-                router.push({path: '/login'});
+                router.replace('/login');
             })
             .catch(e => {
                 commit('SET_LOADING', false);

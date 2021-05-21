@@ -5,18 +5,14 @@
                 <p>Please, enter your country, phone number or whatever they want from you</p>
             </div>
             <div class="card__form">
-                <form action="#" method="post" @submit.prevent="login">
-                    <BaseInput type="email" name="email" v-model="form.email" required="true">Email</BaseInput>
-                    <BaseInput type="password" name="password" v-model="form.password" required="true">Password
-                    </BaseInput>
+                <form method="post" @submit.prevent="login">
+                    <input-field type="email" name="email" v-model="form.email" required="true" autofocus>Email
+                    </input-field>
+                    <input-field type="password" name="password" v-model="form.password" required="true">Password
+                    </input-field>
                     <div class="form__footer">
-                        <div v-if="$store.getters['auth/loading']">
-                            <img src="/images/loader.svg" alt="Loading..." height="40">
-                        </div>
-                        <div class="form__error" v-show="hasErrors">
-                            <img src="/images/error_icon.svg" class="error__img">
-                            <div class="error__text">Warning! You did something wrong.</div>
-                        </div>
+                        <loader v-if="$store.getters['auth/loading']"></loader>
+                        <!--TODO: show error and remove it on typing-->
                         <div class="form__submit">
                             <RoundedButton type="submit">Submit</RoundedButton>
                         </div>
@@ -24,18 +20,14 @@
                 </form>
             </div>
         </div>
-        <div slot="content" class="links">
-            <div class="links__text">Don’t have an account?</div>
-            <router-link to="/register" class="links__link" replace>Sign up</router-link>
+        <div slot="content" class="content">
+            <div class="content__text">Don’t have an account?</div>
+            <router-link to="/register" class="content__link" replace>Sign up</router-link>
         </div>
     </service-layout>
 </template>
 
 <script>
-import authService from '../services/auth';
-import {isNavigationFailure} from "vue-router/src/util/errors";
-import {NavigationFailureType} from "vue-router";
-
 export default {
     name: "Login",
     data() {
@@ -43,18 +35,13 @@ export default {
             form: {
                 email: '',
                 password: ''
-            },
-            errors: {
             }
         }
     },
     methods: {
         login() {
-            authService.login(this.form)
-                .then(() => this.$router.replace('/chats'))
-                .catch(e => {
-                    this.errors = e.response.data.errors;
-                });
+            this.$store.dispatch('auth/setForm', this.form);
+            this.$store.dispatch('auth/login');
         }
     },
     computed: {
@@ -66,4 +53,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.content {
+    margin-top: 11px;
+}
 </style>

@@ -10,7 +10,7 @@ export default {
     props: {
         'type': {
             type: String,
-            default: ''
+            default: 'button'
         }
     }
 }
@@ -24,7 +24,7 @@ button {
     border-radius: 32px;
     outline: 0;
     color: #FFFFFF;
-    transition: background,color .3s;
+    transition: .3s;
     border: 2px solid #E26664;
     cursor: pointer;
 }

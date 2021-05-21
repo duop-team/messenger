@@ -19,13 +19,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .card {
-    margin: -80px auto 0;
-    /*width: 480px;*/
+    /*margin: -80px auto 0;*/
     padding: 25px 45px 32px;
     background: #65B59E;
-    mix-blend-mode: normal;
     border: 3px solid #FFC3C3;
     box-sizing: border-box;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);

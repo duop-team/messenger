@@ -17,15 +17,15 @@ class MessageController extends Controller
         if (!Participant::where('chat_id', $chat_id)->where('user_id', Auth::id())->first()) {
             return response()->noContent(403);
         }
-
-        $message = new MessageResource(Auth::user()->messages()->create([
+      
+        $message = Auth::user()->messages()->create([
             'text' => $request->text,
-            'chat_id' => $chat_id
-        ]));
+            'chat_id' => $id
+        ]);
 
         broadcast(new MessageSent($message))->toOthers();
 
-        return $message;
+        return new MessageResource($message);
     }
 
     public function index($chat_id)
