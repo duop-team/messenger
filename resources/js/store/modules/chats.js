@@ -119,7 +119,7 @@ export const actions = {
     listenChatMessages({commit}, id) {
         Echo.private(`chat.${id}`)
             .listen('MessageSent', e => {
-                commit('PUSH_MESSAGE_LIST', e.message);
+                commit('PUSH_MESSAGE_LIST', e);
             });
     },
     listMessages({getters, commit, dispatch}) {
@@ -127,7 +127,7 @@ export const actions = {
         chatService.listMessages(getters['currentChat'].id).then(r => {
             commit('SET_LOADING', false);
             dispatch('clearMessageList');
-            commit('SET_MESSAGE_LIST', r.data.data); /* FIXME: fix typo on backend */
+            commit('SET_MESSAGE_LIST', r.data);
         }).catch(() => {
             commit('SET_LOADING', false);
             /* TODO: there must be error handler */

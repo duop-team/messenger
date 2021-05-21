@@ -21,10 +21,8 @@ export default {
     sendMessage() {
       // TODO: change chat id
       chatService.sendMessage(this.$store.getters['chats/currentChat'].id, {text: this.message}).then(r => {
-        // this.messagesList.push(r.data);
-        this.$store.commit('chats/PUSH_MESSAGE_LIST', r.data.data);
+        this.$store.commit('chats/PUSH_MESSAGE_LIST', r.data);
         this.message = '';
-        console.log(r)
       });
     }
   }

@@ -21,9 +21,9 @@ class MessageSent implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @param MessageResource $message
+     * @param Message $message
      */
-    public function __construct(MessageResource $message)
+    public function __construct(Message $message)
     {
         $this->message = $message;
     }
@@ -33,8 +33,13 @@ class MessageSent implements ShouldBroadcast
      *
      * @return PrivateChannel
      */
-    public function broadcastOn()
+    public function broadcastOn(): PrivateChannel
     {
         return new PrivateChannel('chat.' . $this->message->chat_id);
+    }
+
+    public function broadcastWith(): array
+    {
+        return (new MessageResource($this->message))->resolve();
     }
 }

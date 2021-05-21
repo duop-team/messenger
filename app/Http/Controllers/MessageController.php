@@ -14,14 +14,14 @@ class MessageController extends Controller
     public function store(Request $request, $id)
     {
 //        TODO: check if sender is participant
-        $message = new MessageResource(Auth::user()->messages()->create([
+        $message = Auth::user()->messages()->create([
             'text' => $request->text,
             'chat_id' => $id
-        ]));
+        ]);
 
         broadcast(new MessageSent($message))->toOthers();
 
-        return $message;
+        return new MessageResource($message);
     }
 
     public function index(Request $request)
