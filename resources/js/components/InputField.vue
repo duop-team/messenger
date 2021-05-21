@@ -66,6 +66,7 @@ input[type=password] {
 
 input::placeholder {
     color: transparent;
+    user-select: none;
 }
 span {
     /*content: '';*/
@@ -86,7 +87,8 @@ label {
     top: 15%;
     left: 5px;
     transition: .4s;
-
+    user-select: none;
+    cursor: text;
 }
 
 input:focus ~ label,

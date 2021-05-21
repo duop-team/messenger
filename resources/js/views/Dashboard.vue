@@ -4,7 +4,8 @@
             <div class="sidebar__menu">
                 <sidebar-button icon="profile">My profile</sidebar-button>
                 <sidebar-button icon="settings">Settings</sidebar-button>
-                <sidebar-button icon="create_chat">Create chat</sidebar-button>
+                <sidebar-button icon="create_chat" @click.native="$store.dispatch('chats/toggleCreateChat')">Create chat
+                </sidebar-button>
             </div>
             <div class="sidebar__list">
                 <div class="sidebar__search">
@@ -14,9 +15,12 @@
             </div>
         </aside>
         <main class="dashboard__content">
-            <loader size="100" v-if="$store.getters['chats/loading']"></loader>
+            <loader size="100" v-if="$store.getters['chats/loading'] && !modalActive"></loader>
             <chat-content v-else-if="isSelectedChat"></chat-content>
         </main>
+        <modal :class="{'is-active': this.modalActive}">
+            <create-chat-modal v-if="$store.getters['chats/isCreatingChat']"></create-chat-modal>
+        </modal>
     </div>
 </template>
 
@@ -26,6 +30,10 @@ export default {
     computed: {
         isSelectedChat() {
             return Object.entries(this.$store.getters['chats/currentChat']).length > 0;
+        },
+        modalActive() {
+            /* TODO */
+            return this.$store.getters['chats/isCreatingChat'];
         }
     },
     data() {

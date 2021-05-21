@@ -1,6 +1,7 @@
 <template>
     <div class="search">
-        <input type="text" placeholder="Search..." name="search" id="search" class="search__field" @input="updateValue">
+        <input type="text" :placeholder="placeholder" :name="name" :id="name"
+               :class="{'search__field': true, 'search__field_blank': !iconEnabled}" @input="updateValue">
         <i v-if="iconEnabled" class="search__icon">
             <svg-vue class="icon" icon="search"></svg-vue>
         </i>
@@ -14,6 +15,14 @@ export default {
         iconEnabled: {
             type: Boolean,
             default: false
+        },
+        name: {
+            type: String,
+            default: 'search'
+        },
+        placeholder: {
+            type: String,
+            default: 'Search...'
         }
     },
     methods: {
@@ -53,10 +62,16 @@ input {
     height: 100%;
     padding-left: 30px;
     font-family: Lexend Deca;
-    font-size: 12px;
+    font-size: 13px;
 
     &::placeholder {
         color: $placeholder-color;
+        user-select: none;
     }
+}
+
+.search__field_blank {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 </style>

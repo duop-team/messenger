@@ -26,6 +26,9 @@ Vue.component('ChatContent', require('./components/ChatContent').default);
 Vue.component('Messages', require('./components/Messages').default);
 Vue.component('SidebarButton', require('./components/SidebarButton').default);
 Vue.component('SearchField', require('./components/SearchField').default);
+Vue.component('CreateChatModal', require('./components/CreateChatModal').default);
+Vue.component('CancelButton', require('./components/CancelButton').default);
+Vue.component('Modal', require('./components/Modal').default);
 
 const app = new Vue({
     el: '#app',
