@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 class UserController extends Controller
 {
     public function index() {
@@ -18,6 +17,6 @@ class UserController extends Controller
     }
 
     public function search(Request $request) {
-        return User::where('nickname', $request->nickname)->firstOrFail();
+        return User::where('nickname', 'LIKE', '%'.$request->nickname.'%')->get();
     }
 }
