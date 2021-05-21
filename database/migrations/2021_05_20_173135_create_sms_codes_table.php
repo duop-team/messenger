@@ -15,7 +15,7 @@ class CreateSmsCodesTable extends Migration
     {
         Schema::create('sms_codes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('code');
+            $table->smallInteger('code');
             $table->timestamp('created_at');
             $table->timestamp('valid_time');
             $table->timestamp('timeout');
