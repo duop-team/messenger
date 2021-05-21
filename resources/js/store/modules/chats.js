@@ -12,7 +12,8 @@ export const state = {
     createChatForm: {
         title: '',
         /* TODO: another fields such as participants, description, etc */
-    }
+    },
+    fondUsers: []
 }
 
 export const mutations = {
@@ -49,6 +50,9 @@ export const mutations = {
     },
     SET_NEW_CHAT(state, data) {
         state.createChatForm = data;
+    },
+    SET_FOND_USERS(state, data) {
+        state.fondUsers = data;
     }
 }
 
@@ -73,15 +77,18 @@ export const getters = {
     },
     newChatForm(state) {
         return state.createChatForm;
+    },
+    getFondUsers(state) {
+        return state.fondUsers;
     }
 }
 
 export const actions = {
-    toggleInfoBar({commit}) {
-        commit('SET_CHAT_INFO', !this.getters["infoActive"]);
+    toggleInfoBar({commit, getters}) {
+        commit('SET_CHAT_INFO', !getters["infoActive"]);
     },
-    toggleCreateChat({commit}) {
-        commit('SET_CREATE_CHAT', !this.getters["isCreatingChat"]);
+    toggleCreateChat({commit, getters}) {
+        commit('SET_CREATE_CHAT', !getters["isCreatingChat"]);
     },
     clearMessageList({commit}) {
         commit('SET_MESSAGE_LIST', []);
@@ -147,4 +154,12 @@ export const actions = {
         }).catch(() => alert('This user doesn\'t exists'))
         /* TODO: Error handlers!!! */
     },
+    searchUser({commit}, nickname) {
+        commit('SET_LOADING', true);
+        chatService.findUser({nickname: nickname}).then(r => {
+            commit('SET_LOADING', false);
+            // console.log(r.data);
+            commit('SET_FOND_USERS', r.data);
+        });
+    }
 }
