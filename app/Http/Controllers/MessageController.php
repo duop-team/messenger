@@ -17,10 +17,10 @@ class MessageController extends Controller
         if (!Participant::where('chat_id', $chat_id)->where('user_id', Auth::id())->first()) {
             return response()->noContent(403);
         }
-      
+
         $message = Auth::user()->messages()->create([
             'text' => $request->text,
-            'chat_id' => $id
+            'chat_id' => $chat_id
         ]);
 
         broadcast(new MessageSent($message))->toOthers();
