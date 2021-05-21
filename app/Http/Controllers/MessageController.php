@@ -6,6 +6,7 @@ use App\Events\MessageSent;
 use App\Http\Requests\Message\MessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
+use App\Models\Participant;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +14,10 @@ class MessageController extends Controller
 {
     public function store(MessageRequest $request, $chat_id)
     {
-//        TODO: check if sender is participant
+        if (!Participant::where('chat_id', $chat_id)->where('user_id', Auth::id())->first()) {
+            return response()->noContent(403);
+        }
+
         $message = new MessageResource(Auth::user()->messages()->create([
             'text' => $request->text,
             'chat_id' => $chat_id
