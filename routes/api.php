@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::middleware(['auth:sanctum'])->group(function () {
-//    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/user', [UserController::class, 'index']);
 
     Route::post('/user/search', [UserController::class, 'search']);
 
