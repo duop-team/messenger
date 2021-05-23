@@ -13,8 +13,6 @@ class SmsCode extends Model
 
     protected $fillable = ['code', 'created_at', 'valid_time', 'timeout'];
 
-    protected $dates = ['created_at', 'valid_time', 'timeout'];
-
     public function users()
     {
         return $this->hasOne(User::class);
