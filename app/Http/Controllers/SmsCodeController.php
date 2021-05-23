@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SmsCode;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -9,20 +10,51 @@ use Nexmo\Laravel\Facade\Nexmo;
 
 class SmsCodeController extends Controller
 {
-    public function sendSms(Request $request)
+    public function sendSms($code, $phone)
     {
-        $code = rand(0000, 9999);
-        Nexmo::message()->send([
-            'to'   => $request->phone,
+        return Nexmo::message()->send([
+            'to' => $phone,
             'from' => env('SMS_FROM'),
             'text' => 'Code: ' . $code
         ]);
+    }
+
+    public function show($user_id)
+    {
+        return SmsCode::findOrFail($user_id);
+    }
+
+    public function store(Request $request)
+    {
+        $code = rand(0000, 9999);
+        $this->sendSms($code, $request->phone);
         $user = User::findOrFail($request->user_id);
-        $user->sms_codes()->create([
+        return $user->sms_codes()->create([
             'code' => $code,
-            'created_at' => Carbon::now('Europe/Kiev'),
-            'valid_time' => Carbon::now('Europe/Kiev')->addMinutes(10),
-            'timeout' => Carbon::now('Europe/Kiev')->addMinute()
+            'created_at' => Carbon::now(),
+            'valid_time' => Carbon::now()->addMinutes(10)
         ]);
+    }
+
+    public function edit(Request $request)
+    {
+        $smsCodes = SmsCode::findOrFail($request->user_id);
+        $currentTime = Carbon::now();
+        $created_at = Carbon::parse($smsCodes->created_at);
+        if (($created_at->diffInMinutes($currentTime) >= 1) && $currentTime->lessThan(Carbon::parse($smsCodes->valid_time))) {
+            $code = rand(0000, 9999);
+            $this->sendSms($code, User::findOrFail($request->user_id)->phone);
+            return $smsCodes->update([
+                'code' => $code,
+                'created_at' => Carbon::now(),
+                'valid_time' => Carbon::now()->addMinutes(10)
+            ]);
+        }
+        return response(['Error: something comes wrong']);
+    }
+
+    public function destroy(Request $request)
+    {
+        return User::findOrFail($request->user_id)->sms_codes()->delete();
     }
 }
