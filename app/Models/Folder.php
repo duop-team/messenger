@@ -13,13 +13,13 @@ class Folder extends Model
 
     public $timestamps = false;
 
-    public function chats()
+    public function users()
     {
         return $this->belongsTo(Chat::class);
     }
 
-    public function users()
+    public function chats()
     {
-        return $this->belongsTo(Chat::class);
+        return $this->belongsToMany(Chat::class);
     }
 }
