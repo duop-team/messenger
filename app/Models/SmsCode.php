@@ -11,7 +11,7 @@ class SmsCode extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['code', 'created_at', 'valid_time', 'timeout'];
+    protected $fillable = ['code', 'created_at', 'valid_time', 'session'];
 
     public function users()
     {

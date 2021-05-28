@@ -15,11 +15,10 @@ class CreateSmsCodesTable extends Migration
     {
         Schema::create('sms_codes', function (Blueprint $table) {
             $table->id();
-            $table->smallInteger('code');
+            $table->integer('code');
+            $table->string('session');
             $table->timestamp('created_at');
             $table->timestamp('valid_time');
-            $table->timestamp('timeout');
-            $table->foreign('id')->references('id')->on('users');
         });
     }
 

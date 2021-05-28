@@ -26,13 +26,14 @@ class SmsCodeController extends Controller
 
     public function store(Request $request)
     {
-        $code = rand(0000, 9999);
-        $this->sendSms($code, $request->phone);
-        $user = User::findOrFail($request->user_id);
-        return $user->sms_codes()->create([
+        $code = rand(10000, 99999);
+//        $this->sendSms($code, $request->phone);
+        $token = session()->token();
+        return SmsCode::create([
             'code' => $code,
             'created_at' => Carbon::now(),
-            'valid_time' => Carbon::now()->addMinutes(10)
+            'valid_time' => Carbon::now()->addMinutes(10),
+            'session' => $token
         ]);
     }
 
@@ -42,12 +43,13 @@ class SmsCodeController extends Controller
         $currentTime = Carbon::now();
         $created_at = Carbon::parse($smsCodes->created_at);
         if (($created_at->diffInMinutes($currentTime) >= 1) && $currentTime->lessThan(Carbon::parse($smsCodes->valid_time))) {
-            $code = rand(0000, 9999);
+            $code = rand(10000, 99999);
             $this->sendSms($code, User::findOrFail($request->user_id)->phone);
             return $smsCodes->update([
                 'code' => $code,
                 'created_at' => Carbon::now(),
-                'valid_time' => Carbon::now()->addMinutes(10)
+                'valid_time' => Carbon::now()->addMinutes(10),
+                'session' => $request->session()->token()
             ]);
         }
         return response(['Error: something comes wrong']);
@@ -55,6 +57,6 @@ class SmsCodeController extends Controller
 
     public function destroy(Request $request)
     {
-        return User::findOrFail($request->user_id)->sms_codes()->delete();
+//        return User::findOrFail($request->user_id)->sms_codes()->delete();
     }
 }
