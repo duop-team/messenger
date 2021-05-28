@@ -19,11 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('nickname')->unique();
             $table->unsignedBigInteger('media_id')->nullable();
             $table->string('phone', 20)->unique();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('about')->nullable();
-            $table->string('password');
-            $table->rememberToken();
             $table->timestamps();
             $table->foreign('media_id')->references('id')->on('medias');
 
