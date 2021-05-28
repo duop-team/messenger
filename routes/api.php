@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\FolderController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ParticipantController;
@@ -39,6 +40,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/user/{user_id}/media', [MediaController::class, 'userUnloadImage']);
 
+    Route::get('/user/folders', [FolderController::class, 'index']);
+
+    Route::delete('/user/folder/{folders_id}', [FolderController::class, 'destroy']);
+
+    Route::post('/user/folders', [FolderController::class, 'create']);
+
     Route::post('/chats', [ChatController::class, 'store']);
 
     Route::get('/chat/{chat_id}', [ChatController::class, 'show']);
@@ -63,3 +70,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::delete('/message/{messages_id}', [MessageController::class, 'destroy']);
 });
+
