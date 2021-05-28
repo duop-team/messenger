@@ -9,13 +9,15 @@ class Folder extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     protected $table = 'folders';
 
     public $timestamps = false;
 
     public function users()
     {
-        return $this->belongsTo(Chat::class);
+        return $this->belongsTo(User::class);
     }
 
     public function chats()
