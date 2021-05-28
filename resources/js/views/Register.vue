@@ -1,23 +1,19 @@
 <template>
     <service-layout card-title="Registration">
         <div slot="card">
-            <div class="card__form">
-                <form action="#" method="post" @submit.prevent="register">
-                    <input-field type="text" name="name" v-model="form.name" required="true">Name</input-field>
-                    <input-field type="text" name="nickname" v-model="form.nickname" required="true">Nickname</input-field>
-                    <input-field type="email" name="email" v-model="form.email" required="true">Email</input-field>
-                    <input-field type="password" name="password" v-model="form.password" required="true">Password
-                    </input-field>
-                    <input-field type="password" name="password_confirmation" v-model="form.password_confirmation" required="true">Confirm password</input-field>
-                    <div class="form__footer">
-                        <loader v-if="$store.getters['auth/loading']"></loader>
-                        <!--TODO: show error and remove it on typing-->
-                        <div class="form__submit">
-                            <RoundedButton type="submit">Submit</RoundedButton>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            <form action="#" method="post" @submit.prevent="register">
+                <input-field type="text" name="name" v-model="form.name" required="true">Full name</input-field>
+                <input-field type="text" name="nickname" v-model="form.nickname" required="true">Nickname</input-field>
+                <input-field type="tel" name="phone" v-model="form.phone" required="true">Phone</input-field>
+                <button @click="send" type="button">Send code</button>
+                <input-field type="text" name="password" v-model="form.code" required="true">Code verification
+                </input-field>
+                <loader v-if="$store.getters['auth/loading']"></loader>
+                <!--TODO: show error and remove it on typing-->
+                <div class="form__submit">
+                    <RoundedButton type="submit">Submit</RoundedButton>
+                </div>
+            </form>
         </div>
         <div slot="content" class="content">
             <div class="content__text">Already have account?</div>
@@ -27,6 +23,8 @@
 </template>
 
 <script>
+import auth from "../services/auth";
+
 export default {
     name: "Register",
     data() {
@@ -34,9 +32,8 @@ export default {
             form: {
                 name: '',
                 nickname: '',
-                email: '',
-                password: '',
-                password_confirmation: ''
+                phone: '',
+                code: ''
             },
             errors: {}
         }
@@ -45,6 +42,9 @@ export default {
         register() {
             this.$store.dispatch('auth/setForm', this.form);
             this.$store.dispatch('auth/register');
+        },
+        send() {
+            auth.code().then(r => console.log(r));
         }
     },
     computed: {
