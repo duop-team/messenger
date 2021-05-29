@@ -7,11 +7,9 @@ use App\Models\SmsCode;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -58,9 +56,8 @@ class RegisterController extends Controller
 
         $token = session()->token();
         $code = SmsCode::select('code')->where('session', $token)->first();
-
-        if (!isset($code)) {
-            return response()->noContent(422);
+        if (!isset($code) || ($code->code != (int)$request->code)) {
+            abort(422);
         }
 
         event(new Registered($user = $this->create($request->all())));
@@ -73,7 +70,7 @@ class RegisterController extends Controller
 
         return $request->wantsJson()
             ? new JsonResponse([], 201)
-            : redirect($this->redirectPath());
+            : redirect('/');
     }
 
     /**
