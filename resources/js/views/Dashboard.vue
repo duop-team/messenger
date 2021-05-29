@@ -2,7 +2,7 @@
     <div class="dashboard">
         <aside class="dashboard__sidebar">
             <div class="sidebar__menu">
-                <sidebar-button icon="profile">My profile</sidebar-button>
+                <sidebar-button icon="profile" @click.native="$store.dispatch('auth/logout')">My profile</sidebar-button>
                 <sidebar-button icon="settings">Settings</sidebar-button>
                 <sidebar-button icon="create_chat" @click.native="$store.dispatch('chats/toggleCreateChat')">Create chat
                 </sidebar-button>
