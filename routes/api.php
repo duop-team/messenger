@@ -42,9 +42,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/user/folders', [FolderController::class, 'index']);
 
+    Route::post('/user/folders', [FolderController::class, 'create']);
+
     Route::delete('/user/folder/{folders_id}', [FolderController::class, 'destroy']);
 
-    Route::post('/user/folders', [FolderController::class, 'create']);
+    Route::post('/user/folder/{folder_id}/chats', [FolderController::class, 'store']);
+
+    Route::delete('/user/folder/{folder_id}/delete', [FolderController::class, 'deleteChatInFolder']);
+
+    Route::get('/user/folder/{folder_id}/show', [FolderController::class, 'show']);
 
     Route::post('/chats', [ChatController::class, 'store']);
 
@@ -70,4 +76,3 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::delete('/message/{messages_id}', [MessageController::class, 'destroy']);
 });
-
