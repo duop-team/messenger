@@ -6,7 +6,7 @@
             </div>
             <div class="card__form">
                 <form method="post" @submit.prevent="login">
-                    <input-field type="tel" name="phone" v-model="form.email" required="true" autofocus>Phone
+                    <input-field type="tel" name="phone" v-model="form.phone" required="true" autofocus>Phone
                     </input-field>
                     <button @click="send" type="button">Send code</button>
                     <input-field type="text" name="code" v-model="form.code" required="true">Password
@@ -36,7 +36,7 @@ export default {
     data() {
         return {
             form: {
-                email: '',
+                phone: '',
                 code: ''
             }
         }
