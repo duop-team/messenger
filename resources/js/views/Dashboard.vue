@@ -76,7 +76,6 @@ export default {
         width: 100%;
         max-width: 80px;
         background-color: #63B69D;
-        padding-top: 7px;
     }
 
     .sidebar__search {
@@ -94,10 +93,8 @@ export default {
 
 .dashboard__content {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     flex: 1 1 auto;
-    max-width: 100%;
 }
 </style>

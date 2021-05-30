@@ -20,7 +20,6 @@ export default {
 
 <style scoped lang="scss">
 .chat__header {
-    margin-left: -15px;
     background: #559E89;
     border: 1px solid #5B8377;
     box-sizing: border-box;

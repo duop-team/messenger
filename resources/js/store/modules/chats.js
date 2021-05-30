@@ -25,10 +25,6 @@ export const mutations = {
     },
     SET_CHAT_INFO(state, chatInfo) {
         state.chatInfo = chatInfo;
-
-        if (state.createChat && state.chatInfo) {
-            state.createChat = false;
-        }
     },
     SET_MESSAGE_LIST(state, list) {
         state.messageList = list;
@@ -44,9 +40,6 @@ export const mutations = {
     },
     SET_CREATE_CHAT(state, value) {
         state.createChat = value;
-        if (state.chatInfo && state.createChat) {
-            state.chatInfo = false;
-        }
     },
     SET_NEW_CHAT(state, data) {
         state.createChatForm = data;
@@ -137,7 +130,7 @@ export const actions = {
         commit('SET_LOADING', true);
         chatService.createChat(getters['newChatForm']).then(r => {
             commit('SET_LOADING', false);
-            alert(`Chat ${r.data.title} is created`);
+            // alert(`Chat ${r.data.title} is created`);
             dispatch('getChatList');
             /* TODO: prevent reloading of full list */
             dispatch('toggleCreateChat');
