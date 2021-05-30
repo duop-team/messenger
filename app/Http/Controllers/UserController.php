@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\EditRequest;
+use App\Http\Requests\User\SearchRequest;
 use App\Http\Resources\UserBasicResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,12 +21,12 @@ class UserController extends Controller
         return User::findOrFail($user_id);
     }
 
-    public function search(Request $request)
+    public function search(SearchRequest $request)
     {
         return User::where('nickname', 'LIKE', '%' . $request->nickname . '%')->get();
     }
 
-    public function edit(Request $request)
+    public function edit(EditRequest $request)
     {
         $user = Auth::user();
         if ($request->has('name')) {
