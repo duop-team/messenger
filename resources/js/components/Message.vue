@@ -1,12 +1,12 @@
 <template>
-    <div class="chat__message">
+    <li :class="{'chat__message_sender': isSender}">
         <div class="message__inner">
-            <div class="sender__photo">
+            <div class="sender__photo" v-if="!isSender">
                 <!--TODO: replace placeholder with a real photo-->
                 <img src="https://via.placeholder.com/60" alt="Awesome avatar">
             </div>
             <div class="message__content">
-                <div class="message__sender">@{{sender}}</div>
+                <div class="message__sender" v-if="!isSender">@{{ sender }}</div>
                 <div class="message__text">
                     <p>
                         <slot></slot>
@@ -14,27 +14,43 @@
                 </div>
             </div>
         </div>
-    </div>
+    </li>
 </template>
 
 <script>
 export default {
     name: "Message",
-    props: ['sender']
+    props: ['sender'],
+    computed: {
+        isSender() {
+            return this.sender === this.$store.getters['auth/currentUser'].nickname
+        }
+    }
 }
 </script>
 
 <style scoped lang="scss">
 .chat__message {
-    width: 100%;
+    max-width: 65%;
+
+    &_sender {
+        align-self: flex-end;
+        .message__content {
+            background-color: #5F9D8A;
+
+            .message__text {
+                color: #FFFFFF;
+            }
+        }
+    }
 }
+
 .message__inner {
     display: flex;
     font-family: Sarabun, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
-    max-width: 65%;
 }
 
 .sender__photo {
@@ -58,7 +74,6 @@ export default {
     border-radius: 0px 3px 3px 0px;
     padding: 10px;
     overflow-wrap: break-word;
-    max-width: calc(100% - 50px);
     word-break: break-all;
 
     display: flex;
