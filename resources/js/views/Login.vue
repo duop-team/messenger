@@ -6,10 +6,10 @@
             </div>
             <div class="card__form">
                 <form method="post" @submit.prevent="login">
-                    <input-field type="tel" name="phone" v-model="form.email" required="true" autofocus>Phone
+                    <input-field type="tel" name="phone" v-model="form.phone" required="true" autofocus class="form__field">Phone
                     </input-field>
                     <button @click="send" type="button">Send code</button>
-                    <input-field type="text" name="code" v-model="form.code" required="true">Password
+                    <input-field type="text" name="code" v-model="form.code" required="true" class="form__field">Password
                     </input-field>
                     <div class="form__footer">
                         <loader v-if="$store.getters['auth/loading']"></loader>
@@ -36,7 +36,7 @@ export default {
     data() {
         return {
             form: {
-                email: '',
+                phone: '',
                 code: ''
             }
         }

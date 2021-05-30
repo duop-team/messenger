@@ -2,11 +2,11 @@
     <service-layout card-title="Registration">
         <div slot="card">
             <form action="#" method="post" @submit.prevent="register">
-                <input-field type="text" name="name" v-model="form.name" required="true">Full name</input-field>
-                <input-field type="text" name="nickname" v-model="form.nickname" required="true">Nickname</input-field>
-                <input-field type="tel" name="phone" v-model="form.phone" required="true">Phone</input-field>
+                <input-field type="text" name="name" v-model="form.name" required="true" class="form__field">Full name</input-field>
+                <input-field type="text" name="nickname" v-model="form.nickname" required="true" class="form__field">Nickname</input-field>
+                <input-field type="tel" name="phone" v-model="form.phone" required="true" class="form__field">Phone</input-field>
                 <button @click="send" type="button">Send code</button>
-                <input-field type="text" name="password" v-model="form.code" required="true">Code verification
+                <input-field type="text" name="password" v-model="form.code" required="true" class="form__field">Code verification
                 </input-field>
                 <loader v-if="$store.getters['auth/loading']"></loader>
                 <!--TODO: show error and remove it on typing-->

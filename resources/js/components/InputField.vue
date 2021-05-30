@@ -38,11 +38,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 .input {
     position: relative;
-    margin-top: 28px;
+    width: 100%;
 }
 
 input {
@@ -58,18 +58,37 @@ input {
     border-radius: 0;
     outline: 0;
     color: #fff;
+
+    &[type=password] {
+        letter-spacing: 0.1em;
+    }
+
+    &::placeholder {
+        color: transparent;
+        user-select: none;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+        background-color: #65B59E !important;
+        -webkit-box-shadow: 0 0 0 1000px #65B59E inset !important;
+        -webkit-text-fill-color: white !important;
+    }
+
+    &:focus ~ label,
+    &:not(:placeholder-shown) ~ label {
+        top: -18px;
+        left: 0;
+    }
+
+    &:focus ~ span,
+    &:not(:placeholder-shown) ~ span {
+        width: 100%;
+    }
 }
 
-input[type=password] {
-    letter-spacing: 0.1em;
-}
-
-input::placeholder {
-    color: transparent;
-    user-select: none;
-}
 span {
-    /*content: '';*/
     background-color: #66C8FF;
     display: block;
     width: 0;
@@ -89,30 +108,5 @@ label {
     transition: .4s;
     user-select: none;
     cursor: text;
-}
-
-input:focus ~ label,
-input:not(:placeholder-shown) ~ label {
-    top: -18px;
-    left: 0;
-}
-
-input:focus ~ span,
-input:not(:placeholder-shown) ~ span {
-    width: 100%;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-    background-color: #65B59E !important;
-    -webkit-box-shadow: 0 0 0 1000px #65B59E inset !important;
-    -webkit-text-fill-color: white !important;
 }
 </style>
