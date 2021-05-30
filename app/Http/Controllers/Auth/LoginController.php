@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\User\LoginRequest;
 use App\Models\SmsCode;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -25,12 +24,8 @@ class LoginController extends Controller
     */
 
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'phone' => ['required', 'string', 'min:3'],
-            'code' => ['required', 'min:5, max:6']
-        ]);
         $user = User::where('phone', $request->phone)->first();
         if (!isset($user)) {
             abort(422);
