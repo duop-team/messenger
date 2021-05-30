@@ -46,6 +46,10 @@ export default {
     }
 }
 
+.sidebar__button:first-child {
+    padding-top: 17px;
+}
+
 .button__inner {
     display: flex;
     flex-direction: column;
@@ -61,7 +65,7 @@ export default {
 }
 
 .icon {
-    max-width: 30px;
+    height: 30px;
 }
 
 .button__text {
