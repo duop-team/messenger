@@ -30,12 +30,12 @@ class ChatController extends Controller
             'access_rule_id' => null
         ]);
         if ($request->has('participants')) {
-           foreach ($request->participants as $participant) {
-               $chat->participants()->create([
-                   'user_id' => User::where('nickname', $participant)->firstOrFail()->id,
-                   'access_rule_id' => null
-               ]);
-           }
+            foreach ($request->participants as $participant) {
+                $chat->participants()->create([
+                    'user_id' => User::where('nickname', $participant)->firstOrFail()->id,
+                    'access_rule_id' => null
+                ]);
+            }
         }
 
         return $chat;
@@ -44,6 +44,21 @@ class ChatController extends Controller
     public function show($chat_id)
     {
         return Chat::findOrFail($chat_id);
+    }
+
+    public function edit(Request $request, $chat_id)
+    {
+        $chat = Chat::findOrFail($chat_id);
+        if ($request->has('about')) {
+            $chat->update([
+                'about' => $request->about
+            ]);
+        } elseif ($request->has('title')) {
+            $chat->update([
+                'title' => $request->title
+            ]);
+        }
+        return $chat;
     }
 
     public function destroy($chat_id)

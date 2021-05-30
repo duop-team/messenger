@@ -43,6 +43,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/chats', [ChatController::class, 'store']);
 
+    Route::patch('/chat/{chat_id}', [ChatController::class, 'edit']);
+
     Route::get('/chat/{chat_id}', [ChatController::class, 'show']);
 
     Route::delete('/chat/{chat_id}', [ChatController::class, 'destroy']);
