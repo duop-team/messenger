@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Chat\EditRequest;
 use App\Http\Requests\Chat\StoreRequest;
 use App\Models\Chat;
 use App\Models\Message;
@@ -46,7 +47,7 @@ class ChatController extends Controller
         return Chat::findOrFail($chat_id);
     }
 
-    public function edit(Request $request, $chat_id)
+    public function edit(EditRequest $request, $chat_id)
     {
         $chat = Chat::findOrFail($chat_id);
         if ($request->has('about')) {
