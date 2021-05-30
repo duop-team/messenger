@@ -29,6 +29,9 @@ Vue.component('SearchField', require('./components/SearchField').default);
 Vue.component('CreateChatModal', require('./components/CreateChatModal').default);
 Vue.component('CancelButton', require('./components/CancelButton').default);
 Vue.component('Modal', require('./components/Modal').default);
+Vue.component('InfoBar', require('./components/InfoBar').default);
+Vue.component('PhotoUploader', require('./components/PhotoUploader').default);
+Vue.component('ParticipantItem', require('./components/ParticipantItem').default);
 
 const app = new Vue({
     el: '#app',
