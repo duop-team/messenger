@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Chat\StoreRequest;
 use App\Models\Chat;
 use App\Models\Message;
 use App\Models\Participant;
@@ -17,7 +18,7 @@ class ChatController extends Controller
         return Chat::whereIn('id', $participant)->get();
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $chat = Auth::user()->chats()->create([
             "title" => $request->title,
