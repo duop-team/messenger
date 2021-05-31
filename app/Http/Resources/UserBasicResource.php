@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserBasicResource extends JsonResource
@@ -16,7 +17,8 @@ class UserBasicResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'nickname' => $this->nickname
+            'nickname' => $this->nickname,
+            'media' => new MediaResource(User::findOrFail($this->id)->media),
         ];
     }
 }
