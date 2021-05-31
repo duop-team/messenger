@@ -69,7 +69,7 @@ export default {
 }
 
 .button__text {
-    font-family: Lexend Deca;
+    font-family: Nunito, sans-serif;
     font-size: 12px;
 }
 </style>

@@ -23,10 +23,10 @@ export default {
     background: #559E89;
     border: 1px solid #5B8377;
     box-sizing: border-box;
-    border-radius: 0px 0px 15px 15px;
+    border-radius: 0 0 15px 15px;
     min-height: 80px;
     color: #fff;
-    font-family: Lexend Deca;
+    font-family: Nunito, sans-serif;
 }
 
 .header {
@@ -41,7 +41,8 @@ export default {
 
     &__title {
         cursor: pointer;
-        font-size: 18px;
+        font-size: 20px;
+        font-weight: bold;
     }
 
     &__subtitle {
