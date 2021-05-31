@@ -6,7 +6,6 @@ export const state = {
     loading: false,
     chat: null,
     chatInfo: false,
-    messageList: [],
     chatList: [],
     createChat: false,
     createChatForm: {
@@ -25,12 +24,6 @@ export const mutations = {
     },
     SET_CHAT_INFO(state, chatInfo) {
         state.chatInfo = chatInfo;
-    },
-    SET_MESSAGE_LIST(state, list) {
-        state.messageList = list;
-    },
-    PUSH_MESSAGE_LIST(state, value) {
-        state.messageList.push(value);
     },
     SET_CHAT_LIST(state, list) {
         state.chatList = list;
@@ -59,9 +52,6 @@ export const getters = {
     infoActive(state) {
         return state.chatInfo;
     },
-    messageList(state) {
-        return state.messageList;
-    },
     chatList(state) {
         return state.chatList;
     },
@@ -83,9 +73,6 @@ export const actions = {
     toggleCreateChat({commit, getters}) {
         commit('SET_CREATE_CHAT', !getters["isCreatingChat"]);
     },
-    clearMessageList({commit}) {
-        commit('SET_MESSAGE_LIST', []);
-    },
     clearChatList({commit}) {
         commit('SET_CHAT_LIST', []);
     },
@@ -106,25 +93,9 @@ export const actions = {
 
         commit('SET_CHAT', chat);
 
-        dispatch('listenChatMessages', chat.id);
-        dispatch('listMessages');
-    },
-    listenChatMessages({commit}, id) {
-        Echo.private(`chat.${id}`)
-            .listen('MessageSent', e => {
-                commit('PUSH_MESSAGE_LIST', e);
-            });
-    },
-    listMessages({getters, commit, dispatch}) {
-        commit('SET_LOADING', true);
-        chatService.listMessages(getters['currentChat'].id).then(r => {
-            commit('SET_LOADING', false);
-            dispatch('clearMessageList');
-            commit('SET_MESSAGE_LIST', r.data);
-        }).catch(() => {
-            commit('SET_LOADING', false);
-            /* TODO: there must be error handler */
-        });
+        this.dispatch('messages/listenChatMessages', chat.id);
+        // dispatch('listMessages');
+        this.dispatch('messages/listMessages');
     },
     createChat({getters, commit, dispatch}) {
         commit('SET_LOADING', true);

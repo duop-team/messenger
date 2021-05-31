@@ -37,6 +37,7 @@ export default {
         align-self: flex-end;
         .message__content {
             background-color: #5F9D8A;
+            border-radius: 3px;
 
             .message__text {
                 color: #FFFFFF;
@@ -47,7 +48,7 @@ export default {
 
 .message__inner {
     display: flex;
-    font-family: Sarabun, sans-serif;
+    font-family: 'Mplus 1p', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -71,7 +72,7 @@ export default {
 
 .message__content {
     background-color: #C8D1E3;
-    border-radius: 0px 3px 3px 0px;
+    border-radius: 0 3px 3px 0;
     padding: 10px;
     overflow-wrap: break-word;
     word-break: break-all;
@@ -82,6 +83,7 @@ export default {
 
     .message__sender {
         color: #D78E53;
+        font-family: Sarabun, sans-serif;
     }
 
     .message__text {

@@ -1,6 +1,6 @@
 <template>
     <ul class="chat__messages">
-        <message class="chat__message" v-for="m in $store.getters['chats/messageList']" :key="m.id"
+        <message class="chat__message" v-for="m in $store.getters['messages/messageList']" :key="m.id"
                  :sender="m.sender.nickname">
             {{ m.text }}
         </message>
