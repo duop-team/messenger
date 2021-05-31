@@ -19,6 +19,7 @@ export default {
     left: 0;
     background-color: rgba(0, 0, 0, .5);
     display: none;
+    z-index: 100;
 
     &.is-active {
         width: 100%;
