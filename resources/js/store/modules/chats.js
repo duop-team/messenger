@@ -10,7 +10,7 @@ export const state = {
     createChat: false,
     createChatForm: {
         title: '',
-        /* TODO: another fields such as participants, description, etc */
+        participants: []
     },
     fondUsers: []
 }
@@ -118,12 +118,13 @@ export const actions = {
         }).catch(() => alert('This user doesn\'t exists'))
         /* TODO: Error handlers!!! */
     },
-    searchUser({commit}, nickname) {
+    searchUser({commit, rootGetters}, nickname) {
         commit('SET_LOADING', true);
         chatService.findUser({nickname: nickname}).then(r => {
             commit('SET_LOADING', false);
-            // console.log(r.data);
-            commit('SET_FOND_USERS', r.data);
+            let users = r.data;
+            commit('SET_FOND_USERS',
+                users.filter(u => u.nickname !== rootGetters['auth/currentUser'].nickname));
         });
     }
 }
