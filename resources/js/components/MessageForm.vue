@@ -62,7 +62,7 @@ export default {
         width: 100%;
         height: 100%;
         font-family: Nunito, sans-serif;
-        font-size: 15px;
+        font-size: 14px;
         color: #FFFFFF;
         background-color: transparent;
         outline: 0;

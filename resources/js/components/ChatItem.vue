@@ -30,7 +30,7 @@ export default {
     align-items: center;
     user-select: none;
     cursor: pointer;
-    font-family: Sarabun, sans-serif;
+    font-family: Nunito, sans-serif;
     background-color: #D4D4D4;
 
     &:nth-child(2n) {
@@ -53,8 +53,8 @@ export default {
 
 .chat__title {
     color: #000000;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 800;
 }
 
 .chat__message {

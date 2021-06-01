@@ -41,12 +41,13 @@ export default {
 
     &__title {
         cursor: pointer;
-        font-size: 20px;
-        font-weight: bold;
+        font-size: 18px;
+        font-weight: 600;
     }
 
     &__subtitle {
         font-size: 14px;
+        color: #E2DDDD;
     }
 }
 </style>

@@ -47,7 +47,7 @@ export default {
 
 input {
     padding: 5px 0;
-    font-family: Sarabun, sans-serif;
+    font-family: Nunito, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;

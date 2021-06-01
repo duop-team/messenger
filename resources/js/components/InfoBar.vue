@@ -33,7 +33,7 @@ export default {
     height: 100%;
     gap: 15px;
     color: #FFFFFF;
-    font-family: Lexend Deca;
+    font-family: Nunito, sans-serif;
     font-size: 14px;
 }
 
@@ -81,8 +81,8 @@ export default {
     }
 
     &_members {
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 15px 15px 0px 0px;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 15px 15px 0 0;
         flex: 1 1 auto;
     }
 }

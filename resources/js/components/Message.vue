@@ -48,7 +48,7 @@ export default {
 
 .message__inner {
     display: flex;
-    font-family: 'Mplus 1p', sans-serif;
+    font-family: 'M PLUS 1p', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -56,7 +56,7 @@ export default {
 
 .sender__photo {
     background: #B0B8C9;
-    border-radius: 3px 0px 0px 3px;
+    border-radius: 3px 0 0 3px;
     padding: 9px 5px;
     display: flex;
     flex-flow: column nowrap;

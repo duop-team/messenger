@@ -70,6 +70,7 @@ export default {
 
 .button__text {
     font-family: Nunito, sans-serif;
+    font-weight: 700;
     font-size: 12px;
 }
 </style>

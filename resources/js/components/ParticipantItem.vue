@@ -68,6 +68,7 @@ export default {
         background-color: #E2E2E2;
         padding: 5px 20px 5px 10px;
         transition: .3s;
+        align-items: center;
 
         &:nth-child(2n) {
             background-color: #EAE9E9;
@@ -99,7 +100,7 @@ export default {
 
     &__status {
         font-size: 11px;
-        font-family: Lexend Deca, sans-serif;
+        font-family: Nunito, sans-serif;
         color: #768978;
     }
 }
