@@ -1,5 +1,5 @@
 <template>
-    <div class="modal">
+    <div class="modal" @click.self="closeModal()">
         <div class="modal__content">
             <slot></slot>
         </div>
@@ -8,7 +8,12 @@
 
 <script>
 export default {
-    name: "Modal"
+    name: "Modal",
+    methods: {
+        closeModal() {
+            this.$store.dispatch('chats/closeModal');
+        }
+    }
 }
 </script>
 

@@ -2,7 +2,7 @@
     <form class="modal__inner" @submit.prevent="createChat">
         <div class="modal__section modal__section_top">
             <!-- TODO: add avatar uploading feature -->
-            <photo-uploader class="chat__photo"></photo-uploader>
+            <photo-uploader class="chat__photo" @click.native="$store.dispatch('chats/openModal', 'cropper')"></photo-uploader>
             <input-field type="text" name="chat_title" required="true" v-model="title">Chat name</input-field>
         </div>
 
@@ -21,7 +21,7 @@
             </ul>
         </div>
         <div class="modal__section modal__section_footer">
-            <cancel-button @click.native="$store.dispatch('chats/toggleCreateChat')">Cancel</cancel-button>
+            <cancel-button @click.native="$store.dispatch('chats/closeModal')">Cancel</cancel-button>
             <rounded-button type="submit">Create</rounded-button>
         </div>
     </form>

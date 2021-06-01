@@ -12,7 +12,9 @@ export const state = {
         title: '',
         participants: []
     },
-    fondUsers: []
+    fondUsers: [],
+    modal: '',
+    openedModals: []
 }
 
 export const mutations = {
@@ -39,6 +41,12 @@ export const mutations = {
     },
     SET_FOND_USERS(state, data) {
         state.fondUsers = data;
+    },
+    SET_MODAL(state, value) {
+        state.modal = value;
+    },
+    SET_MODALS(state, data) {
+        state.openedModals = data;
     }
 }
 
@@ -63,6 +71,12 @@ export const getters = {
     },
     getFondUsers(state) {
         return state.fondUsers;
+    },
+    currentModal(state) {
+        return state.modal;
+    },
+    openedModals(state) {
+        return state.openedModals;
     }
 }
 
@@ -70,8 +84,25 @@ export const actions = {
     toggleInfoBar({commit, getters}) {
         commit('SET_CHAT_INFO', !getters["infoActive"]);
     },
-    toggleCreateChat({commit, getters}) {
-        commit('SET_CREATE_CHAT', !getters["isCreatingChat"]);
+    // toggleCreateChat({commit, getters}) {
+    //     // commit('SET_CREATE_CHAT', !getters["isCreatingChat"]);
+    //     if (!getters['currentModal']) commit('SET_MODAL', 'createChat');
+    //     else commit('SET_MODAL', '');
+    // },
+    closeModal({commit, getters}) {
+        let modals = getters['openedModals'];
+        if (modals) {
+            commit('SET_MODAL', modals.pop());
+            commit('SET_MODALS', modals);
+        }
+    },
+    openModal({getters, commit}, value) {
+        let modals = getters['openedModals'];
+        if (getters['currentModal']) {
+            modals.push(getters['currentModal']);
+        }
+        commit('SET_MODAL', value);
+        commit('SET_MODALS', modals);
     },
     clearChatList({commit}) {
         commit('SET_CHAT_LIST', []);
