@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ChatFolderController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MessageController;
@@ -46,11 +47,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::delete('/user/folder/{folders_id}', [FolderController::class, 'destroy']);
 
-    Route::post('/user/folder/{folder_id}/chats', [FolderController::class, 'store']);
+    Route::post('/user/folder/{folder_id}/chats', [ChatFolderController::class, 'store']);
 
-    Route::delete('/user/folder/{folder_id}/delete', [FolderController::class, 'deleteChatInFolder']);
+    Route::delete('/user/folder/{folder_id}/chat/{chat_id}', [ChatFolderController::class, 'deleteChatInFolder']);
 
-    Route::get('/user/folder/{folder_id}/show', [FolderController::class, 'show']);
+    Route::get('/user/folder/{folder_id}', [ChatFolderController::class, 'index']);
 
     Route::post('/chats', [ChatController::class, 'store']);
 
