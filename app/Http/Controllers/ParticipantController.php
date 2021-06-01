@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ChatResource;
 use App\Models\Chat;
 use App\Models\Participant;
 use App\Models\User;
@@ -11,7 +12,7 @@ class ParticipantController extends Controller
 {
     public function index($chat_id)
     {
-        return Chat::findOrFail($chat_id)->participants;
+        return ChatResource::collection(Chat::with('participants')->where('id', $chat_id)->get());
     }
 
     public function store(Request $request, $chat_id)
