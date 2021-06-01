@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ChatFolderController;
 use App\Http\Controllers\FolderController;
+use App\Http\Controllers\FriendController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ParticipantController;
@@ -34,6 +35,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::patch('/user', [UserController::class, 'edit']);
 
     Route::post('/user/search', [UserController::class, 'search']);
+
+    Route::get('/user/friends', [FriendController::class, 'index']);
+
+    Route::post('/user/friend/{friend_id}', [FriendController::class, 'store']);
+
+    Route::delete('/user/friend/{friend_id}', [FriendController::class, 'delete']);
 
     Route::get('/user/chats', [ChatController::class, 'index']);
 

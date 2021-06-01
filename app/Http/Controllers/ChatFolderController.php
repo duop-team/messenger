@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ChatsFolderResource;
 use App\Models\ChatFolder;
+use App\Models\Folder;
 use Illuminate\Http\Request;
 
 class ChatFolderController extends Controller
@@ -10,7 +12,7 @@ class ChatFolderController extends Controller
 
     public function index($folder_id)
     {
-        return ChatFolder::all()->where('folder_id', $folder_id);
+        return ChatsFolderResource::collection(Folder::with('chats')->where('id', $folder_id)->get());
     }
 
     public function store(Request $request, $folder_id)
