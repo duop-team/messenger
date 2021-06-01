@@ -18,12 +18,12 @@ class UserController extends Controller
 
     public function show($user_id)
     {
-        return User::findOrFail($user_id);
+        return new UserBasicResource(User::findOrFail($user_id));
     }
 
     public function search(SearchRequest $request)
     {
-        return User::where('nickname', 'LIKE', '%' . $request->nickname . '%')->get();
+        return new UserBasicResource(User::where('nickname', 'LIKE', '%' . $request->nickname . '%')->get());
     }
 
     public function edit(EditRequest $request)
