@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Models\User;
+use App\Models\Media;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserBasicResource extends JsonResource
+class ChatResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,9 @@ class UserBasicResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'nickname' => $this->nickname,
-            'photo' => new MediaResource(User::findOrFail($this->id)->media),
+            'title' => $this->title,
+            'about' => $this->about,
+            'photo' => new MediaResource(Media::where('id', $this->media_id)->first()),
         ];
     }
 }

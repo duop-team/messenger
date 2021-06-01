@@ -31,6 +31,8 @@ Broadcast::routes(['middleware' => ['auth:sanctum']]);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'index']);
 
+    Route::patch('/user', [UserController::class, 'edit']);
+
     Route::post('/user/search', [UserController::class, 'search']);
 
     Route::get('/user/chats', [ChatController::class, 'index']);
@@ -54,6 +56,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user/folder/{folder_id}', [ChatFolderController::class, 'index']);
 
     Route::post('/chats', [ChatController::class, 'store']);
+
+    Route::patch('/chat/{chat_id}', [ChatController::class, 'edit']);
 
     Route::get('/chat/{chat_id}', [ChatController::class, 'show']);
 
