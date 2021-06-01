@@ -16,9 +16,8 @@ class UserBasicResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
             'nickname' => $this->nickname,
-            'media' => new MediaResource(User::findOrFail($this->id)->media),
+            'photo' => new MediaResource(User::findOrFail($this->id)->media),
         ];
     }
 }
