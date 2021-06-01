@@ -3,22 +3,19 @@
 namespace App\Http\Controllers;
 
 
-use App\Http\Resources\MessageResource;
-use App\Models\Chat;
-use App\Models\ChatFolder;
+use App\Http\Requests\FolderRequest;
+use App\Http\Resources\FolderResource;
 use App\Models\Folder;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FolderController extends Controller
 {
     public function index()
     {
-        return Auth::user()->folders()->get();
+        return FolderResource::collection(Auth::user()->folders()->get());
     }
 
-    public function store(Request $request)
+    public function store(FolderRequest $request)
     {
         $folder = Auth::user()->folders()->create([
             'name' => $request->name
