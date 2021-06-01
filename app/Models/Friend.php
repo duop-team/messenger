@@ -11,6 +11,8 @@ class Friend extends Model
 
     protected $table = 'friends';
 
+    public $timestamps = false;
+
     protected $fillable = ['user_id', 'friend_id'];
 
     public function users()
