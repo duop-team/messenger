@@ -31,7 +31,7 @@ class LoginController extends Controller
             abort(422);
         }
         $token = session()->token();
-        $code = SmsCode::where('session', $token)->first();
+        $code = SmsCode::where('session', $token)->get()->last();
         if (($code->code != (int)$request->code)) {
             abort(422);
         }

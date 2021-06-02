@@ -53,7 +53,7 @@ class RegisterController extends Controller
     public function register(RegistrationRequest $request)
     {
         $token = session()->token();
-        $code = SmsCode::select('code')->where('session', $token)->first();
+        $code = SmsCode::select('code')->where('session', $token)->get()->last();
         if (!isset($code) || ($code->code != (int)$request->code)) {
             abort(422);
         }
