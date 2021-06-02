@@ -76,16 +76,24 @@ export const actions = {
                 commit('SET_LOADING', false);
             });
     },
-    async checkPhone({getters, commit}) {
+    async checkPhone({getters, commit}, flow) {
         commit('SET_ERROR', '');
         commit('SET_LOADING', true);
+        let isFond = false;
         await chatService.findUser({phone: getters['formData'].phone}).then(r => {
             for (const item of r.data) {
                 if (item.phone === getters['formData'].phone) {
-                    commit('SET_ERROR', 'Phone already taken');
+                    isFond = true;
+                    if (flow === 'register') {
+                        commit('SET_ERROR', 'Phone already taken');
+                    }
                     break;
                 }
             }
+            if (flow === 'login' && !isFond) {
+                commit('SET_ERROR', 'You are not registered');
+            }
+
             commit('SET_LOADING', false);
         });
     },
@@ -129,7 +137,7 @@ export const actions = {
             })
             .catch(e => {
                 commit('SET_LOADING', false);
-                // this.errors = e.response.data.errors;
+                commit('SET_ERROR', 'Incorrect sms code');
             });
     },
     register({commit, getters}) {

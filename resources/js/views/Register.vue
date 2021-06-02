@@ -85,7 +85,7 @@ export default {
         },
         sendCode() {
             this.$store.dispatch('auth/setForm', this.form);
-            this.$store.dispatch('auth/checkPhone').then(() => {
+            this.$store.dispatch('auth/checkPhone', 'register').then(() => {
                 this.$store.dispatch('auth/setStep', 'code')
             });
 
