@@ -17,10 +17,8 @@ class CreateParticipantsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('chat_id');
-            $table->unsignedBigInteger('access_rule_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('chat_id')->references('id')->on('chats');
-            $table->foreign('access_rule_id')->references('id')->on('access_rules');
         });
     }
 
