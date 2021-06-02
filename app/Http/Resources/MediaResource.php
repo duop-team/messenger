@@ -16,7 +16,7 @@ class MediaResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'url' => $this->content,
+            'url' => url(Storage::url($this->content)),
         ];
     }
 }
