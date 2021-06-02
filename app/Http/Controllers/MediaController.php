@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ImageUploadRequest;
+use App\Http\Resources\MediaResource;
 use App\Models\Chat;
 use App\Models\Media;
 use App\Models\User;
@@ -39,12 +40,12 @@ class MediaController extends Controller
     public function userUnloadImage($user_id)
     {
         $userImage = User::findOrFail($user_id)->media;
-        return url(Storage::url($userImage->content));
+        return new MediaResource($userImage);
     }
 
     public function chatUnloadImage($user_id)
     {
         $chatImage = Chat::findOrFail($user_id)->media;
-        return url(Storage::url($chatImage->content));
+        return new MediaResource($chatImage);
     }
 }

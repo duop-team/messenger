@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ChatFolderController;
+use App\Http\Controllers\FolderController;
+use App\Http\Controllers\FriendController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ParticipantController;
@@ -30,7 +33,15 @@ Broadcast::routes(['middleware' => ['auth:sanctum']]);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'index']);
 
+    Route::patch('/user', [UserController::class, 'edit']);
+
     Route::post('/user/search', [UserController::class, 'search']);
+
+    Route::get('/user/friends', [FriendController::class, 'index']);
+
+    Route::post('/user/friend/{friend_id}', [FriendController::class, 'store']);
+
+    Route::delete('/user/friend/{friend_id}', [FriendController::class, 'delete']);
 
     Route::get('/user/chats', [ChatController::class, 'index']);
 
@@ -40,7 +51,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/user/{user_id}/media', [MediaController::class, 'userUnloadImage']);
 
+    Route::get('/user/folders', [FolderController::class, 'index']);
+
+    Route::post('/user/folders', [FolderController::class, 'create']);
+
+    Route::delete('/user/folder/{folders_id}', [FolderController::class, 'destroy']);
+
+    Route::post('/user/folder/{folder_id}/chats', [ChatFolderController::class, 'store']);
+
+    Route::delete('/user/folder/{folder_id}/chat/{chat_id}', [ChatFolderController::class, 'deleteChatInFolder']);
+
+    Route::get('/user/folder/{folder_id}', [ChatFolderController::class, 'index']);
+
     Route::post('/chats', [ChatController::class, 'store']);
+
+    Route::patch('/chat/{chat_id}', [ChatController::class, 'edit']);
 
     Route::get('/chat/{chat_id}', [ChatController::class, 'show']);
 

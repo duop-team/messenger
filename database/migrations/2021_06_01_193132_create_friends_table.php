@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFoldersTable extends Migration
+class CreateFriendsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateFoldersTable extends Migration
      */
     public function up()
     {
-        Schema::create('folders', function (Blueprint $table) {
+        Schema::create('friends', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('friend_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('friend_id')->references('id')->on('users');
         });
     }
 
@@ -28,6 +29,6 @@ class CreateFoldersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('folders');
+        Schema::dropIfExists('friends');
     }
 }

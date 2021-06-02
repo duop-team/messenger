@@ -63,7 +63,7 @@ class User extends Authenticatable
 
     public function folders()
     {
-        return $this->hasMany(Participant::class);
+        return $this->hasMany(Folder::class);
     }
 
     public function messages()
@@ -74,5 +74,10 @@ class User extends Authenticatable
     public function sms_codes()
     {
         return $this->hasOne(SmsCode::class, 'id');
+    }
+  
+    public function friends()
+    {
+        return $this->hasMany(Friend::class, 'user_id', 'friend_id');
     }
 }

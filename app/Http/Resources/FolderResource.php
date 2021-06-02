@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserBasicResource extends JsonResource
+class FolderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +15,7 @@ class UserBasicResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'nickname' => $this->nickname,
-            'photo' => new MediaResource(User::findOrFail($this->id)->media),
+            'name' => $this->name,
         ];
     }
 }
