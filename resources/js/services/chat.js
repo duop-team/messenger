@@ -16,5 +16,12 @@ export default {
     },
     async createChat(payload) {
         return await axios.post('/api/chats', payload);
+    },
+    async setChatPhoto(chat, payload) {
+        return await axios.post(`/api/chat/${chat}/media`, payload, {
+            'headers': {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 }

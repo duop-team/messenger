@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'nickname',
+        'phone',
         'email',
         'password',
         'media_id',
@@ -70,6 +71,11 @@ class User extends Authenticatable
         return $this->hasMany(Message::class);
     }
 
+    public function sms_codes()
+    {
+        return $this->hasOne(SmsCode::class, 'id');
+    }
+  
     public function friends()
     {
         return $this->hasMany(Friend::class, 'user_id', 'friend_id');

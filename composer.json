@@ -16,6 +16,7 @@
         "laravel/sanctum": "^2.9",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
+        "nexmo/laravel": "^2.4",
         "pusher/pusher-php-server": "^6.1"
     },
     "require-dev": {

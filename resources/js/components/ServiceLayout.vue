@@ -50,6 +50,7 @@ export default {
 
     .card {
         margin: -80px auto 0;
+        max-width: 480px;
     }
 }
 

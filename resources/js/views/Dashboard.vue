@@ -4,7 +4,9 @@
             <div class="sidebar__menu">
                 <sidebar-button icon="profile">My profile</sidebar-button>
                 <sidebar-button icon="settings">Settings</sidebar-button>
-                <sidebar-button icon="create_chat" @click.native="$store.dispatch('chats/toggleCreateChat')">Create chat
+                <sidebar-button icon="create_chat"
+                                @click.native="$store.dispatch('chats/openModal', 'createChat')">
+                    Create chat
                 </sidebar-button>
             </div>
             <div class="sidebar__list">
@@ -19,7 +21,8 @@
             <chat-content v-else-if="isSelectedChat"></chat-content>
         </main>
         <modal :class="{'is-active': this.modalActive}">
-            <create-chat-modal v-if="$store.getters['chats/isCreatingChat']"></create-chat-modal>
+            <create-chat-modal v-if="modal === 'createChat'"></create-chat-modal>
+            <photo-cropper v-else-if="modal === 'cropper'"></photo-cropper>
         </modal>
     </div>
 </template>
@@ -31,9 +34,11 @@ export default {
         isSelectedChat() {
             return Object.entries(this.$store.getters['chats/currentChat']).length > 0;
         },
+        modal() {
+            return this.$store.getters['chats/currentModal']
+        },
         modalActive() {
-            /* TODO */
-            return this.$store.getters['chats/isCreatingChat'];
+            return this.$store.getters['chats/currentModal'];
         }
     },
     data() {
@@ -76,7 +81,6 @@ export default {
         width: 100%;
         max-width: 80px;
         background-color: #63B69D;
-        padding-top: 7px;
     }
 
     .sidebar__search {
@@ -94,10 +98,8 @@ export default {
 
 .dashboard__content {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     flex: 1 1 auto;
-    max-width: 100%;
 }
 </style>

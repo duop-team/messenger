@@ -19,7 +19,7 @@ export default {
 .cancel-btn {
     cursor: pointer;
     font-size: 16px;
-    font-family: Sarabun;
+    font-family: Sarabun, sans-serif;
     user-select: none;
     border: 0;
     outline: 0;

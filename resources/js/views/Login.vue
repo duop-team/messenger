@@ -6,9 +6,10 @@
             </div>
             <div class="card__form">
                 <form method="post" @submit.prevent="login">
-                    <input-field type="email" name="email" v-model="form.email" required="true" autofocus>Email
+                    <input-field type="tel" name="phone" v-model="form.phone" required="true" autofocus class="form__field">Phone
                     </input-field>
-                    <input-field type="password" name="password" v-model="form.password" required="true">Password
+                    <button @click="send" type="button">Send code</button>
+                    <input-field type="text" name="code" v-model="form.code" required="true" class="form__field">Password
                     </input-field>
                     <div class="form__footer">
                         <loader v-if="$store.getters['auth/loading']"></loader>
@@ -28,13 +29,15 @@
 </template>
 
 <script>
+import auth from "../services/auth";
+
 export default {
     name: "Login",
     data() {
         return {
             form: {
-                email: '',
-                password: ''
+                phone: '',
+                code: ''
             }
         }
     },
@@ -42,6 +45,9 @@ export default {
         login() {
             this.$store.dispatch('auth/setForm', this.form);
             this.$store.dispatch('auth/login');
+        },
+        send() {
+            auth.code().then(r => console.log(r));
         }
     },
     computed: {

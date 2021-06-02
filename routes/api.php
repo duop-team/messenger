@@ -7,6 +7,7 @@ use App\Http\Controllers\FriendController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\SmsCodeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -87,4 +88,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::patch('/message/{message_id}', [MessageController::class, 'update']);
 
     Route::delete('/message/{messages_id}', [MessageController::class, 'destroy']);
+
 });
+
+Route::post('/code', [SmsCodeController::class, 'store']);
