@@ -61,7 +61,7 @@ input {
     width: 100%;
     height: 100%;
     padding-left: 30px;
-    font-family: Lexend Deca;
+    font-family: 'M PLUS 1p', sans-serif;
     font-size: 13px;
 
     &::placeholder {

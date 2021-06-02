@@ -33,13 +33,13 @@ class Chat extends Model
         return $this->hasMany(Participant::class);
     }
 
-    public function hasParticipant($user):bool
+    public function hasParticipant($user): bool
     {
         return !!$this->participants()->where('user_id', $user->id);
     }
 
     public function folders()
     {
-        return $this->hasMany(Folder::class);
+        return $this->belongsToMany(Folder::class);
     }
 }

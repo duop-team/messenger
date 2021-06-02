@@ -9,8 +9,10 @@
             padding: 0;
         }
     </style>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Hind+Madurai&family=M+PLUS+1p:wght@400;500;700;800&family=Nunito:wght@400;600;700&family=Sarabun&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <title>Messenger</title>
 </head>

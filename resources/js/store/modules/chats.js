@@ -6,14 +6,15 @@ export const state = {
     loading: false,
     chat: null,
     chatInfo: false,
-    messageList: [],
     chatList: [],
     createChat: false,
     createChatForm: {
         title: '',
-        /* TODO: another fields such as participants, description, etc */
+        participants: []
     },
-    fondUsers: []
+    fondUsers: [],
+    modal: '',
+    openedModals: []
 }
 
 export const mutations = {
@@ -25,16 +26,6 @@ export const mutations = {
     },
     SET_CHAT_INFO(state, chatInfo) {
         state.chatInfo = chatInfo;
-
-        if (state.createChat && state.chatInfo) {
-            state.createChat = false;
-        }
-    },
-    SET_MESSAGE_LIST(state, list) {
-        state.messageList = list;
-    },
-    PUSH_MESSAGE_LIST(state, value) {
-        state.messageList.push(value);
     },
     SET_CHAT_LIST(state, list) {
         state.chatList = list;
@@ -44,15 +35,18 @@ export const mutations = {
     },
     SET_CREATE_CHAT(state, value) {
         state.createChat = value;
-        if (state.chatInfo && state.createChat) {
-            state.chatInfo = false;
-        }
     },
     SET_NEW_CHAT(state, data) {
         state.createChatForm = data;
     },
     SET_FOND_USERS(state, data) {
         state.fondUsers = data;
+    },
+    SET_MODAL(state, value) {
+        state.modal = value;
+    },
+    SET_MODALS(state, data) {
+        state.openedModals = data;
     }
 }
 
@@ -66,9 +60,6 @@ export const getters = {
     infoActive(state) {
         return state.chatInfo;
     },
-    messageList(state) {
-        return state.messageList;
-    },
     chatList(state) {
         return state.chatList;
     },
@@ -80,6 +71,12 @@ export const getters = {
     },
     getFondUsers(state) {
         return state.fondUsers;
+    },
+    currentModal(state) {
+        return state.modal;
+    },
+    openedModals(state) {
+        return state.openedModals;
     }
 }
 
@@ -87,11 +84,25 @@ export const actions = {
     toggleInfoBar({commit, getters}) {
         commit('SET_CHAT_INFO', !getters["infoActive"]);
     },
-    toggleCreateChat({commit, getters}) {
-        commit('SET_CREATE_CHAT', !getters["isCreatingChat"]);
+    // toggleCreateChat({commit, getters}) {
+    //     // commit('SET_CREATE_CHAT', !getters["isCreatingChat"]);
+    //     if (!getters['currentModal']) commit('SET_MODAL', 'createChat');
+    //     else commit('SET_MODAL', '');
+    // },
+    closeModal({commit, getters}) {
+        let modals = getters['openedModals'];
+        if (modals) {
+            commit('SET_MODAL', modals.pop());
+            commit('SET_MODALS', modals);
+        }
     },
-    clearMessageList({commit}) {
-        commit('SET_MESSAGE_LIST', []);
+    openModal({getters, commit}, value) {
+        let modals = getters['openedModals'];
+        if (getters['currentModal']) {
+            modals.push(getters['currentModal']);
+        }
+        commit('SET_MODAL', value);
+        commit('SET_MODALS', modals);
     },
     clearChatList({commit}) {
         commit('SET_CHAT_LIST', []);
@@ -113,31 +124,15 @@ export const actions = {
 
         commit('SET_CHAT', chat);
 
-        dispatch('listenChatMessages', chat.id);
-        dispatch('listMessages');
-    },
-    listenChatMessages({commit}, id) {
-        Echo.private(`chat.${id}`)
-            .listen('MessageSent', e => {
-                commit('PUSH_MESSAGE_LIST', e);
-            });
-    },
-    listMessages({getters, commit, dispatch}) {
-        commit('SET_LOADING', true);
-        chatService.listMessages(getters['currentChat'].id).then(r => {
-            commit('SET_LOADING', false);
-            dispatch('clearMessageList');
-            commit('SET_MESSAGE_LIST', r.data);
-        }).catch(() => {
-            commit('SET_LOADING', false);
-            /* TODO: there must be error handler */
-        });
+        this.dispatch('messages/listenChatMessages', chat.id);
+        // dispatch('listMessages');
+        this.dispatch('messages/listMessages');
     },
     createChat({getters, commit, dispatch}) {
         commit('SET_LOADING', true);
         chatService.createChat(getters['newChatForm']).then(r => {
             commit('SET_LOADING', false);
-            alert(`Chat ${r.data.title} is created`);
+            // alert(`Chat ${r.data.title} is created`);
             dispatch('getChatList');
             /* TODO: prevent reloading of full list */
             dispatch('toggleCreateChat');
@@ -154,12 +149,13 @@ export const actions = {
         }).catch(() => alert('This user doesn\'t exists'))
         /* TODO: Error handlers!!! */
     },
-    searchUser({commit}, nickname) {
+    searchUser({commit, rootGetters}, nickname) {
         commit('SET_LOADING', true);
         chatService.findUser({nickname: nickname}).then(r => {
             commit('SET_LOADING', false);
-            // console.log(r.data);
-            commit('SET_FOND_USERS', r.data);
+            let users = r.data;
+            commit('SET_FOND_USERS',
+                users.filter(u => u.nickname !== rootGetters['auth/currentUser'].nickname));
         });
     }
 }
