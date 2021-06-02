@@ -1,17 +1,46 @@
 <template>
     <service-layout card-title="Registration">
         <div slot="card">
-            <form action="#" method="post" @submit.prevent="register">
-                <input-field type="text" name="name" v-model="form.name" required="true" class="form__field">Full name</input-field>
-                <input-field type="text" name="nickname" v-model="form.nickname" required="true" class="form__field">Nickname</input-field>
-                <input-field type="tel" name="phone" v-model="form.phone" required="true" class="form__field">Phone</input-field>
-                <button @click="send" type="button">Send code</button>
-                <input-field type="text" name="password" v-model="form.code" required="true" class="form__field">Code verification
+            <form action="#" method="post" @submit.prevent="setNames" class="card__form"
+                  v-if="$store.getters['auth/formStep'] === 'names'">
+                <input-field type="text" name="name" v-model="form.name" required="true" class="form__field">Full name
                 </input-field>
-                <loader v-if="$store.getters['auth/loading']"></loader>
-                <!--TODO: show error and remove it on typing-->
-                <div class="form__submit">
-                    <RoundedButton type="submit">Submit</RoundedButton>
+                <input-field type="text" name="nickname" v-model="form.nickname" required="true" class="form__field">
+                    Nickname
+                </input-field>
+                <div class="form__footer">
+                    <loader v-if="$store.getters['auth/loading']"></loader>
+                    <div v-else-if="hasErrors" class="form__error">{{ $store.getters['auth/error'] }}</div>
+                    <div class="form__submit">
+                        <RoundedButton type="submit">Continue</RoundedButton>
+                    </div>
+                </div>
+            </form>
+
+            <form action="#" method="post" @submit.prevent="sendCode" class="card__form"
+                  v-else-if="$store.getters['auth/formStep'] === 'phone'">
+                <input-field type="tel" name="phone" v-model="form.phone" required="true" class="form__field">Phone
+                </input-field>
+                <div class="form__footer">
+                    <loader v-if="$store.getters['auth/loading']"></loader>
+                    <div v-else-if="hasErrors" class="form__error">{{ $store.getters['auth/error'] }}</div>
+                    <div class="form__submit">
+                        <RoundedButton type="submit">Continue</RoundedButton>
+                    </div>
+                </div>
+            </form>
+
+            <form action="#" method="post" @submit.prevent="register" class="card__form"
+                  v-else-if="$store.getters['auth/formStep'] === 'code'">
+                <input-field type="text" name="password" v-model="form.code" required="true" class="form__field">Code
+                    verification
+                </input-field>
+                <div class="form__footer">
+                    <loader v-if="$store.getters['auth/loading']"></loader>
+                    <div v-else-if="hasErrors" class="form__error">{{ $store.getters['auth/error'] }}</div>
+                    <div class="form__submit">
+                        <RoundedButton type="submit">Submit</RoundedButton>
+                    </div>
                 </div>
             </form>
         </div>
@@ -23,8 +52,6 @@
 </template>
 
 <script>
-import auth from "../services/auth";
-
 export default {
     name: "Register",
     beforeMount() {
@@ -41,18 +68,41 @@ export default {
             errors: {}
         }
     },
+    watch: {
+        form: {
+            deep: true,
+            handler() {
+                if (this.$store.getters['auth/error']) {
+                    this.$store.commit('auth/SET_ERROR', '');
+                }
+            }
+        }
+    },
     methods: {
         register() {
             this.$store.dispatch('auth/setForm', this.form);
             this.$store.dispatch('auth/register');
         },
-        send() {
-            auth.code().then(r => console.log(r));
+        sendCode() {
+            this.$store.dispatch('auth/setForm', this.form);
+            this.$store.dispatch('auth/checkPhone').then(() => {
+                this.$store.dispatch('auth/setStep', 'code')
+            });
+
+            if (!this.hasErrors) {
+                this.$store.dispatch('auth/sendCode', this.form.code);
+            }
+        },
+        setNames() {
+            this.$store.dispatch('auth/setForm', this.form);
+            this.$store.dispatch('auth/checkNickname').then(() => {
+                this.$store.dispatch('auth/setStep', 'phone');
+            });
         }
     },
     computed: {
         hasErrors() {
-            return Object.keys(this.errors).length > 0;
+            return this.$store.getters['auth/error'];
         }
     }
 }

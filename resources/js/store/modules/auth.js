@@ -1,4 +1,5 @@
 import authService from "../../services/auth";
+import chatService from "../../services/chat";
 import router from "../../routes";
 
 export const namespaced = true;
@@ -8,7 +9,8 @@ export const state = {
     user: null,
     loading: false,
     formType: 'auth',
-    formStep: 'phone'
+    formStep: 'phone',
+    error: ''
 }
 
 export const mutations = {
@@ -31,19 +33,20 @@ export const mutations = {
     },
     SET_STEP(state, data) {
         state.formStep = data;
-    }
+    },
+    SET_ERROR(state, data) {
+        state.error = data;
+    },
 }
 
 
 export const getters = {
     isLoggedIn(state) {
         return !!state.user;
-    }
-    ,
+    },
     currentUser(state) {
         return state.user;
-    }
-    ,
+    },
     loading(state) {
         return state.loading;
     },
@@ -52,10 +55,40 @@ export const getters = {
     },
     formStep(state) {
         return state.formStep;
+    },
+    error(state) {
+        return state.error;
     }
 }
 
 export const actions = {
+    async checkNickname({getters, commit}) {
+        commit('SET_ERROR', '');
+        commit('SET_LOADING', true);
+        await chatService.findUser({nickname: getters['formData'].nickname})
+            .then(r => {
+                for (const item of r.data) {
+                    if (item.nickname === getters['formData'].nickname) {
+                        commit('SET_ERROR', 'Nickname already taken');
+                        break;
+                    }
+                }
+                commit('SET_LOADING', false);
+            });
+    },
+    async checkPhone({getters, commit}) {
+        commit('SET_ERROR', '');
+        commit('SET_LOADING', true);
+        await chatService.findUser({phone: getters['formData'].phone}).then(r => {
+            for (const item of r.data) {
+                if (item.phone === getters['formData'].phone) {
+                    commit('SET_ERROR', 'Phone already taken');
+                    break;
+                }
+            }
+            commit('SET_LOADING', false);
+        });
+    },
     switchForm({commit}, type) {
         switch (type) {
             case 'login':
@@ -72,15 +105,18 @@ export const actions = {
 
         commit('SET_FORM_TYPE', type);
     },
-    setStep({commit}, value) {
-        commit('SET_STEP', value);
+    setStep({commit, getters}, value) {
+        if (getters['error'] === '') {
+            commit('SET_STEP', value);
+        }
     },
     setForm({commit}, payload) {
         commit('SET_FORM', payload);
     },
     sendCode({commit}, payload) {
+        commit('SET_LOADING', true);
         authService.code(payload).then(r => {
-            commit('SET_STEP', 'code')
+            commit('SET_LOADING', false);
         });
     },
     login({commit, getters}) {
@@ -104,9 +140,9 @@ export const actions = {
                 commit('SET_FORM', {});
                 router.replace('/chats')
             })
-            .catch(e => {
+            .catch(() => {
                 commit('SET_LOADING', false);
-                // this.errors = e.response.data.errors
+                commit('SET_ERROR', 'Incorrect sms code');
             })
     },
     logout({commit}) {
