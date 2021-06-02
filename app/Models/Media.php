@@ -13,6 +13,8 @@ class Media extends Model
 
     protected $fillable = ['content'];
 
+    public $timestamps = false;
+
     public function users()
     {
         return $this->hasMany(User::class);
