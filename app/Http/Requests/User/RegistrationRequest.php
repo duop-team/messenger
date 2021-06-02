@@ -24,10 +24,10 @@ class RegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'nickname' => ['required', 'string', 'max:255', 'unique:users'],
-            'phone' => ['required', 'string', 'unique:users'],
-            'code' => ['required', 'min:1', 'max:6']
+            'name' => ['required', 'string', 'min:1', 'max:255'],
+            'nickname' => ['required', 'string', 'min:1', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string', 'unique:users', 'min:3'],
+            'code' => ['required', 'min:5', 'max:5']
         ];
     }
 }

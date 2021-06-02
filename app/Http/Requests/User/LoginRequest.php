@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'phone' => ['required', 'string', 'min:3'],
-            'code' => ['required', 'min:5, max:6']
+            'code' => ['required', 'min:5, max:5']
         ];
     }
 }
