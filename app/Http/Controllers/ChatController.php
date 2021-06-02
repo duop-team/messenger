@@ -16,7 +16,7 @@ class ChatController extends Controller
 {
     public function index()
     {
-        $participant = Participant::select('chat_id')->where('user_id', User::find(1));
+        $participant = Participant::select('chat_id')->where('user_id', Auth::id());
         return Chat::whereIn('id', $participant)->get();
     }
 
@@ -28,14 +28,12 @@ class ChatController extends Controller
         ]);
 
         $chat->participants()->create([
-            'user_id' => Auth::id(),
-            'access_rule_id' => null
+            'user_id' => Auth::id()
         ]);
         if ($request->has('participants')) {
             foreach ($request->participants as $participant) {
                 $chat->participants()->create([
-                    'user_id' => User::where('nickname', $participant)->firstOrFail()->id,
-                    'access_rule_id' => null
+                    'user_id' => User::where('nickname', $participant)->firstOrFail()->id
                 ]);
             }
         }

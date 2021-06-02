@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
-    public function uploadImage(Request $request)
+    private function uploadImage($image)
     {
         $currentMedia = Media::create([
-            'content' => Storage::putFile('/public/media', $request->image),
+            'content' => Storage::putFile('/public/media', $image),
         ]);
         return $currentMedia->id;
     }
@@ -26,7 +26,7 @@ class MediaController extends Controller
         if (Auth::id() !== $user_id) {
             return response()->noContent(403);
         }
-        return User::findOrFail($user_id)->update(["media_id" => $this->uploadImage($request)]);
+        return User::findOrFail($user_id)->update(["media_id" => $this->uploadImage($request->image)]);
     }
 
     public function chatUploadImage(ImageUploadRequest $request, $group_id)
@@ -34,7 +34,7 @@ class MediaController extends Controller
         if (!Chat::where('user_id', Auth::id())->first()) {
             return response()->noContent(403);
         }
-        return Chat::findOrFail($group_id)->update(["media_id" => $this->uploadImage($request)]);
+        return Chat::findOrFail($group_id)->update(["media_id" => $this->uploadImage($request->image)]);
     }
 
     public function userUnloadImage($user_id)
