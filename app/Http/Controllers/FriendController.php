@@ -10,7 +10,7 @@ class FriendController extends Controller
 {
     public function index()
     {
-        $friend = Friend::where('user_id', 1)->get();
+        $friend = Friend::where('user_id', Auth::id())->get();
         if ($friend->isEmpty()) {
             return response()->noContent(404);
         }
