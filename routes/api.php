@@ -23,19 +23,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
-
 Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'index']);
 
     Route::patch('/user', [UserController::class, 'edit']);
-
-    Route::post('/user/search', [UserController::class, 'search']);
 
     Route::get('/user/friends', [FriendController::class, 'index']);
 
@@ -90,5 +83,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/message/{messages_id}', [MessageController::class, 'destroy']);
 
 });
+
+Route::post('/user/search', [UserController::class, 'search']);
 
 Route::post('/code', [SmsCodeController::class, 'store']);
