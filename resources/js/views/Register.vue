@@ -27,6 +27,9 @@ import auth from "../services/auth";
 
 export default {
     name: "Register",
+    beforeMount() {
+        this.$store.dispatch('auth/switchForm', 'register');
+    },
     data() {
         return {
             form: {

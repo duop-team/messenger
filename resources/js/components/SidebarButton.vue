@@ -66,6 +66,7 @@ export default {
 
 .icon {
     height: 30px;
+    width: 30px;
 }
 
 .button__text {

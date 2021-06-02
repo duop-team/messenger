@@ -13,8 +13,8 @@ export default {
     async getAuthUser() {
         return await axios.get('/api/user');
     },
-    async code() {
+    async code(payload) {
         await axios.get("/sanctum/csrf-cookie");
-        await axios.post("/api/code");
+        await axios.post("/api/code", payload);
     }
 }

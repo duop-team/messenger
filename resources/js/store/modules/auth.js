@@ -6,7 +6,9 @@ export const namespaced = true;
 export const state = {
     form: {},
     user: null,
-    loading: false
+    loading: false,
+    formType: 'auth',
+    formStep: 'phone'
 }
 
 export const mutations = {
@@ -18,6 +20,17 @@ export const mutations = {
     },
     SET_FORM(state, data) {
         state.form = data;
+    },
+    SET_FORM_TYPE(state, data) {
+        state.form = data;
+        if (data === 'login') {
+            state.formStep = 'phone';
+        } else {
+            state.formStep = 'names';
+        }
+    },
+    SET_STEP(state, data) {
+        state.formStep = data;
     }
 }
 
@@ -36,12 +49,39 @@ export const getters = {
     },
     formData(state) {
         return state.form;
+    },
+    formStep(state) {
+        return state.formStep;
     }
 }
 
 export const actions = {
+    switchForm({commit}, type) {
+        switch (type) {
+            case 'login':
+                commit('SET_STEP', 'phone');
+                break;
+
+            case 'register':
+                commit('SET_STEP', 'names');
+                break;
+
+            default:
+                return;
+        }
+
+        commit('SET_FORM_TYPE', type);
+    },
+    setStep({commit}, value) {
+        commit('SET_STEP', value);
+    },
     setForm({commit}, payload) {
         commit('SET_FORM', payload);
+    },
+    sendCode({commit}, payload) {
+        authService.code(payload).then(r => {
+            commit('SET_STEP', 'code')
+        });
     },
     login({commit, getters}) {
         commit('SET_LOADING', true);
@@ -81,8 +121,7 @@ export const actions = {
                 commit('SET_LOADING', false);
                 // console.log(e)
             });
-    }
-    ,
+    },
     getAuthUser({commit}) {
         commit('SET_LOADING', true);
         return authService.getAuthUser()

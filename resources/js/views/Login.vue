@@ -2,14 +2,23 @@
     <service-layout card-title="Sign in">
         <div slot="card">
             <div class="card__description">
-                <p>Please, enter your country, phone number or whatever they want from you</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, consequuntur?</p>
             </div>
             <div class="card__form">
-                <form method="post" @submit.prevent="login">
+                <form method="post" @submit.prevent="sendCode()" v-if="$store.getters['auth/formStep'] === 'phone'">
                     <input-field type="tel" name="phone" v-model="form.phone" required="true" autofocus class="form__field">Phone
                     </input-field>
-                    <button @click="send" type="button">Send code</button>
-                    <input-field type="text" name="code" v-model="form.code" required="true" class="form__field">Password
+                    <div class="form__footer">
+                        <loader v-if="$store.getters['auth/loading']"></loader>
+                        <!--TODO: show error and remove it on typing-->
+                        <div class="form__submit">
+                            <RoundedButton type="submit">Submit</RoundedButton>
+                        </div>
+                    </div>
+                </form>
+
+                <form method="post" @submit.prevent="login()" v-if="$store.getters['auth/formStep'] === 'code'">
+                    <input-field type="text" name="code" v-model="form.code" required="true" class="form__field">Code from SMS
                     </input-field>
                     <div class="form__footer">
                         <loader v-if="$store.getters['auth/loading']"></loader>
@@ -29,10 +38,11 @@
 </template>
 
 <script>
-import auth from "../services/auth";
-
 export default {
     name: "Login",
+    beforeMount() {
+        this.$store.dispatch('auth/switchForm', 'login');
+    },
     data() {
         return {
             form: {
@@ -46,8 +56,10 @@ export default {
             this.$store.dispatch('auth/setForm', this.form);
             this.$store.dispatch('auth/login');
         },
-        send() {
-            auth.code().then(r => console.log(r));
+        sendCode() {
+            this.$store.dispatch('auth/sendCode', this.form.code)
+                .then(() => this.$store.dispatch('auth/setStep', 'code'))
+                .catch();
         }
     },
     computed: {
