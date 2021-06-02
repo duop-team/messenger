@@ -10,13 +10,18 @@ use Nexmo\Laravel\Facade\Nexmo;
 
 class SmsCodeController extends Controller
 {
-    public function sendSms($code, $phone)
+    private function sendSms($code, $phone)
     {
         return Nexmo::message()->send([
             'to' => $phone,
             'from' => env('SMS_FROM'),
             'text' => 'Code: ' . $code
         ]);
+    }
+
+    private function generateCode()
+    {
+        return rand(11111, 99999);
     }
 
     public function show($user_id)
@@ -26,7 +31,7 @@ class SmsCodeController extends Controller
 
     public function store(Request $request)
     {
-        $code = rand(10000, 99999);
+        $code = $this->generateCode();
 //        $this->sendSms($code, $request->phone);
         $token = session()->token();
         return SmsCode::create([
@@ -43,7 +48,7 @@ class SmsCodeController extends Controller
         $currentTime = Carbon::now();
         $created_at = Carbon::parse($smsCodes->created_at);
         if (($created_at->diffInMinutes($currentTime) >= 1) && $currentTime->lessThan(Carbon::parse($smsCodes->valid_time))) {
-            $code = rand(10000, 99999);
+            $code = $this->generateCode();
             $this->sendSms($code, User::findOrFail($request->user_id)->phone);
             return $smsCodes->update([
                 'code' => $code,
@@ -57,6 +62,6 @@ class SmsCodeController extends Controller
 
     public function destroy(Request $request)
     {
-//        return User::findOrFail($request->user_id)->sms_codes()->delete();
+        return User::findOrFail($request->user_id)->sms_codes()->delete();
     }
 }

@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\RegistrationRequest;
 use App\Models\SmsCode;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -52,15 +50,12 @@ class RegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function register(RegistrationRequest $request)
     {
-        $this->validator($request->all())->validate();
-
         $token = session()->token();
-        $code = SmsCode::select('code')->where('session', $token)->first();
-
-        if (!isset($code)) {
-            return response()->noContent(422);
+        $code = SmsCode::select('code')->where('session', $token)->get()->last();
+        if (!isset($code) || ($code->code != (int)$request->code)) {
+            abort(422);
         }
 
         event(new Registered($user = $this->create($request->all())));
@@ -73,7 +68,7 @@ class RegisterController extends Controller
 
         return $request->wantsJson()
             ? new JsonResponse([], 201)
-            : redirect($this->redirectPath());
+            : redirect('/');
     }
 
     /**
@@ -96,21 +91,6 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         SmsCode::where('session', session()->token())->delete();
-    }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param array $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'nickname' => ['required', 'string', 'max:255', 'unique:users'],
-            'phone' => ['required', 'string', 'unique:users']
-        ]);
     }
 
     /**
