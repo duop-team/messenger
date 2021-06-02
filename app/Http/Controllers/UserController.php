@@ -23,7 +23,11 @@ class UserController extends Controller
 
     public function search(SearchRequest $request)
     {
-        return UserBasicResource::collection(User::where('nickname', 'LIKE', '%' . $request->nickname . '%')->get());
+        if ($request->has('nickname')) {
+            return UserBasicResource::collection(User::where('nickname', 'LIKE', '%' . $request->nickname . '%')->get());
+        } else if ($request->has('phone')) {
+            return UserBasicResource::collection(User::where('phone', 'LIKE', '%' . $request->phone . '%')->get());
+        }
     }
 
     public function edit(EditRequest $request)

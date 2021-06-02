@@ -24,7 +24,8 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'nickname' => ['required', 'string', 'min:1', 'max:255']
+            'nickname' => ['string', 'min:1', 'max:255'],
+            'phone' => ['string']
         ];
     }
 }

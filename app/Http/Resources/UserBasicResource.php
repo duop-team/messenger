@@ -17,6 +17,7 @@ class UserBasicResource extends JsonResource
     {
         return [
             'nickname' => $this->nickname,
+            'phone' => $this->phone,
             'photo' => new MediaResource(User::findOrFail($this->id)->media),
         ];
     }
