@@ -24,11 +24,6 @@ class SmsCodeController extends Controller
         return rand(11111, 99999);
     }
 
-    public function show($user_id)
-    {
-        return SmsCode::findOrFail($user_id);
-    }
-
     public function store(Request $request)
     {
         $code = $this->generateCode();
@@ -58,10 +53,5 @@ class SmsCodeController extends Controller
             ]);
         }
         return response(['Error: something comes wrong']);
-    }
-
-    public function destroy(Request $request)
-    {
-        return User::findOrFail($request->user_id)->sms_codes()->delete();
     }
 }

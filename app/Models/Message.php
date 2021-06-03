@@ -13,11 +13,6 @@ class Message extends Model
 
     protected $fillable = ['text', 'user_id', 'chat_id'];
 
-    public function attachments()
-    {
-        return $this->belongsTo(Attachment::class);
-    }
-
     public function chats()
     {
         return $this->belongsTo(Chat::class);
