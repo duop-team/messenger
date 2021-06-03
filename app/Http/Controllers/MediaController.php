@@ -39,13 +39,13 @@ class MediaController extends Controller
 
     public function userUnloadImage($user_id)
     {
-        $userImage = User::findOrFail($user_id)->media;
+        $userImage = User::findOrFail($user_id)->firstOrFail()->media;
         return new MediaResource($userImage);
     }
 
     public function chatUnloadImage($chat_id)
     {
-        $chatImage = Chat::findOrFail($chat_id)->media;
+        $chatImage = Chat::findOrFail($chat_id)->firstOrFail()->media;
         return new MediaResource($chatImage);
     }
 }
