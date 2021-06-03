@@ -21,9 +21,6 @@ class ChatParticipantsResource extends JsonResource
             array_push($data, $item->user_id);
         }
 
-        return [
-            'owner' => new UserBasicResource(User::where('id', $this->user_id)->first()),
-            'participants' => UserBasicResource::collection(User::findMany($data)),
-        ];
+        return UserBasicResource::collection(User::findMany($data));
     }
 }
