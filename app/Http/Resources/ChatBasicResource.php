@@ -17,6 +17,7 @@ class ChatBasicResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'about' => $this->about,
             'photo' => new MediaResource(Media::where('id', $this->media_id)->first()),

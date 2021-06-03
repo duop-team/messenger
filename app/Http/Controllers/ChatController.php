@@ -17,7 +17,7 @@ class ChatController extends Controller
     public function index()
     {
         $participant = Participant::select('chat_id')->where('user_id', Auth::id());
-        return Chat::whereIn('id', $participant)->get();
+        return ChatBasicResource::collection(Chat::whereIn('id', $participant)->get());
     }
 
     public function store(StoreRequest $request)
