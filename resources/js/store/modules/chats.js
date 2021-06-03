@@ -6,6 +6,7 @@ export const state = {
     loading: false,
     chat: null,
     participants: [],
+    newMembers: [],
     chatInfo: false,
     chatList: [],
     createChat: false,
@@ -39,6 +40,9 @@ export const mutations = {
     },
     PUSH_CHAT_LIST(state, value) {
         state.chatList.push(value);
+    },
+    SET_NEW_MEMBERS(state, list) {
+        state.newMembers = list;
     },
     SET_CREATE_CHAT(state, value) {
         state.createChat = value;
@@ -78,6 +82,9 @@ export const getters = {
     },
     newChatForm(state) {
         return state.createChatForm;
+    },
+    newMembers(state) {
+        return state.newMembers;
     },
     getFondUsers(state) {
         return state.fondUsers;
@@ -155,12 +162,14 @@ export const actions = {
             /* TODO: there must be error handler */
         });
     },
-    addParticipant({getters}, nickname) {
-        chatService.findUser({nickname: nickname}).then(r => {
-            chatService.addParticipant(getters['currentChat'].id, {user_id: r.data.id})
-                .then(res => alert('Participant added'))
-                .catch(() => alert('That user already a participant'))
-        }).catch(() => alert('This user doesn\'t exists'))
+    addParticipants({getters, dispatch}) {
+        chatService.addParticipant(getters['currentChat'].id, {users: getters['newMembers']})
+            .then(() => {
+                dispatch('retrieveParticipants', getters['currentChat'].id);
+            })
+            .catch(() => {
+                dispatch('retrieveParticipants');
+            })
         /* TODO: Error handlers!!! */
     },
     searchUser({commit, rootGetters}, nickname) {

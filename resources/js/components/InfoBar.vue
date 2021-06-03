@@ -14,18 +14,30 @@
             </div>
         </div>
         <div class="info__section info__section_members">
-            <ul class="participants__list">
-                <li class="participants__item" v-for="item in $store.getters['chats/participants']" :key="item.nickname">
-                    <div class="participant__photo">
-                        <img :src="item.photo.url" v-if="item.photo" class="photo">
-                        <svg-vue icon="frog" class="photo" v-else></svg-vue>
-                    </div>
-                    <div class="participant__name">
-                        <div class="participant__nickname">@{{item.nickname}}</div>
-                        <div class="participant__status">Non-implemented status</div>
-                    </div>
-                </li>
-            </ul>
+            <div class="members__top">
+                <button class="top__button">
+                    <svg-vue icon="search" class="button__icon"></svg-vue>
+                </button>
+
+                <button class="top__button" @click="$store.dispatch('chats/openModal', 'addMembers')">
+                    <svg-vue icon="add_user" class="button__icon"></svg-vue>
+                </button>
+            </div>
+            <div class="members">
+                <ul class="participants__list">
+                    <li class="participants__item" v-for="item in $store.getters['chats/participants']"
+                        :key="item.nickname">
+                        <div class="participant__photo">
+                            <img :src="item.photo.url" v-if="item.photo" class="photo">
+                            <svg-vue icon="frog" class="photo" v-else></svg-vue>
+                        </div>
+                        <div class="participant__name">
+                            <div class="participant__nickname">@{{ item.nickname }}</div>
+                            <div class="participant__status">Non-implemented status</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -42,6 +54,24 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.members__top {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+
+    .top__button {
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+        fill: #5B8377;
+        cursor: pointer;
+
+        .button__icon {
+            height: 30px;
+        }
+    }
+}
+
 .participant {
     &__photo {
         max-width: 60px;
@@ -103,10 +133,12 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
+    max-height: 100vh;
     gap: 15px;
     color: #FFFFFF;
     font-family: Nunito, sans-serif;
     font-size: 14px;
+    overflow-y: scroll;
 }
 
 .chat__button {
