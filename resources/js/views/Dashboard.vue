@@ -102,7 +102,7 @@ export default {
         flex-direction: column;
 
         .chats {
-            overflow-y: scroll;
+            overflow-y: auto;
         }
     }
 }

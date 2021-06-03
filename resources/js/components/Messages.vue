@@ -29,7 +29,7 @@ export default {
 
 <style scoped lang="scss">
 .chat__messages {
-    overflow-y: scroll;
+    overflow-y: auto;
     flex: 1 1 auto;
     list-style: none;
     margin: 0;

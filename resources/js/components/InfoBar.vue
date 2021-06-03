@@ -138,7 +138,7 @@ export default {
     color: #FFFFFF;
     font-family: Nunito, sans-serif;
     font-size: 14px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .chat__button {
