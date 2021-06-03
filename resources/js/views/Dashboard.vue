@@ -14,16 +14,20 @@
                 <div class="sidebar__search">
                     <search-field v-model="query" :icon-enabled="true"></search-field>
                 </div>
-                <chat-list></chat-list>
+                <div class="chats">
+                    <chat-list></chat-list>
+                </div>
             </div>
         </aside>
         <main class="dashboard__content">
             <loader size="100" v-if="$store.getters['chats/loading'] && !modalActive"></loader>
             <chat-content v-else-if="isSelectedChat"></chat-content>
         </main>
-        <modal :class="{'is-active': this.modalActive}">
+        <modal :class="{'is-active': this.modalActive || $store.getters['auth/loading']}">
             <create-chat-modal v-if="modal === 'createChat'"></create-chat-modal>
             <photo-cropper v-else-if="modal === 'cropper'"></photo-cropper>
+            <add-members-modal v-else-if="modal === 'addMembers'"></add-members-modal>
+            <loader v-else-if="$store.getters['auth/loading']"></loader>
         </modal>
     </div>
 </template>
@@ -94,6 +98,12 @@ export default {
 
     .sidebar__list {
         width: 480px;
+        display: flex;
+        flex-direction: column;
+
+        .chats {
+            overflow-y: scroll;
+        }
     }
 }
 
