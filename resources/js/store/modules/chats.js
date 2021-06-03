@@ -5,6 +5,7 @@ export const namespaced = true;
 export const state = {
     loading: false,
     chat: null,
+    participants: [],
     chatInfo: false,
     chatList: [],
     createChat: false,
@@ -30,6 +31,12 @@ export const mutations = {
     SET_CHAT_LIST(state, list) {
         state.chatList = list;
     },
+    SET_PARTICIPANTS(state, list) {
+        state.participants = list;
+    },
+    PUSH_PARTICIPANTS(state, list) {
+        state.participants = list;
+    },
     PUSH_CHAT_LIST(state, value) {
         state.chatList.push(value);
     },
@@ -53,6 +60,9 @@ export const mutations = {
 export const getters = {
     currentChat(state) {
         return state.chat || {};
+    },
+    participants(state) {
+        return state.participants;
     },
     loading(state) {
         return state.loading;
@@ -84,11 +94,10 @@ export const actions = {
     toggleInfoBar({commit, getters}) {
         commit('SET_CHAT_INFO', !getters["infoActive"]);
     },
-    // toggleCreateChat({commit, getters}) {
-    //     // commit('SET_CREATE_CHAT', !getters["isCreatingChat"]);
-    //     if (!getters['currentModal']) commit('SET_MODAL', 'createChat');
-    //     else commit('SET_MODAL', '');
-    // },
+    closeAllModals({commit}) {
+        commit('SET_MODAL', '');
+        commit('SET_MODALS', []);
+    },
     closeModal({commit, getters}) {
         let modals = getters['openedModals'];
         if (modals) {
@@ -107,11 +116,11 @@ export const actions = {
     clearChatList({commit}) {
         commit('SET_CHAT_LIST', []);
     },
-    getChatList({commit, dispatch}) {
+    async getChatList({commit, dispatch}) {
         commit('SET_LOADING', true);
         dispatch('clearChatList');
 
-        chatService.listChats().then(r => {
+        await chatService.listChats().then(r => {
             commit('SET_LOADING', false);
             commit('SET_CHAT_LIST', r.data);
         }).catch(() => {
@@ -121,18 +130,23 @@ export const actions = {
     },
     selectChat({commit, getters, dispatch}, chat) {
         Echo.leave(`chat.${getters['currentChat'].id}`);
+        commit('SET_PARTICIPANTS', []);
 
         commit('SET_CHAT', chat);
 
         this.dispatch('messages/listenChatMessages', chat.id);
-        // dispatch('listMessages');
         this.dispatch('messages/listMessages');
+        dispatch('retrieveParticipants', chat.id);
+    },
+    async retrieveParticipants({commit}, chat) {
+        await chatService.retrieveParticipants(chat).then(r => {
+            commit('SET_PARTICIPANTS', r.data[0]);
+        });
     },
     createChat({getters, commit, dispatch}) {
         commit('SET_LOADING', true);
         chatService.createChat(getters['newChatForm']).then(r => {
             commit('SET_LOADING', false);
-            // alert(`Chat ${r.data.title} is created`);
             dispatch('getChatList');
             /* TODO: prevent reloading of full list */
             dispatch('toggleCreateChat');

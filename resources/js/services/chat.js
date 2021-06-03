@@ -8,6 +8,9 @@ export default {
     async listChats() {
         return await axios.get('/api/user/chats');
     },
+    async retrieveParticipants(chat) {
+        return await axios.get(`/api/chat/${chat}/participants`);
+    },
     async findUser(payload) {
         return await axios.post('/api/user/search', payload);
     },

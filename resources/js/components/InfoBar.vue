@@ -1,8 +1,9 @@
 <template>
     <div class="chat__info">
         <div class="info__section info__section_top">
-            <img src="https://via.placeholder.com/165" alt="Awesome chat photo" class="chat__photo">
-            <div class="chat__title">{{$store.getters['chats/currentChat'].title}}</div>
+            <img v-if="chat.photo" :src="chat.photo.url" alt="Awesome chat photo" class="chat__photo">
+            <svg-vue icon="chat" v-else class="chat__photo"></svg-vue>
+            <div class="chat__title">{{ $store.getters['chats/currentChat'].title }}</div>
             <div class="button__wrapper">
                 <button class="chat__button chat__button_rounded">
                     <svg-vue icon="edit" class="button__icon"></svg-vue>
@@ -13,18 +14,89 @@
             </div>
         </div>
         <div class="info__section info__section_members">
-            hello world
+            <ul class="participants__list">
+                <li class="participants__item" v-for="item in $store.getters['chats/participants']" :key="item.nickname">
+                    <div class="participant__photo">
+                        <img :src="item.photo.url" v-if="item.photo" class="photo">
+                        <svg-vue icon="frog" class="photo" v-else></svg-vue>
+                    </div>
+                    <div class="participant__name">
+                        <div class="participant__nickname">@{{item.nickname}}</div>
+                        <div class="participant__status">Non-implemented status</div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: "InfoBar"
+    name: "InfoBar",
+    computed: {
+        chat() {
+            return this.$store.getters['chats/currentChat'];
+        }
+    }
 }
 </script>
 
 <style scoped lang="scss">
+.participant {
+    &__photo {
+        max-width: 60px;
+
+        .photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+    }
+
+    &__name {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    &__nickname {
+        font-family: "Mplus 1p", sans-serif;
+        color: #000000;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    &__status {
+        font-size: 11px;
+        font-family: Nunito, sans-serif;
+        color: #768978;
+    }
+
+    &s__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &s__item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background-color: #E2E2E2;
+        padding: 5px 20px 5px 10px;
+        transition: .3s;
+
+        &:nth-child(2n) {
+            background-color: #EAE9E9;
+        }
+
+        &:hover {
+            background-color: #A1D9C9;
+        }
+    }
+}
+
 .chat__info {
     width: 400px;
     background-color: #68B8A1;
@@ -81,6 +153,7 @@ export default {
     }
 
     &_members {
+        padding: 0;
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
         border-radius: 15px 15px 0 0;
         flex: 1 1 auto;

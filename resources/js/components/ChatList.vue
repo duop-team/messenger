@@ -1,6 +1,5 @@
 <template>
-    <loader v-if="$store.getters['chats/loading']"></loader>
-    <ul class="chats__list" v-else>
+    <ul class="chats__list">
         <chat-item v-for="chat in $store.getters['chats/chatList']" :key="chat.id"
                    :class="[($store.getters['chats/currentChat'].id === chat.id) ? 'is-active' : '']"
                    :title="chat.title" :photo_url="chat.photo ? chat.photo.url : ''"

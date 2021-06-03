@@ -2,7 +2,7 @@
     <div class="chat__header">
         <div class="header__inner">
             <div class="header__title" @click="showInfo">{{ $store.getters["chats/currentChat"].title }}</div>
-            <div class="header__subtitle">There are many members</div>
+            <div class="header__subtitle" v-if="$store.getters['chats/participants'].length > 0">{{$store.getters['chats/participants'].length}} members</div>
         </div>
     </div>
 </template>
