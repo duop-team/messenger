@@ -14,10 +14,10 @@
 
         <div class="modal__section_list">
             <loader v-if="$store.getters['chats/loading']"></loader>
-            <ul v-else>
-                <participant-item v-for="item in $store.getters['chats/getFondUsers']" :key="item.id"
-                                  :photo="'https://via.placeholder.com/60'"
-                                  :nickname="item.nickname" v-model="selected"></participant-item>
+            <ul class="users__list" v-else>
+                <participant-item v-for="item in $store.getters['chats/getFondUsers']" :key="item.nickname"
+                                  :photo="item.photo ? item.photo.url : ''"
+                                  :nickname="item.nickname"></participant-item>
             </ul>
         </div>
         <div class="modal__section modal__section_footer">
@@ -111,7 +111,7 @@ export default {
     }
 }
 
-ul {
+.users__list {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -119,9 +119,9 @@ ul {
     overflow-y: scroll;
     flex: 1 1 auto;
 
-    li {
-        margin: 0;
-        padding: 0;
-    }
+    //li {
+    //    margin: 0;
+    //    padding: 0;
+    //}
 }
 </style>
