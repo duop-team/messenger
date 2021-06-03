@@ -29,12 +29,12 @@ class MediaController extends Controller
         return User::findOrFail($user_id)->update(["media_id" => $this->uploadImage($request->image)]);
     }
 
-    public function chatUploadImage(ImageUploadRequest $request, $group_id)
+    public function chatUploadImage(ImageUploadRequest $request, $chat_id)
     {
         if (!Chat::where('user_id', Auth::id())->first()) {
             return response()->noContent(403);
         }
-        return Chat::findOrFail($group_id)->update(["media_id" => $this->uploadImage($request->image)]);
+        return Chat::findOrFail($chat_id)->update(["media_id" => $this->uploadImage($request->image)]);
     }
 
     public function userUnloadImage($user_id)
@@ -43,9 +43,9 @@ class MediaController extends Controller
         return new MediaResource($userImage);
     }
 
-    public function chatUnloadImage($user_id)
+    public function chatUnloadImage($chat_id)
     {
-        $chatImage = Chat::findOrFail($user_id)->media;
+        $chatImage = Chat::findOrFail($chat_id)->media;
         return new MediaResource($chatImage);
     }
 }
