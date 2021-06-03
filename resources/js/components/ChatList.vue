@@ -1,9 +1,10 @@
 <template>
-    <ul class="chats__list">
+    <loader v-if="$store.getters['chats/loading']"></loader>
+    <ul class="chats__list" v-else>
         <chat-item v-for="chat in $store.getters['chats/chatList']" :key="chat.id"
                    :class="[($store.getters['chats/currentChat'].id === chat.id) ? 'is-active' : '']"
                    :title="chat.title" :photo_url="chat.photo ? chat.photo.url : ''"
-                   @click="$store.dispatch('chats/selectChat', chat)"></chat-item>
+                   @click="select(chat)"></chat-item>
     </ul>
 </template>
 
@@ -12,6 +13,13 @@ export default {
     name: "ChatList",
     mounted() {
         this.$store.dispatch('chats/getChatList');
+    },
+    methods: {
+        select(chat) {
+            if (this.$store.getters['chats/currentChat'] !== chat.id) {
+                this.$store.dispatch('chats/selectChat', chat);
+            }
+        }
     }
 }
 </script>
