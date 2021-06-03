@@ -1,11 +1,9 @@
 <template>
-    <ul>
-        <li>
-            <chat-item v-for="chat in $store.getters['chats/chatList']" :key="chat.id"
-                       :class="[($store.getters['chats/currentChat'].id === chat.id) ? 'is-active' : '']"
-                       :title="chat.title" photo_url="https://via.placeholder.com/60"
-                       @click="$store.dispatch('chats/selectChat', chat)"></chat-item>
-        </li>
+    <ul class="chats__list">
+        <chat-item v-for="chat in $store.getters['chats/chatList']" :key="chat.id"
+                   :class="[($store.getters['chats/currentChat'].id === chat.id) ? 'is-active' : '']"
+                   :title="chat.title" :photo_url="chat.photo ? chat.photo.url : ''"
+                   @click="$store.dispatch('chats/selectChat', chat)"></chat-item>
     </ul>
 </template>
 
@@ -19,7 +17,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-ul {
+.chats__list {
     list-style: none;
     margin: 0;
     padding: 0;
