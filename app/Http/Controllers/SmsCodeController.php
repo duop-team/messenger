@@ -27,7 +27,7 @@ class SmsCodeController extends Controller
     public function store(Request $request)
     {
         $code = $this->generateCode();
-//        $this->sendSms($code, $request->phone);
+        $this->sendSms($code, $request->phone);
         $token = session()->token();
         return SmsCode::create([
             'code' => $code,
