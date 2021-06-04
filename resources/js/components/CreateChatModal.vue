@@ -46,11 +46,15 @@ export default {
         }
     },
     methods: {
+        close() {
+            this.$store.commit('chats/SET_NEW_CHAT', {title: '', participants: []});
+            this.$store.dispatch('chats/closeAllModals')
+        },
         createChat() {
             let form = this.$store.getters['chats/newChatForm'];
             form.title = this.title;
             this.$store.commit('chats/SET_NEW_CHAT', form);
-            this.$store.dispatch('chats/createChat');
+            this.$store.dispatch('chats/createChat').then(() => this.close());
         },
         searchUser() {
             if (this.query.length > 1) {
