@@ -179,9 +179,9 @@ export const actions = {
             dispatch('retrieveFriends');
         });
     },
-    createChat({getters, commit, dispatch}) {
+    async createChat({getters, commit, dispatch}) {
         commit('SET_LOADING', true);
-        chatService.createChat(getters['newChatForm']).then(r => {
+        await chatService.createChat(getters['newChatForm']).then(r => {
             commit('SET_LOADING', false);
             dispatch('getChatList');
             /* TODO: prevent reloading of full list */
@@ -191,8 +191,8 @@ export const actions = {
             /* TODO: there must be error handler */
         });
     },
-    addParticipants({getters, dispatch}) {
-        chatService.addParticipant(getters['currentChat'].id, {users: getters['newMembers']})
+    async addParticipants({getters, dispatch}) {
+        await chatService.addParticipant(getters['currentChat'].id, {users: getters['newMembers']})
             .then(() => {
                 dispatch('retrieveParticipants', getters['currentChat'].id);
             })
