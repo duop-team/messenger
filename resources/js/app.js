@@ -36,6 +36,7 @@ Vue.component('PhotoCropper', require('./components/PhotoCropper').default);
 Vue.component('AddMembersModal', require('./components/AddMembersModal').default);
 Vue.component('ProfileModal', require('./components/ProfileModal').default);
 Vue.component('SettingsModal', require('./components/SettingsModal').default);
+Vue.component('NewFriendsModal', require('./components/NewFriendsModal').default);
 
 const app = new Vue({
     el: '#app',

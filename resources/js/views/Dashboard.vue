@@ -12,6 +12,10 @@
                                 @click.native="$store.dispatch('chats/openModal', 'createChat')">
                     Create chat
                 </sidebar-button>
+                <sidebar-button icon="stars"
+                                @click.native="$store.dispatch('chats/openModal', 'friends')">
+                    Add friend
+                </sidebar-button>
             </div>
             <div class="sidebar__list">
                 <div class="sidebar__search">
@@ -34,6 +38,7 @@
             <profile-modal v-else-if="modal === 'myProfile'"></profile-modal>
             <profile-modal v-else-if="modal === 'profile'"></profile-modal>
             <settings-modal v-else-if="modal === 'settings'"></settings-modal>
+            <new-friends-modal v-else-if="modal === 'friends'"></new-friends-modal>
         </modal>
     </div>
 </template>
