@@ -8,7 +8,7 @@
                 <button class="chat__button chat__button_rounded">
                     <svg-vue icon="logout" class="button__icon"></svg-vue>
                 </button>
-                <button class="chat__button chat__button_rounded">
+                <button class="chat__button chat__button_rounded" @click="setPhoto()">
                     <svg-vue icon="settings" class="button__icon"></svg-vue>
                 </button>
             </div>
@@ -54,8 +54,12 @@ export default {
         selectUser(user) {
             this.$store.commit('chats/SET_SELECTED_USER', user);
             this.$store.dispatch('chats/openModal', 'profile');
+        },
+        setPhoto() {
+            this.$store.commit('chats/SET_TARGET', {target: 'chat', value: this.chat.id});
+            this.$store.dispatch('chats/openModal', 'cropper');
         }
-    }
+    },
 
 }
 </script>
