@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Chat\EditRequest;
 use App\Http\Requests\Chat\StoreRequest;
-use App\Http\Resources\ChatResource;
+use App\Http\Resources\ChatBasicResource;
 use App\Models\Chat;
 use App\Models\Message;
 use App\Models\Participant;
@@ -17,7 +17,7 @@ class ChatController extends Controller
     public function index()
     {
         $participant = Participant::select('chat_id')->where('user_id', Auth::id());
-        return Chat::whereIn('id', $participant)->get();
+        return ChatBasicResource::collection(Chat::whereIn('id', $participant)->get());
     }
 
     public function store(StoreRequest $request)
@@ -43,7 +43,7 @@ class ChatController extends Controller
 
     public function show($chat_id)
     {
-        return new ChatResource(Chat::findOrFail($chat_id));
+        return new ChatBasicResource(Chat::findOrFail($chat_id));
     }
 
     public function edit(EditRequest $request, $chat_id)

@@ -1,13 +1,14 @@
 <template>
-    <div class="chat__item" @click="select">
+    <li class="chat__item" @click="select">
         <div class="chat__photo">
-            <img :src="photo_url" alt="Awesome chat photo" height="60">
+            <img :src="photo_url" v-if="photo_url !== ''" alt="Awesome chat photo" class="photo">
+            <svg-vue v-else icon="chat" class="photo"></svg-vue>
         </div>
         <div class="chat__details">
             <div class="chat__title">{{ title }}</div>
             <div class="chat__message">There must be latest message, but i can't get it</div>
         </div>
-    </div>
+    </li>
 </template>
 
 <script>
@@ -25,6 +26,7 @@ export default {
 <style scoped lang="scss">
 .chat__item {
     padding: 10px;
+    gap: 10px;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -43,11 +45,12 @@ export default {
 }
 
 .chat__photo {
-    margin-right: 10px;
+    display: flex;
     max-width: 60px;
 
-    img {
+    .photo {
         border-radius: 50%;
+        height: 60px;
     }
 }
 

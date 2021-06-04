@@ -2,10 +2,11 @@
     <li class="participants__item">
         <div class="participant__info">
             <div class="participant__photo">
-                <img :src="photo" class="photo">
+                <img :src="photo" v-if="photo" class="photo">
+                <svg-vue icon="frog" class="photo" v-else></svg-vue>
             </div>
             <div class="participant__name">
-                <div class="participant__nickname">{{nickname}}</div>
+                <div class="participant__nickname">{{ nickname }}</div>
                 <div class="participant__status">Non-implemented status</div>
             </div>
         </div>
@@ -18,19 +19,48 @@
 <script>
 export default {
     name: "ParticipantItem",
-    props: ['photo', 'nickname'],
+    props: {
+        photo: {
+            type: String
+        },
+        nickname: {
+            type: String
+        },
+        type: {
+            type: String,
+            default: 'newChat'
+        }
+    },
     methods: {
         onChange(e) {
-            let form = this.$store.getters['chats/newChatForm'];
-            let participants = form.participants;
+            switch (this.type) {
+                case 'newChat':
+                    let form = this.$store.getters['chats/newChatForm'];
+                    let participants = form.participants;
 
-            if (e.target.checked) {
-                form.participants.push(this.nickname);
-            } else {
-                form.participants = participants.filter(i => i !== this.nickname);
+                    if (e.target.checked) {
+                        form.participants.push(this.nickname);
+                    } else {
+                        form.participants = participants.filter(i => i !== this.nickname);
+                    }
+
+                    this.$store.commit('chats/SET_NEW_CHAT', form);
+
+                    break;
+                case 'addMembers':
+                    let data = this.$store.getters['chats/newMembers'];
+                    let members = data;
+
+                    if (e.target.checked) {
+                        data.push(this.nickname);
+                    } else {
+                        data = members.filter(i => i !== this.nickname);
+                    }
+
+                    this.$store.commit('chats/SET_NEW_MEMBERS', data);
+
+                    break;
             }
-
-            this.$store.commit('chats/SET_NEW_CHAT', form);
         }
     }
 }

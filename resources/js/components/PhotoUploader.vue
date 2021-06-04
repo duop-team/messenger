@@ -1,8 +1,9 @@
 <template>
     <div class="photo__uploader">
-        <div class="photo photo__empty">
+        <div class="photo photo__empty" v-if="!$store.getters['auth/currentUser'].photo">
             <svg-vue icon="camera" class="photo__icon"></svg-vue>
         </div>
+        <img :src="$store.getters['auth/currentUser'].photo.url" v-else height="60" class="image">
     </div>
 </template>
 
@@ -13,6 +14,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.image {
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+}
 .photo {
     display: flex;
     justify-content: center;

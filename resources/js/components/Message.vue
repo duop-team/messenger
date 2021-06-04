@@ -2,8 +2,8 @@
     <li :class="{'chat__message_sender': isSender}">
         <div class="message__inner">
             <div class="sender__photo" v-if="!isSender">
-                <!--TODO: replace placeholder with a real photo-->
-                <img src="https://via.placeholder.com/60" alt="Awesome avatar">
+                <img v-if="photo" :src="photo" alt="Awesome avatar" class="photo">
+                <svg-vue icon="frog" class="photo" v-else></svg-vue>
             </div>
             <div class="message__content">
                 <div class="message__sender" v-if="!isSender">@{{ sender }}</div>
@@ -20,7 +20,7 @@
 <script>
 export default {
     name: "Message",
-    props: ['sender'],
+    props: ['photo', 'sender'],
     computed: {
         isSender() {
             return this.sender === this.$store.getters['auth/currentUser'].nickname
@@ -62,7 +62,7 @@ export default {
     flex-flow: column nowrap;
     justify-content: flex-end;
 
-    img {
+    .photo {
         margin-top: auto;
         margin-bottom: 0;
         border-radius: 50%;

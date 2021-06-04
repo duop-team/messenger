@@ -16,8 +16,8 @@ class ChatsFolderResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name' => $this->name,
-            'chats' => ChatResource::collection($this->chats),
+            'name' => Chat::find($this->id),
+            'chats' => ChatBasicResource::collection(Chat::with('folders')->get()),
         ];
     }
 }

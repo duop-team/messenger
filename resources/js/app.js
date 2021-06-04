@@ -33,6 +33,9 @@ Vue.component('InfoBar', require('./components/InfoBar').default);
 Vue.component('PhotoUploader', require('./components/PhotoUploader').default);
 Vue.component('ParticipantItem', require('./components/ParticipantItem').default);
 Vue.component('PhotoCropper', require('./components/PhotoCropper').default);
+Vue.component('AddMembersModal', require('./components/AddMembersModal').default);
+Vue.component('ProfileModal', require('./components/ProfileModal').default);
+Vue.component('SettingsModal', require('./components/SettingsModal').default);
 
 const app = new Vue({
     el: '#app',

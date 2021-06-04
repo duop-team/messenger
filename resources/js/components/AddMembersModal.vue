@@ -1,39 +1,31 @@
 <template>
-    <form class="modal__inner" @submit.prevent="createChat">
+    <form class="modal__inner" @submit.prevent="addMembers()">
         <div class="modal__section modal__section_top">
-            <!-- Removed because it isn't possible to set photo before chat is created -->
-<!--            <photo-uploader class="chat__photo" @click.native="$store.dispatch('chats/openModal', 'cropper')"></photo-uploader>-->
-            <input-field type="text" name="chat_title" required="true" v-model="title">Chat name</input-field>
-        </div>
-
-        <div class="modal__section modal__section_middle">
             <search-field placeholder="Find a friend..." name="find_user"
                           class="search__field" :icon-enabled="true" v-model="query"></search-field>
         </div>
 
         <div class="modal__section_list">
             <loader v-if="$store.getters['chats/loading']"></loader>
-            <ul class="users__list" v-else>
+            <ul v-else class="users__list">
                 <participant-item v-for="item in results" :key="item.nickname"
                                   :photo="item.photo ? item.photo.url : ''"
-                                  :nickname="item.nickname"></participant-item>
+                                  :nickname="item.nickname" type="addMembers"></participant-item>
             </ul>
         </div>
         <div class="modal__section modal__section_footer">
             <cancel-button @click.native="$store.dispatch('chats/closeAllModals')">Cancel</cancel-button>
-            <rounded-button type="submit">Create</rounded-button>
+            <rounded-button type="submit">Add members</rounded-button>
         </div>
     </form>
 </template>
 
 <script>
 export default {
-    name: "CreateChatModal",
+    name: "AddMembersModal",
     data() {
         return {
-            title: '',
-            query: '',
-            selected: []
+            query: ''
         }
     },
     computed: {
@@ -46,11 +38,8 @@ export default {
         }
     },
     methods: {
-        createChat() {
-            let form = this.$store.getters['chats/newChatForm'];
-            form.title = this.title;
-            this.$store.commit('chats/SET_NEW_CHAT', form);
-            this.$store.dispatch('chats/createChat');
+        addMembers() {
+            this.$store.dispatch('chats/addParticipants');
         },
         searchUser() {
             if (this.query.length > 1) {
@@ -64,11 +53,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.chat__photo {
-    width: 60px;
-    height: 60px;
-}
-
 .modal__inner {
     width: 480px;
     max-width: 420px;
@@ -116,6 +100,7 @@ export default {
 
     .search__field {
         height: 35px;
+        width: 100%;
     }
 }
 
@@ -124,7 +109,8 @@ export default {
     margin: 0;
     padding: 0;
     align-self: stretch;
-    overflow-y: scroll;
+    overflow-y: auto;
     flex: 1 1 auto;
 }
+
 </style>

@@ -8,6 +8,15 @@ export default {
     async listChats() {
         return await axios.get('/api/user/chats');
     },
+    async retrieveParticipants(chat) {
+        return await axios.get(`/api/chat/${chat}/participants`);
+    },
+    async retrieveFriends() {
+        return await axios.get(`/api/user/friends`);
+    },
+    async addFriend(payload) {
+        return await axios.post('/api/user/friends', payload);
+    },
     async findUser(payload) {
         return await axios.post('/api/user/search', payload);
     },
@@ -19,6 +28,13 @@ export default {
     },
     async setChatPhoto(chat, payload) {
         return await axios.post(`/api/chat/${chat}/media`, payload, {
+            'headers': {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    },
+    async setUserPhoto(chat, payload) {
+        return await axios.post(`/api/user/${chat}/media`, payload, {
             'headers': {
                 'Content-Type': 'multipart/form-data'
             }
