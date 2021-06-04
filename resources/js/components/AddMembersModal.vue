@@ -2,14 +2,13 @@
     <form class="modal__inner" @submit.prevent="addMembers()">
         <div class="modal__section modal__section_top">
             <search-field placeholder="Find a friend..." name="find_user"
-                          class="search__field"
-                          :icon-enabled="true" @input="searchUser()" v-model="query"></search-field>
+                          class="search__field" :icon-enabled="true" v-model="query"></search-field>
         </div>
 
         <div class="modal__section_list">
             <loader v-if="$store.getters['chats/loading']"></loader>
             <ul v-else class="users__list">
-                <participant-item v-for="item in $store.getters['chats/getFondUsers']" :key="item.nickname"
+                <participant-item v-for="item in results" :key="item.nickname"
                                   :photo="item.photo ? item.photo.url : ''"
                                   :nickname="item.nickname" type="addMembers"></participant-item>
             </ul>
@@ -27,6 +26,15 @@ export default {
     data() {
         return {
             query: ''
+        }
+    },
+    computed: {
+        results() {
+            if (this.query !== '') {
+                return this.$store.getters['chats/friendsList'].filter(f => f.nickname.includes(this.query));
+            }
+
+            return this.$store.getters['chats/friendsList'];
         }
     },
     methods: {

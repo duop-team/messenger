@@ -1,21 +1,20 @@
 <template>
     <form class="modal__inner" @submit.prevent="createChat">
         <div class="modal__section modal__section_top">
-            <!-- TODO: add avatar uploading feature -->
-            <photo-uploader class="chat__photo" @click.native="$store.dispatch('chats/openModal', 'cropper')"></photo-uploader>
+            <!-- Removed because it isn't possible to set photo before chat is created -->
+<!--            <photo-uploader class="chat__photo" @click.native="$store.dispatch('chats/openModal', 'cropper')"></photo-uploader>-->
             <input-field type="text" name="chat_title" required="true" v-model="title">Chat name</input-field>
         </div>
 
         <div class="modal__section modal__section_middle">
             <search-field placeholder="Find a friend..." name="find_user"
-                          class="search__field"
-                          :icon-enabled="true" @input="searchUser()" v-model="query"></search-field>
+                          class="search__field" :icon-enabled="true" v-model="query"></search-field>
         </div>
 
         <div class="modal__section_list">
             <loader v-if="$store.getters['chats/loading']"></loader>
             <ul class="users__list" v-else>
-                <participant-item v-for="item in $store.getters['chats/getFondUsers']" :key="item.nickname"
+                <participant-item v-for="item in results" :key="item.nickname"
                                   :photo="item.photo ? item.photo.url : ''"
                                   :nickname="item.nickname"></participant-item>
             </ul>
@@ -35,6 +34,15 @@ export default {
             title: '',
             query: '',
             selected: []
+        }
+    },
+    computed: {
+        results() {
+            if (this.query !== '') {
+                return this.$store.getters['chats/friendsList'].filter(f => f.nickname.includes(this.query));
+            }
+
+            return this.$store.getters['chats/friendsList'];
         }
     },
     methods: {
