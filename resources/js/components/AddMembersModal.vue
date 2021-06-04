@@ -14,7 +14,7 @@
             </ul>
         </div>
         <div class="modal__section modal__section_footer">
-            <cancel-button @click.native="$store.dispatch('chats/closeAllModals')">Cancel</cancel-button>
+            <cancel-button @click.native="close()">Cancel</cancel-button>
             <rounded-button type="submit">Add members</rounded-button>
         </div>
     </form>
@@ -38,8 +38,13 @@ export default {
         }
     },
     methods: {
+        close() {
+            this.$store.dispatch('chats/closeAllModals');
+        },
         addMembers() {
-            this.$store.dispatch('chats/addParticipants');
+            this.$store.dispatch('chats/addParticipants').then(() => {
+                this.close();
+            });
         },
         searchUser() {
             if (this.query.length > 1) {

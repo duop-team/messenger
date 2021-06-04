@@ -191,8 +191,8 @@ export const actions = {
             /* TODO: there must be error handler */
         });
     },
-    addParticipants({getters, dispatch}) {
-        chatService.addParticipant(getters['currentChat'].id, {users: getters['newMembers']})
+    async addParticipants({getters, dispatch}) {
+        await chatService.addParticipant(getters['currentChat'].id, {users: getters['newMembers']})
             .then(() => {
                 dispatch('retrieveParticipants', getters['currentChat'].id);
             })
