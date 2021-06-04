@@ -12,11 +12,7 @@ class FriendController extends Controller
 {
     public function index()
     {
-        $friend = Friend::where('user_id', Auth::id())->get();
-        if ($friend->isEmpty()) {
-            return response()->noContent(404);
-        }
-        return FriendResource::collection($friend);
+        return FriendResource::collection(Friend::where('user_id', Auth::id())->firstOrFail()->get());
     }
 
     public function store(Request $request)
@@ -33,10 +29,6 @@ class FriendController extends Controller
 
     public function delete($friend_id)
     {
-        $friend = Friend::where('friend_id', $friend_id)->where('user_id', Auth::id())->first();
-        if (!$friend) {
-            return response()->noContent(404);
-        }
-        return $friend->delete();
+        return Friend::where('friend_id', $friend_id)->where('user_id', Auth::id())->firstOrFail()->delete();
     }
 }
