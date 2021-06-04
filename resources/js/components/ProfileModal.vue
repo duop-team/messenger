@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal__section modal__section_middle button">
+        <div class="modal__section modal__section_middle button" v-if="currentUser.nickname !== user.nickname">
             <button @click="$store.dispatch('chats/addFriend')"
                     v-if="!$store.getters['chats/friendsList'].some(f => f.nickname === user.nickname)">
                 <span class="button__content">
@@ -99,6 +99,7 @@ export default {
     .user__photo {
         width: 100px;
         height: 100px;
+        border-radius: 50%;
     }
 }
 
