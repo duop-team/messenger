@@ -26,7 +26,7 @@ class MediaController extends Controller
 //        if (Auth::id() !== $user_id) {
 //            return response()->noContent(403);
 //        }
-        return User::findOrFail($user_id)->update(["media_id" => $this->uploadImage($request)]);
+        return User::findOrFail($user_id)->update(["media_id" => $this->uploadImage($request->image)]);
     }
 
     public function chatUploadImage(ImageUploadRequest $request, $chat_id)
