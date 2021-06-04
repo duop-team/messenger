@@ -2,8 +2,8 @@
     <li :class="{'chat__message_sender': isSender}">
         <div class="message__inner">
             <div class="sender__photo" v-if="!isSender">
-                <img v-if="photo" :src="photo" alt="Awesome avatar">
-                <svg-vue icon="frog" class="photo"></svg-vue>
+                <img v-if="photo" :src="photo" alt="Awesome avatar" class="photo">
+                <svg-vue icon="frog" class="photo" v-else></svg-vue>
             </div>
             <div class="message__content">
                 <div class="message__sender" v-if="!isSender">@{{ sender }}</div>
