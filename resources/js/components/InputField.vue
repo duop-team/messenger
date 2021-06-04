@@ -80,6 +80,7 @@ input {
     &:not(:placeholder-shown) ~ label {
         top: -18px;
         left: 0;
+        color: #66C8FF;
     }
 
     &:focus ~ span,
