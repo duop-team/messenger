@@ -6,7 +6,7 @@
             <div class="chat__title">{{ $store.getters['chats/currentChat'].title }}</div>
             <div class="button__wrapper">
                 <button class="chat__button chat__button_rounded">
-                    <svg-vue icon="edit" class="button__icon"></svg-vue>
+                    <svg-vue icon="logout" class="button__icon"></svg-vue>
                 </button>
                 <button class="chat__button chat__button_rounded">
                     <svg-vue icon="settings" class="button__icon"></svg-vue>
@@ -26,7 +26,7 @@
             <div class="members">
                 <ul class="participants__list">
                     <li class="participants__item" v-for="item in $store.getters['chats/participants']"
-                        :key="item.nickname">
+                        :key="item.nickname" @click="selectUser(item)">
                         <div class="participant__photo">
                             <img :src="item.photo.url" v-if="item.photo" class="photo">
                             <svg-vue icon="frog" class="photo" v-else></svg-vue>
@@ -49,7 +49,14 @@ export default {
         chat() {
             return this.$store.getters['chats/currentChat'];
         }
+    },
+    methods: {
+        selectUser(user) {
+            this.$store.commit('chats/SET_SELECTED_USER', user);
+            this.$store.dispatch('chats/openModal', 'profile');
+        }
     }
+
 }
 </script>
 
@@ -58,6 +65,7 @@ export default {
     height: 60px;
     display: flex;
     justify-content: space-between;
+    padding: 0 15px;
 
     .top__button {
         border: 0;
@@ -116,6 +124,8 @@ export default {
         background-color: #E2E2E2;
         padding: 5px 20px 5px 10px;
         transition: .3s;
+        user-select: none;
+        cursor: pointer;
 
         &:nth-child(2n) {
             background-color: #EAE9E9;
@@ -178,10 +188,9 @@ export default {
 
         .chat__photo {
             width: 165px;
+            height: 165px;
             border-radius: 50%;
         }
-
-
     }
 
     &_members {

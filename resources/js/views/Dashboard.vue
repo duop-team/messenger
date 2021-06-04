@@ -2,9 +2,12 @@
     <div class="dashboard">
         <aside class="dashboard__sidebar">
             <div class="sidebar__menu">
-                <sidebar-button icon="profile" @click.native="$store.dispatch('auth/logout')">My profile
+                <sidebar-button icon="profile" @click.native="$store.dispatch('chats/openModal', 'myProfile')">My
+                    profile
                 </sidebar-button>
-                <sidebar-button icon="settings">Settings</sidebar-button>
+                <sidebar-button icon="settings" @click.native="$store.dispatch('chats/openModal', 'settings')">
+                    Settings
+                </sidebar-button>
                 <sidebar-button icon="create_chat"
                                 @click.native="$store.dispatch('chats/openModal', 'createChat')">
                     Create chat
@@ -24,10 +27,13 @@
             <chat-content v-else-if="isSelectedChat"></chat-content>
         </main>
         <modal :class="{'is-active': this.modalActive || $store.getters['auth/loading']}">
-            <create-chat-modal v-if="modal === 'createChat'"></create-chat-modal>
+            <loader size="100" v-if="$store.getters['auth/loading']"></loader>
+            <create-chat-modal v-else-if="modal === 'createChat'"></create-chat-modal>
             <photo-cropper v-else-if="modal === 'cropper'"></photo-cropper>
             <add-members-modal v-else-if="modal === 'addMembers'"></add-members-modal>
-            <loader v-else-if="$store.getters['auth/loading']"></loader>
+            <profile-modal v-else-if="modal === 'myProfile'"></profile-modal>
+            <profile-modal v-else-if="modal === 'profile'"></profile-modal>
+            <settings-modal v-else-if="modal === 'settings'"></settings-modal>
         </modal>
     </div>
 </template>
@@ -35,12 +41,15 @@
 <script>
 export default {
     name: "Dashboard",
+    mounted() {
+        this.$store.dispatch('chats/retrieveFriends');
+    },
     computed: {
         isSelectedChat() {
             return Object.entries(this.$store.getters['chats/currentChat']).length > 0;
         },
         modal() {
-            return this.$store.getters['chats/currentModal']
+            return this.$store.getters['chats/currentModal'];
         },
         modalActive() {
             return this.$store.getters['chats/currentModal'];

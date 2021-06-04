@@ -21,7 +21,7 @@
             </ul>
         </div>
         <div class="modal__section modal__section_footer">
-            <cancel-button @click.native="$store.dispatch('chats/closeModal')">Cancel</cancel-button>
+            <cancel-button @click.native="$store.dispatch('chats/closeAllModals')">Cancel</cancel-button>
             <rounded-button type="submit">Create</rounded-button>
         </div>
     </form>
@@ -118,10 +118,5 @@ export default {
     align-self: stretch;
     overflow-y: scroll;
     flex: 1 1 auto;
-
-    //li {
-    //    margin: 0;
-    //    padding: 0;
-    //}
 }
 </style>

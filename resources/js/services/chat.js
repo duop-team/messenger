@@ -11,6 +11,12 @@ export default {
     async retrieveParticipants(chat) {
         return await axios.get(`/api/chat/${chat}/participants`);
     },
+    async retrieveFriends() {
+        return await axios.get(`/api/user/friends`);
+    },
+    async addFriend(payload) {
+        return await axios.post('/api/user/friends', payload);
+    },
     async findUser(payload) {
         return await axios.post('/api/user/search', payload);
     },

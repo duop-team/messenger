@@ -6,9 +6,11 @@ export const state = {
     loading: false,
     chat: null,
     participants: [],
+    friends: [],
     newMembers: [],
     chatInfo: false,
     chatList: [],
+    selectedUser: {},
     createChat: false,
     createChatForm: {
         title: '',
@@ -44,14 +46,17 @@ export const mutations = {
     SET_NEW_MEMBERS(state, list) {
         state.newMembers = list;
     },
-    SET_CREATE_CHAT(state, value) {
-        state.createChat = value;
+    SET_SELECTED_USER(state, data) {
+        state.selectedUser = data;
     },
     SET_NEW_CHAT(state, data) {
         state.createChatForm = data;
     },
     SET_FOND_USERS(state, data) {
         state.fondUsers = data;
+    },
+    SET_FRIENDS(state, data) {
+        state.friends = data;
     },
     SET_MODAL(state, value) {
         state.modal = value;
@@ -88,6 +93,12 @@ export const getters = {
     },
     getFondUsers(state) {
         return state.fondUsers;
+    },
+    friendsList(state) {
+        return state.friends;
+    },
+    selectedUser(state) {
+        return state.selectedUser;
     },
     currentModal(state) {
         return state.modal;
@@ -148,6 +159,17 @@ export const actions = {
     async retrieveParticipants({commit}, chat) {
         await chatService.retrieveParticipants(chat).then(r => {
             commit('SET_PARTICIPANTS', r.data[0]);
+        });
+    },
+    async retrieveFriends({commit}) {
+        commit('SET_FRIENDS', []);
+        await chatService.retrieveFriends().then(r => {
+            commit('SET_FRIENDS', r.data);
+        });
+    },
+    addFriend({getters, dispatch}) {
+        chatService.addFriend({nickname: getters['selectedUser'].nickname}).then(() => {
+            dispatch('retrieveFriends');
         });
     },
     createChat({getters, commit, dispatch}) {
