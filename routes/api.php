@@ -32,7 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/user/friends', [FriendController::class, 'index']);
 
-    Route::post('/user/friend/{friend_id}', [FriendController::class, 'store']);
+    Route::post('/user/friends', [FriendController::class, 'store']);
 
     Route::delete('/user/friend/{friend_id}', [FriendController::class, 'delete']);
 
