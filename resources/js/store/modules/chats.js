@@ -11,6 +11,7 @@ export const state = {
     chatInfo: false,
     chatList: [],
     selectedUser: {},
+    photoTarget: null,
     createChat: false,
     createChatForm: {
         title: '',
@@ -63,6 +64,9 @@ export const mutations = {
     },
     SET_MODALS(state, data) {
         state.openedModals = data;
+    },
+    SET_TARGET(state, data) {
+        state.photoTarget = data;
     }
 }
 
@@ -105,6 +109,9 @@ export const getters = {
     },
     openedModals(state) {
         return state.openedModals;
+    },
+    photoTarget(state) {
+        return state.photoTarget;
     }
 }
 

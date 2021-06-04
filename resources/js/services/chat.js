@@ -32,5 +32,12 @@ export default {
                 'Content-Type': 'multipart/form-data'
             }
         });
+    },
+    async setUserPhoto(chat, payload) {
+        return await axios.post(`/api/user/${chat}/media`, payload, {
+            'headers': {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 }
