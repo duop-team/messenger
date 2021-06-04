@@ -54,6 +54,10 @@ export default {
         }
     },
     methods: {
+        close() {
+            this.$store.commit('chats/SET_TARGET', null);
+            this.$store.dispatch('chats/closeAllModals');
+        },
         crop() {
             const {canvas} = this.$refs.cropper.getResult();
             canvas.toBlob((blob) => {
@@ -70,15 +74,14 @@ export default {
                     let res = this.$store.getters['chats/photoTarget'];
                     if (res.target === 'chat') {
                         chat.setChatPhoto(res.value, form)
-                            .then(r => console.log(r))
+                            .then(() => this.close())
                             .catch(e => console.log(e));
                     } else {
                         chat.setUserPhoto(res.value, form)
-                            .then().catch();
+                            .then(() => this.close()).catch();
                     }
                 });
             }
-
         },
         reset() {
             this.image = {
