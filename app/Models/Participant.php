@@ -15,11 +15,6 @@ class Participant extends Model
 
     public $timestamps = false;
 
-    public function accessRules()
-    {
-        return $this->belongsTo(AccessRule::class);
-    }
-
     public function users()
     {
         return $this->belongsTo(User::class);
