@@ -3,8 +3,8 @@
           @submit.prevent="updateProfile()">
         <div class="modal__section modal__section_top">
             <!-- TODO: add avatar uploading feature -->
-            <photo-uploader class="user__photo"
-                            @click.native="$store.dispatch('chats/openModal', 'cropper')"></photo-uploader>
+            <photo-uploader class="user__photo" target="user" :value="currentUser.id"
+                            @click.native="setPhoto()"></photo-uploader>
             <input-field type="text" name="full_name" required="true" v-model="form.fullName">Full name</input-field>
         </div>
         <div class="modal__section modal__section_middle">
@@ -75,6 +75,10 @@ export default {
         }
     },
     methods: {
+        setPhoto() {
+            this.$store.commit('chats/SET_TARGET', {target: 'user', value: this.currentUser.id});
+            this.$store.dispatch('chats/openModal', 'cropper');
+        },
         updateProfile() {
             this.$store.dispatch('chats/closeAllModals');
         }
@@ -82,6 +86,9 @@ export default {
     computed: {
         user() {
             return this.$store.getters['chats/selectedUser'];
+        },
+        currentUser() {
+            return this.$store.getters['auth/currentUser'];
         }
     }
 }
