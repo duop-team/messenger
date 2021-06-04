@@ -72,7 +72,7 @@ export default {
             });
 
             if (!this.hasErrors) {
-                this.$store.dispatch('auth/sendCode', this.form.code);
+                this.$store.dispatch('auth/sendCode', {phone: this.form.phone});
             }
         }
     },
